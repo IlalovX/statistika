@@ -1,4 +1,3 @@
-import NavigationIcon from '@mui/icons-material/Navigation'
 import {
 	Box,
 	Paper,
@@ -11,6 +10,8 @@ import {
 	Typography,
 } from '@mui/material'
 import { useState } from 'react'
+import { default as arrowUp } from '../../../public/Polygon 2 (1).svg'
+import { default as arrowDown } from '../../../public/Polygon 2.svg'
 import MapTooltip from '../mapTooltip/MapTooltip'
 import './MapCard.css'
 
@@ -225,8 +226,12 @@ function MapCard() {
 											gridTemplateColumns: '1fr 1fr 1fr',
 										}}
 									>
-										<span className='3xl'>{row.amount}</span>
-										<NavigationIcon color='success' />
+										<span className='3xl'>{row.amount} T</span>
+										{index % 2 !== 0 ? (
+											<img src={arrowDown} />
+										) : (
+											<img src={arrowUp} />
+										)}
 										<span className='3xl '>{row.extra}%</span>
 									</TableCell>
 								</TableRow>

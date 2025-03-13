@@ -50,7 +50,7 @@ export default function ChartWithCustomTooltip() {
 						<linearGradient id='myGradient' x1='0' y1='0' x2='0' y2='1'>
 							<stop
 								offset='5%'
-								stopColor='rgba(177, 172, 172, 0.785)'
+								stopColor='rgba(176, 160, 172, 0.70)'
 								stopOpacity={0.3}
 							/>
 							<stop offset='95%' stopColor='transparent' stopOpacity={0} />

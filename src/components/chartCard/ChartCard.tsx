@@ -4,7 +4,7 @@ import StatsHeader from '../chartStatsHeader/ChartStatsHeader'
 
 function ChartCard() {
 	return (
-		<Box className='shadow-2xl w-full rounded-2xl p-2.5 mb-20'>
+		<Box className='shadow-2xl w-full rounded-2xl  mb-20'>
 			<StatsHeader />
 			<Stack direction='column' width='100%' spacing={1}>
 				<Chart />
