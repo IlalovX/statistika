@@ -23,7 +23,13 @@ function HomeList() {
 			{data.map(item => (
 				<ListItem
 					key={item.id}
-					sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: 0 }}
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: 2,
+						paddingLeft: 0,
+						paddingRight: 0,
+					}}
 				>
 					<ListItemAvatar>
 						<Avatar sx={{ bgcolor: '#F3F4F6' }}>
