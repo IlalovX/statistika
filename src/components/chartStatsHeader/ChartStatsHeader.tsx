@@ -6,19 +6,19 @@ function StatsHeader() {
 			<Box className='flex gap-10'>
 				<Box>
 					<p className='text-gray-400'>Общее количество Туристов</p>
-					<Typography variant='h4'>1500</Typography>
+					<Typography variant='h6'>1500</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-2xl'>+3,4%</span> за последний
+						<span className='text-green-500 text-xl'>+3,4%</span> за последний
 						месяц
 					</p>
 				</Box>
 				<Box>
 					<p className='text-gray-400'>Общее прибыль от Туристов</p>
-					<Typography variant='h4' className='text-[#355CBF]'>
+					<Typography variant='h6' className='text-[#355CBF]'>
 						3 500 $
 					</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-2xl'>+3,4%</span> за последний
+						<span className='text-green-500 text-xl'>+3,4%</span> за последний
 						месяц
 					</p>
 				</Box>
