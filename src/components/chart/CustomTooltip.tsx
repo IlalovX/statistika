@@ -48,19 +48,19 @@ export function CustomAxisTooltip() {
 						table: { borderSpacing: 0 },
 						thead: {
 							td: {
-								px: 1.5,
-								py: 0.75,
+								px: .75,
+								py: 0.5,
 							},
 						},
 						tbody: {
-							'tr:first-child': { td: { paddingTop: 1.5 } },
-							'tr:last-child': { td: { paddingBottom: 1.5 } },
+							'tr:first-child': { td: { paddingTop: .5 } },
+							'tr:last-child': { td: { paddingBottom: .5 } },
 							tr: {
-								'td:first-child': { paddingLeft: 1.5 },
-								'td:last-child': { paddingRight: 1.5 },
+								'td:first-child': { paddingLeft: .5 },
+								'td:last-child': { paddingRight: .5 },
 								td: {
-									paddingRight: '7px',
-									paddingBottom: '10px',
+									paddingRight: '5px',
+									paddingBottom: '5px',
 								},
 							},
 						},
