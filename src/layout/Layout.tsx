@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import type { Router } from '@toolpad/core/AppProvider'
 import { AppProvider, type Session } from '@toolpad/core/AppProvider'
 import { DashboardLayout } from '@toolpad/core/DashboardLayout'
 import { useMemo, useState } from 'react'
@@ -7,7 +8,6 @@ import { NAVIGATION } from '../const/layoutNav'
 import { demoTheme } from '../const/layoutTheme'
 import { RoutesConsts } from '../const/routes'
 import { RoutesEnums } from '../enums/routes'
-
 export default function DashboardLayoutAccount() {
 	const [session, setSession] = useState<Session | null>({
 		user: {
@@ -37,10 +37,8 @@ export default function DashboardLayoutAccount() {
 	const location = useLocation()
 	const navigate = useNavigate()
 
-	const router = {
-		push: navigate,
-		replace: (path: string) => navigate(path, { replace: true }),
-		navigate,
+	const router: Router = {
+		navigate: url => navigate(typeof url === 'string' ? url : url.toString()),
 		pathname: location.pathname,
 		searchParams: new URLSearchParams(location.search),
 	}
@@ -53,7 +51,7 @@ export default function DashboardLayoutAccount() {
 			navigation={NAVIGATION}
 			theme={demoTheme}
 			branding={{
-				logo: <img src='https://mui.com/static/logo.png' alt='MUI logo' />,
+				logo: '',
 				title: 'Statistika',
 				homeUrl: RoutesConsts[RoutesEnums.HOME],
 			}}
