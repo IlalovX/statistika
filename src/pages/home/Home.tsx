@@ -1,12 +1,10 @@
-import { Typography } from '@mui/material'
 import ChartCard from '../../components/chartCard/ChartCard'
+import ThemeText from '../../components/themeText/ThemeText'
 
 function Home() {
 	return (
 		<div>
-			<Typography variant='h3' gutterBottom>
-				Туризм
-			</Typography>
+			<ThemeText variant='h4' text='Туризм' />
 			<ChartCard />
 			<ChartCard />
 		</div>

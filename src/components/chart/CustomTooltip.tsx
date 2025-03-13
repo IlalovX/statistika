@@ -79,14 +79,14 @@ export function CustomAxisTooltip() {
 								<tr key={seriesItem.seriesId}>
 									<td>
 										<Typography fontWeight='bold'>Туристы</Typography>
-										<Typography color='blue' fontWeight='bold' variant='h5'>
+										<Typography color='blue' fontWeight='500' variant='h6'>
 											250$
 										</Typography>
 									</td>
 
 									<td>
 										<Typography fontWeight='bold'>Прибыль</Typography>
-										<Typography color='blue' fontWeight='bold' variant='h5'>
+										<Typography color='blue' fontWeight='500' variant='h6'>
 											1000$
 										</Typography>
 									</td>

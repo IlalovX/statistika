@@ -1,17 +1,13 @@
-import { Typography } from '@mui/material'
 import ChartCard from '../../components/chartCard/ChartCard'
 import MapCard from '../../components/mapCard/MapCard'
+import ThemeText from '../../components/themeText/ThemeText'
 
 function Tourism() {
 	return (
 		<div>
-			<Typography variant='h3' gutterBottom>
-				Туризм
-			</Typography>
+			<ThemeText variant='h4' text='Туризм' />
 			<ChartCard />
-			<Typography variant='h3' gutterBottom>
-			Источники/страны
-			</Typography>
+			<ThemeText variant='h4' text='Источники/страны' />
 			<MapCard />
 		</div>
 	)
