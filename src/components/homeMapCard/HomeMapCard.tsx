@@ -35,7 +35,7 @@ const HtmlTooltip = (props: TooltipProps) => {
 function HomeMapCard() {
 	return (
 		<Box
-			className={`shadow-2xl rounded-xl   flex items-center justify-center ${styles.map}`}
+			className={`shadow-2xl rounded-xl  p-5 flex items-center justify-center ${styles.map}`}
 		>
 			<svg
 				width='300'
