@@ -1,0 +1,10 @@
+.map {
+	svg {
+		path {
+			transition: all 0.3s 0 linear;
+			&:hover {
+				fill: rgba(0, 141, 243, 0.734);
+			}
+		}
+	}
+}
