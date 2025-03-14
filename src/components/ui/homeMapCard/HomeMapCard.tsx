@@ -5,7 +5,7 @@ import CustomTooltipContent from '../homeMapTooltip/HomeMapTooltip'
 import styles from './HomeMap.module.scss'
 
 const HtmlTooltip = (props: TooltipProps) => {
-	const theme = useTheme() // Получаем текущую тему
+	const theme = useTheme()
 
 	return (
 		<Tooltip
@@ -16,16 +16,16 @@ const HtmlTooltip = (props: TooltipProps) => {
 					sx: {
 						backgroundColor:
 							theme.palette.mode === 'dark'
-								? theme.palette.background.paper // Фон в тёмной теме
-								: 'white', // Фон в светлой теме
+								? theme.palette.background.paper 
+								: 'white', 
 						color:
 							theme.palette.mode === 'dark'
-								? 'white' // Текст в тёмной теме
-								: 'rgba(0, 0, 0, 0.87)', // Текст в светлой теме
+								? 'white' 
+								: 'rgba(0, 0, 0, 0.87)', 
 						maxWidth: 220,
 						fontSize: '12px',
-						border: `1px solid ${theme.palette.divider}`, // Граница зависит от темы
-						boxShadow: theme.shadows[3], // Поддержка теней от темы
+						border: `1px solid ${theme.palette.divider}`, 
+						boxShadow: theme.shadows[3], 
 					},
 				},
 			}}
@@ -35,7 +35,7 @@ const HtmlTooltip = (props: TooltipProps) => {
 function HomeMapCard() {
 	return (
 		<Box
-			className={`shadow-2xl rounded-xl  p-5 flex items-center justify-center ${styles.map}`}
+			className={`shadow-2xl rounded-xl  p-2 flex items-center justify-center ${styles.map}`}
 		>
 			<svg
 				width='300'

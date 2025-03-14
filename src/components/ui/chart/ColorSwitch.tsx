@@ -1,6 +1,6 @@
-import { useDrawingArea, useYScale } from '@mui/x-charts/hooks';
-import { ScaleLinear } from 'd3-scale';
-import { ColorSwichProps } from '../../types/propsColorSwitch'
+import { useDrawingArea, useYScale } from '@mui/x-charts/hooks'
+import { ScaleLinear } from 'd3-scale'
+import { ColorSwichProps } from '../../../types/propsColorSwitch'
 function ColorSwich({ threshold, color1, id }: ColorSwichProps) {
 	const { top, height, bottom } = useDrawingArea()
 	const svgHeight = top + bottom + height

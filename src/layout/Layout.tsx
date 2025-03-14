@@ -11,8 +11,8 @@ import { RoutesEnums } from '../enums/routes'
 export default function DashboardLayoutAccount() {
 	const [session, setSession] = useState<Session | null>({
 		user: {
-			name: 'Xudayar Ilalov',
-			email: 'IlalovX@outlook.com',
+			name: 'Qural Atabaev',
+			email: 'quralatabaev@gmail.com',
 			image: 'https://avatars.githubusercontent.com/u/19550456',
 		},
 	})
@@ -22,8 +22,8 @@ export default function DashboardLayoutAccount() {
 			signIn: () => {
 				setSession({
 					user: {
-						name: 'Xudayar Ilalov',
-						email: 'IlalovX@outlook.com',
+						name: 'Qural Atabaev',
+						email: 'quralatabaev@gmail.com',
 						image: 'https://avatars.githubusercontent.com/u/19550456',
 					},
 				})
@@ -52,13 +52,13 @@ export default function DashboardLayoutAccount() {
 			theme={demoTheme}
 			branding={{
 				logo: '',
-				title: 'Statistika',
+				title: 'Qaraqalpaqstannıń Ekonomikalıq hám sociyallıq kórsetkishleri',
 				homeUrl: RoutesConsts[RoutesEnums.HOME],
 			}}
 			router={router}
 		>
 			<DashboardLayout>
-				<Box className='p-5'>
+				<Box className='p-2'>
 					<Outlet />
 				</Box>
 			</DashboardLayout>

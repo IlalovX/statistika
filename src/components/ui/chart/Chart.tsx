@@ -4,7 +4,7 @@ import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis'
 import { AreaPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart'
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer'
 import * as React from 'react'
-import { dataset, valueFormatter } from '../../const/lineGraphData'
+import { dataset, valueFormatter } from '../../../const/lineGraphData'
 import { CustomAxisTooltip } from './CustomTooltip'
 
 export default function ChartWithCustomTooltip() {

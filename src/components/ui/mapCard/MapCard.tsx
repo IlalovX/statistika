@@ -10,10 +10,10 @@ import {
 	Typography,
 } from '@mui/material'
 import { useState } from 'react'
-import { default as arrowUp } from '../../../public/Polygon 2 (1).svg'
-import { default as arrowDown } from '../../../public/Polygon 2.svg'
 import MapTooltip from '../mapTooltip/MapTooltip'
 import './MapCard.css'
+import { default as arrowUp } from '/Polygon 2 (1).svg'
+import { default as arrowDown } from '/Polygon 2.svg'
 
 const data = [
 	{ country: 'Узбекистан', amount: 50, extra: 1.5 },

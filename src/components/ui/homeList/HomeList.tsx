@@ -7,10 +7,10 @@ import {
 	Typography,
 } from '@mui/material'
 
-import { default as icon } from '../../../public/туризм.svg'
+import { default as icon } from '../../../../public/туризм.svg'
 
 const data = [
-	{ id: 1, title: 'IT фирмы', value: 20, percent: '+0.24%' },
+	{ id: 1, title: 'Бизнес', value: 20, percent: '+0.24%' },
 	{ id: 2, title: 'Бизнес', value: 20, percent: '+0.24%' },
 	{ id: 3, title: 'Бизнес', value: 20, percent: '+0.24%' },
 	{ id: 4, title: 'Бизнес', value: 20, percent: '+0.24%' },
@@ -27,8 +27,7 @@ function HomeList() {
 						display: 'flex',
 						alignItems: 'center',
 						gap: 2,
-						paddingLeft: 0,
-						paddingRight: 0,
+						padding: '0 0 0 2px',
 					}}
 				>
 					<ListItemAvatar>
@@ -40,10 +39,10 @@ function HomeList() {
 						primary={item.title}
 						primaryTypographyProps={{ variant: 'body1', fontWeight: 500 }}
 					/>
-					<Typography variant='body1' fontWeight={600}>
+					<Typography variant='body1' fontWeight={600} className='text-[20px]'>
 						{item.value}
 					</Typography>
-					<Typography variant='body2' color='green'>
+					<Typography variant='body2' color='green' className='text-[11px]'>
 						{item.percent}
 					</Typography>
 				</ListItem>

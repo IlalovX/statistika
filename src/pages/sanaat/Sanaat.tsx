@@ -1,10 +1,10 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import { default as arrowUp } from '../../../public/Polygon 2 (1).svg'
 import { default as arrowDown } from '../../../public/Polygon 2.svg'
-import ChartCard from '../../components/chartCard/ChartCard'
-import MapCard from '../../components/mapCard/MapCard'
 import SanaatTable from '../../components/sanaatTable/SanaatTable'
 import ThemeText from '../../components/themeText/ThemeText'
+import ChartCard from '../../components/ui/chartCard/ChartCard'
+import MapCard from '../../components/ui/mapCard/MapCard'
 
 function Sanaat() {
 	const theme = useTheme()
