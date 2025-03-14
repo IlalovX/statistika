@@ -1,6 +1,15 @@
 import { createTheme } from '@mui/material/styles'
 
 export const demoTheme = createTheme({
+	components: {
+		MuiDrawer: {
+			styleOverrides: {
+				paper: {
+					borderRight: 'none',
+				},
+			},
+		},
+	},
 	cssVariables: {
 		colorSchemeSelector: 'data-toolpad-color-scheme',
 	},
