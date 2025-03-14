@@ -3,7 +3,7 @@ import { BarChart } from '@mui/x-charts/BarChart'
 export default function HomeExportImport() {
 	return (
 		<BarChart
-			width={340}
+			width={540}
 			height={300}
 			tooltip={{ trigger: 'none' }}
 			series={[

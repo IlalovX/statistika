@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { default as arrowup } from '../../../public/Polygon 2 (1).svg'
 import HomeDoughnut from '../ui/homeDoughnut/HomeDoughnut'
 import HomeExportImport from '../ui/homeExportImport/HomeExportImport'
@@ -9,6 +9,7 @@ import HomeMapCard from '../ui/homeMapCard/HomeMapCard'
 import HomeProfit from '../ui/homeProfit/HomeProfit'
 import ThemeText from '../ui/themeText/ThemeText'
 function HomeBody() {
+	const theme = useTheme()
 	return (
 		<div>
 			<div className='grid grid-cols-4 grid-rows-[380px] gap-3'>
@@ -16,7 +17,10 @@ function HomeBody() {
 				<div className='grid grid-cols-1 grid-rows-[70%,30%] gap-5'>
 					<Box
 						className='shadow-xl rounded-2xl p-1.5'
-						sx={{ bgcolor: 'background.paper' }}
+						sx={{
+							bgcolor: 'background.paper',
+							border: `1px solid ${theme.palette.divider}`,
+						}}
 					>
 						<ThemeText text='Население' variant='h6' />
 						<p className='text-gray-400'>за 2025г</p>
@@ -30,7 +34,10 @@ function HomeBody() {
 					</Box>
 					<Box
 						className='shadow-xl rounded-2xl p-1.5'
-						sx={{ bgcolor: 'background.paper' }}
+						sx={{
+							bgcolor: 'background.paper',
+							border: `1px solid ${theme.palette.divider}`,
+						}}
 					>
 						<ThemeText text='Безработные' variant='h6' />
 						<p className='text-gray-400'>250 человек</p>
@@ -47,7 +54,10 @@ function HomeBody() {
 				<div className='grid grid-cols-1 grid-rows-2 gap-2'>
 					<Box
 						className='shadow-xl rounded-2xl p-1.5'
-						sx={{ bgcolor: 'background.paper' }}
+						sx={{
+							bgcolor: 'background.paper',
+							border: `1px solid ${theme.palette.divider}`,
+						}}
 					>
 						<ThemeText text='Население' variant='h6' />
 						<p className='text-gray-400'>за 2025г</p>
@@ -72,7 +82,10 @@ function HomeBody() {
 					</Box>
 					<Box
 						className='shadow-xl rounded-2xl p-1.5'
-						sx={{ bgcolor: 'background.paper' }}
+						sx={{
+							bgcolor: 'background.paper',
+							border: `1px solid ${theme.palette.divider}`,
+						}}
 					>
 						<ThemeText text='Самозанятый' variant='h6' />
 						<p className='text-gray-400'>за 2025г</p>
@@ -81,7 +94,10 @@ function HomeBody() {
 				</div>
 				<Box
 					className='shadow-xl rounded-2xl p-1.5'
-					sx={{ bgcolor: 'background.paper' }}
+					sx={{
+						bgcolor: 'background.paper',
+						border: `1px solid ${theme.palette.divider}`,
+					}}
 				>
 					<div className='flex justify-between items-center'>
 						<div className='flex flex-col gap-5'>
@@ -112,6 +128,7 @@ function HomeBody() {
 					className='shadow-xl rounded-2xl p-4 col-start-2 col-end-5 grid-cols-[70%_30%] grid'
 					sx={{
 						bgcolor: 'background.paper',
+						border: `1px solid ${theme.palette.divider}`,
 					}}
 				>
 					<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200'>

@@ -1,6 +1,10 @@
 import { Typography } from '@mui/material'
+import { getDataPopulation } from '../../services/query'
 
-function CustomTooltipContent() {
+function CustomTooltipContent({ data }: { data: string }) {
+	const population = getDataPopulation()
+	console.log(population)
+
 	return (
 		<>
 			<span className='text-xs text-gray-400'>2024 г</span>

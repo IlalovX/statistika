@@ -6,6 +6,7 @@ import {
 	ListItemAvatar,
 	ListItemText,
 	Typography,
+	useTheme,
 } from '@mui/material'
 import HomeWeeklyBarChart from '../homeWeeklyBarChart/HomeWeeklyBarChart'
 import ThemeText from '../themeText/ThemeText'
@@ -34,10 +35,14 @@ const data = [
 	},
 ]
 function HomeProfit() {
+	const theme = useTheme()
 	return (
 		<Box
 			className='shadow-xl rounded-2xl p-1.5 '
-			sx={{ bgcolor: 'background.paper' }}
+			sx={{
+				bgcolor: 'background.paper',
+				border: `1px solid ${theme.palette.divider}`,
+			}}
 		>
 			<ThemeText text='Прибыль' variant='h6' />
 			<p className='text-gray-400'>за последний месяц</p>
