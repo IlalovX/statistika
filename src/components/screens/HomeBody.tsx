@@ -1,55 +1,24 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import { default as arrowup } from '../../../public/Polygon 2 (1).svg'
+import { default as arrowup } from '/svg/Polygon 2 (1).svg'
 import HomeDoughnut from '../ui/homeDoughnut/HomeDoughnut'
 import HomeExportImport from '../ui/homeExportImport/HomeExportImport'
 import HomeExportImportButton from '../ui/homeExportImportButton/HomeExportImportButton'
-import HomeLineOfChart from '../ui/homeLineOfChart/HomeLineOfChart'
 import HomeList from '../ui/homeList/HomeList'
 import HomeMapCard from '../ui/homeMapCard/HomeMapCard'
+import HomePopultaionCard from '../ui/homePopulationCard/HomePopultaionCard'
 import HomeProfit from '../ui/homeProfit/HomeProfit'
+import HomeUnemployersСard from '../ui/HomeUnemployersСard/HomeUnemployersСard'
 import ThemeText from '../ui/themeText/ThemeText'
 function HomeBody() {
 	const theme = useTheme()
+
 	return (
 		<div>
 			<div className='grid grid-cols-4 grid-rows-[380px] gap-3'>
 				<HomeMapCard />
 				<div className='grid grid-cols-1 grid-rows-[70%,30%] gap-5'>
-					<Box
-						className='shadow-xl rounded-2xl p-1.5'
-						sx={{
-							bgcolor: 'background.paper',
-							border: `1px solid ${theme.palette.divider}`,
-						}}
-					>
-						<ThemeText text='Население' variant='h6' />
-						<p className='text-gray-400'>за 2025г</p>
-						<HomeLineOfChart />
-						<div className='flex items-center justify-between'>
-							<Typography variant='body1'>
-								2 064 000 <br /> человек
-							</Typography>
-							<span className='text-green-500'>+10,5%</span>
-						</div>
-					</Box>
-					<Box
-						className='shadow-xl rounded-2xl p-1.5'
-						sx={{
-							bgcolor: 'background.paper',
-							border: `1px solid ${theme.palette.divider}`,
-						}}
-					>
-						<ThemeText text='Безработные' variant='h6' />
-						<p className='text-gray-400'>250 человек</p>
-						<HomeLineOfChart />
-						<div className='flex items-center justify-between text-gray-400 gap-1 text-sm'>
-							<span>2020</span>
-							<span>2021</span>
-							<span>2022</span>
-							<span>2023</span>
-							<span>2024</span>
-						</div>
-					</Box>
+					<HomePopultaionCard />
+					<HomeUnemployersСard />
 				</div>
 				<div className='grid grid-cols-1 grid-rows-2 gap-2'>
 					<Box
@@ -131,13 +100,7 @@ function HomeBody() {
 						border: `1px solid ${theme.palette.divider}`,
 					}}
 				>
-					<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200'>
-						<div className='font-bold flex gap-2'>
-							<Typography className='text-[#7367F0]'>Экспорт</Typography>
-							<Typography className='text-[#FF9F43]'>Импорт</Typography>
-						</div>
-						<HomeExportImport />
-					</Box>
+					<HomeExportImport/>
 					<Box className='flex flex-col items-center justify-start gap-8'>
 						<HomeExportImportButton />
 						<div>

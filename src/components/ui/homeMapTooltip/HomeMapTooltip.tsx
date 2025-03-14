@@ -1,10 +1,15 @@
 import { Typography } from '@mui/material'
-import { getDataPopulation } from '../../services/query'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 function CustomTooltipContent({ data }: { data: string }) {
-	const population = getDataPopulation()
-	console.log(population)
-
+	let popualtion = useQuery({
+		queryKey: ['population', data],
+		queryFn: async () => {
+			const response = await axios.get('../../../public/data.json')
+			return response.data
+		},
+	})
 	return (
 		<>
 			<span className='text-xs text-gray-400'>2024 г</span>

@@ -7,7 +7,7 @@ import {
 	Typography,
 } from '@mui/material'
 
-import { default as icon } from '../../../../public/туризм.svg'
+import { default as icon } from '/svg/туризм.svg'
 
 const data = [
 	{ id: 1, title: 'Бизнес', value: 20, percent: '+0.24%' },
