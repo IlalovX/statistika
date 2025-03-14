@@ -6,7 +6,7 @@ import ThemeText from '../themeText/ThemeText'
 
 export default function HomeUnemployersCard() {
 	const theme = useTheme()
-	const [chartData, setChartData] = useState([1, 2, 3, 4]) 
+	const [chartData, setChartData] = useState([1, 2, 3, 4])
 
 	const { data } = useQuery({
 		queryKey: ['unemployees'],
@@ -39,7 +39,7 @@ export default function HomeUnemployersCard() {
 			}}
 		>
 			<ThemeText text='Безработные' variant='h6' />
-			<p className='text-gray-400'>250 человек</p>
+			<p className='text-gray-400'>{data?.data[1]['2023']} тыс человек</p>
 			<Stack direction='row' sx={{ width: '100%', height: '77px' }}>
 				<Box sx={{ flexGrow: 1 }}>
 					<SparkLineChart
@@ -47,6 +47,7 @@ export default function HomeUnemployersCard() {
 						height={77}
 						showHighlight
 						showTooltip
+						valueFormatter={value => `${value} тыс`}
 					/>
 				</Box>
 			</Stack>

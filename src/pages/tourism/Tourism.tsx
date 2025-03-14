@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import ChartCard from '../../components/ui/chartCard/ChartCard'
 import MapCard from '../../components/ui/mapCard/MapCard'
 import ThemeText from '../../components/ui/themeText/ThemeText'
-import { default as arrowUp } from '/Polygon 2 (1).svg'
+import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 
 function Tourism() {
 	return (

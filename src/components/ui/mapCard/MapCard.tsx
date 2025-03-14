@@ -12,8 +12,8 @@ import {
 import { useState } from 'react'
 import MapTooltip from '../mapTooltip/MapTooltip'
 import './MapCard.css'
-import { default as arrowUp } from '/Polygon 2 (1).svg'
-import { default as arrowDown } from '/Polygon 2.svg'
+import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
+import { default as arrowDown } from '/svg/Polygon 2.svg'
 
 const data = [
 	{ country: 'Узбекистан', amount: 50, extra: 1.5 },

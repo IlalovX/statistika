@@ -1,6 +1,6 @@
 import { Typography, useTheme } from '@mui/material'
 
-function HomeDoughnut() {
+function HomeDoughnut({ total }: { total: string }) {
 	const theme = useTheme()
 	const isDarkMode = theme.palette.mode === 'dark'
 	return (
@@ -15,7 +15,7 @@ function HomeDoughnut() {
 						}}
 					>
 						<Typography variant='h6' fontWeight='bold'>
-							345
+							{total}
 						</Typography>
 						<span className='text-green-500 text-xs'>Всего</span>
 					</div>

@@ -1,21 +1,24 @@
 import { Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 
 function CustomTooltipContent({ data }: { data: string }) {
-	let popualtion = useQuery({
-		queryKey: ['population', data],
+	const { data: population } = useQuery({
+		queryKey: [data, 'map'],
 		queryFn: async () => {
-			const response = await axios.get('../../../public/data.json')
-			return response.data
+			const res = await fetch('/db/population/population.json')
+			if (!res.ok) {
+				throw new Error('Ошибка загрузки данных')
+			}
+			return res.json()
 		},
 	})
+
 	return (
 		<>
 			<span className='text-xs text-gray-400'>2024 г</span>
-			<p className='text-xs'>Нукус</p>
-			<Typography variant='h6' className='text-blue-400 text-[16px]'>
-				329 тыс
+			<p className='text-xl'>{data}</p>
+			<Typography variant='body2' className='text-blue-400 text-[12px]'>
+				{population ? population[data]['2024'] : '...'} тыс
 			</Typography>
 		</>
 	)

@@ -24,6 +24,7 @@ export default function DashboardLayoutAccount() {
 			router={router}
 			theme={demoTheme}
 			branding={{
+				logo: '',
 				title: 'Qaraqalpaqstannıń Ekonomikalıq hám sociyallıq kórsetkishleri',
 				homeUrl: RoutesConsts[RoutesEnums.HOME],
 			}}

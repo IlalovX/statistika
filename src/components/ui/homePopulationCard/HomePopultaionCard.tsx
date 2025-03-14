@@ -64,6 +64,7 @@ function HomePopulationCard() {
 						height={77}
 						showHighlight
 						showTooltip
+						valueFormatter={value => `${value} тыс`}
 					/>
 				</Box>
 			</Stack>
