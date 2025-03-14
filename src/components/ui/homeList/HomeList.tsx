@@ -28,6 +28,7 @@ function HomeList() {
 						alignItems: 'center',
 						gap: 2,
 						padding: '0 0 0 2px',
+						margin: '4px 0',
 					}}
 				>
 					<ListItemAvatar>

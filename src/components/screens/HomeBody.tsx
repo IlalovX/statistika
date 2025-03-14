@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import { default as arrowup } from '../../../public/Polygon 2 (1).svg'
 import HomeDoughnut from '../ui/homeDoughnut/HomeDoughnut'
+import HomeExportImport from '../ui/homeExportImport/HomeExportImport'
+import HomeExportImportButton from '../ui/homeExportImportButton/HomeExportImportButton'
 import HomeLineOfChart from '../ui/homeLineOfChart/HomeLineOfChart'
 import HomeList from '../ui/homeList/HomeList'
 import HomeMapCard from '../ui/homeMapCard/HomeMapCard'
@@ -107,15 +109,32 @@ function HomeBody() {
 					<HomeProfit />
 				</div>
 				<Box
-					className='shadow-xl rounded-2xl p-4 col-start-2 col-end-5'
+					className='shadow-xl rounded-2xl p-4 col-start-2 col-end-5 grid-cols-[70%_30%] grid'
 					sx={{
 						bgcolor: 'background.paper',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
 					}}
 				>
-					text
+					<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200'>
+						<div className='font-bold flex gap-2'>
+							<Typography className='text-[#7367F0]'>Экспорт</Typography>
+							<Typography className='text-[#FF9F43]'>Импорт</Typography>
+						</div>
+						<HomeExportImport />
+					</Box>
+					<Box className='flex flex-col items-center justify-start gap-8'>
+						<HomeExportImportButton />
+						<div>
+							<Typography
+								variant='h5'
+								sx={{ padding: 0, textAlign: 'center', letterSpacing: 3 }}
+							>
+								$25,825
+							</Typography>
+							<Typography variant='body2' sx={{ textAlign: 'center' }}>
+								План: 56,800
+							</Typography>
+						</div>
+					</Box>
 				</Box>
 			</div>
 		</div>

@@ -57,7 +57,7 @@ export default function DashboardLayoutAccount() {
 			}}
 			router={router}
 		>
-			<DashboardLayout>
+			<DashboardLayout sidebarExpandedWidth={250}>
 				<Box className='p-2'>
 					<Outlet />
 				</Box>

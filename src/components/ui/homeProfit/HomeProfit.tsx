@@ -52,10 +52,11 @@ function HomeProfit() {
 							alignItems: 'center',
 							gap: 2,
 							padding: '0 0 0 2px',
+							margin: '4px 0',
 						}}
 					>
 						<ListItemAvatar sx={{ minWidth: 32 }}>
-							<Avatar sx={{ bgcolor: 'transparent', width: 32, height: 32 }}>
+							<Avatar sx={{ bgcolor: '#F3F4F6', width: 32, height: 32 }}>
 								<img src={item.icon} alt='icon' width={24} height={24} />
 							</Avatar>
 						</ListItemAvatar>

@@ -2,12 +2,12 @@ import Paper from '@mui/material/Paper'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 // Импорт SVG-иконок
-import Hlopok from '../../../public/products/hlopok.svg'
-import Kartoshka from '../../../public/products/kartoshka.svg'
-import Kundjut from '../../../public/products/kundjut.svg'
-import Markov from '../../../public/products/markov.svg'
-import Polin from '../../../public/products/polin.svg'
-import Ris from '../../../public/products/ris.svg'
+import Hlopok from '/products/hlopok.svg'
+import Kartoshka from '/products/kartoshka.svg'
+import Kundjut from '/products/kundjut.svg'
+import Markov from '/products/markov.svg'
+import Polin from '/products/polin.svg'
+import Ris from '/products/ris.svg'
 
 const rows = [
 	{ id: 1, products: 'Рис', weigh: 1050, price: 200, icon: Ris },
