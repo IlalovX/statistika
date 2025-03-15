@@ -1,35 +1,84 @@
-import { Tooltip, useTheme } from '@mui/material'
+import { ClickAwayListener, Tooltip, useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
 import { TooltipProps } from '@mui/material/Tooltip'
+import { useState } from 'react'
 import CustomTooltipContent from '../homeMapTooltip/HomeMapTooltip'
 import styles from './HomeMap.module.scss'
 
+// const HtmlTooltip = (props: TooltipProps) => {
+// 	const theme = useTheme()
+
+// 	return (
+// 		<Tooltip
+// 			{...props}
+// 			followCursor
+// 			slotProps={{
+// 				tooltip: {
+// 					sx: {
+// 						backgroundColor:
+// 							theme.palette.mode === 'dark'
+// 								? theme.palette.background.paper
+// 								: 'white',
+// 						color:
+// 							theme.palette.mode === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.87)',
+// 						maxWidth: 220,
+// 						fontSize: '12px',
+// 						border: `1px solid ${theme.palette.divider}`,
+// 						boxShadow: theme.shadows[3],
+// 					},
+// 				},
+// 			}}
+// 		/>
+// 	)
+// }
+
 const HtmlTooltip = (props: TooltipProps) => {
 	const theme = useTheme()
+	const [open, setOpen] = useState(false)
+
+	const handleTooltipOpen = () => {
+		setOpen(true)
+	}
+
+	const handleTooltipClose = () => {
+		setOpen(false)
+	}
 
 	return (
-		<Tooltip
-			{...props}
-			followCursor
-			slotProps={{
-				tooltip: {
-					sx: {
-						backgroundColor:
-							theme.palette.mode === 'dark'
-								? theme.palette.background.paper
-								: 'white',
-						color:
-							theme.palette.mode === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.87)',
-						maxWidth: 220,
-						fontSize: '12px',
-						border: `1px solid ${theme.palette.divider}`,
-						boxShadow: theme.shadows[3],
+		<ClickAwayListener onClickAway={handleTooltipClose}>
+			<Tooltip
+				{...props}
+				open={open}
+				followCursor
+				onClose={handleTooltipClose}
+				disableFocusListener
+				disableHoverListener
+				disableTouchListener
+				slotProps={{
+					tooltip: {
+						sx: {
+							backgroundColor:
+								theme.palette.mode === 'dark'
+									? theme.palette.background.paper
+									: 'white',
+							color:
+								theme.palette.mode === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.87)',
+							maxWidth: 220,
+							fontSize: '12px',
+							border: `1px solid ${theme.palette.divider}`,
+							boxShadow: theme.shadows[3],
+						},
 					},
-				},
-			}}
-		/>
+				}}
+			>
+				<g onClick={handleTooltipOpen} style={{ cursor: 'pointer' }}>
+					{props.children}
+				</g>
+			</Tooltip>
+		</ClickAwayListener>
 	)
 }
+
 function HomeMapCard() {
 	const theme = useTheme()
 	return (

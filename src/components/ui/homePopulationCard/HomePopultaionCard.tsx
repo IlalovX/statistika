@@ -75,7 +75,7 @@ function HomePopulationCard() {
 						: '...'}{' '}
 					<br /> человек
 				</Typography>
-				<span className='text-green-500'>+10,5%</span>
+				<span className='text-green-500'>+11,47%</span>
 			</div>
 		</Box>
 	)
