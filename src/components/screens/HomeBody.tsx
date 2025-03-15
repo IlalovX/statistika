@@ -16,7 +16,7 @@ function HomeBody() {
 		<div>
 			<div className='grid grid-cols-4 grid-rows-[380px] gap-3'>
 				<HomeMapCard />
-				<div className='grid grid-cols-1 grid-rows-[70%,30%] gap-5'>
+				<div className='grid grid-cols-1 grid-rows-[70%,30%] gap-2'>
 					<HomePopultaionCard />
 					<HomeUnemployersСard />
 				</div>

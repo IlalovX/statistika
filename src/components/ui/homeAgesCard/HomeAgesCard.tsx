@@ -53,7 +53,10 @@ function HomeAgesCard() {
 							/>
 							<span className='text-xs'>
 								{' '}
-								{age === 'up to 80' ? `больше ${age.slice(-2)}` : age} лет
+								{age === 'up to 80'
+									? `больше ${age.slice(-2)}`
+									: `до ${age}`}{' '}
+								лет
 							</span>
 						</li>
 					)

@@ -5,8 +5,6 @@ import { useState } from 'react'
 import CustomTooltipContent from '../homeMapTooltip/HomeMapTooltip'
 import styles from './HomeMap.module.scss'
 
-
-
 const HtmlTooltip = (props: TooltipProps) => {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
@@ -26,9 +24,6 @@ const HtmlTooltip = (props: TooltipProps) => {
 				open={open}
 				followCursor
 				onClose={handleTooltipClose}
-				disableFocusListener
-				disableHoverListener
-				disableTouchListener
 				slotProps={{
 					tooltip: {
 						sx: {
@@ -46,7 +41,12 @@ const HtmlTooltip = (props: TooltipProps) => {
 					},
 				}}
 			>
-				<g onClick={handleTooltipOpen} style={{ cursor: 'pointer' }}>
+				<g
+					onClick={handleTooltipOpen}
+					onMouseEnter={handleTooltipOpen}
+					onMouseLeave={handleTooltipClose}
+					style={{ cursor: 'pointer' }}
+				>
 					{props.children}
 				</g>
 			</Tooltip>

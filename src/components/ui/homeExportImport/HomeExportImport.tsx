@@ -104,14 +104,14 @@ export default function HomeExportImport() {
 						id: 'pvId',
 						stack: 'stack1',
 						color: '#7367F0',
-						valueFormatter: value => `${value} т`,
+						valueFormatter: value => `$${value} млн`,
 					},
 					{
 						data: uData.map(value => -value),
 						id: 'uvId',
 						stack: 'stack1',
 						color: '#FF9F43',
-						valueFormatter: value => `${Math.abs(value as number)} т`,
+						valueFormatter: value => `$${Math.abs(value as number)} млн `,
 					},
 				]}
 				xAxis={[
