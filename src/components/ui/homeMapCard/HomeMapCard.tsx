@@ -5,32 +5,7 @@ import { useState } from 'react'
 import CustomTooltipContent from '../homeMapTooltip/HomeMapTooltip'
 import styles from './HomeMap.module.scss'
 
-// const HtmlTooltip = (props: TooltipProps) => {
-// 	const theme = useTheme()
 
-// 	return (
-// 		<Tooltip
-// 			{...props}
-// 			followCursor
-// 			slotProps={{
-// 				tooltip: {
-// 					sx: {
-// 						backgroundColor:
-// 							theme.palette.mode === 'dark'
-// 								? theme.palette.background.paper
-// 								: 'white',
-// 						color:
-// 							theme.palette.mode === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.87)',
-// 						maxWidth: 220,
-// 						fontSize: '12px',
-// 						border: `1px solid ${theme.palette.divider}`,
-// 						boxShadow: theme.shadows[3],
-// 					},
-// 				},
-// 			}}
-// 		/>
-// 	)
-// }
 
 const HtmlTooltip = (props: TooltipProps) => {
 	const theme = useTheme()
