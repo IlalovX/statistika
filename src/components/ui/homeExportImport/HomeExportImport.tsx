@@ -97,13 +97,14 @@ export default function HomeExportImport() {
 
 			<BarChart
 				height={300}
-				borderRadius={10}
+				borderRadius={5}
 				series={[
 					{
 						data: pData,
 						id: 'pvId',
 						stack: 'stack1',
 						color: '#7367F0',
+
 						valueFormatter: value => `$${value} млн`,
 					},
 					{
@@ -119,7 +120,7 @@ export default function HomeExportImport() {
 						data: months,
 						scaleType: 'band',
 						tickPlacement: 'middle',
-						tickSize: 10,
+						tickSize: 5,
 					},
 				]}
 			/>

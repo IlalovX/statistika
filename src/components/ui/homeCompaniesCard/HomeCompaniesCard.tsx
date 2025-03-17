@@ -11,7 +11,6 @@ import {
 
 import { useQuery } from '@tanstack/react-query'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
-import ThemeText from '../themeText/ThemeText'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
 
@@ -41,7 +40,9 @@ function HomeCompaniesCard() {
 			<div className='flex justify-between items-center'>
 				<div className='flex flex-col gap-5'>
 					<div>
-						<ThemeText text='Открытые фирмы' variant='h6' />
+						<Typography variant='h6' fontWeight='bold'>
+							Открытые фирмы
+						</Typography>
 						<p className='text-gray-400'>за 2025г</p>
 					</div>
 					<div>

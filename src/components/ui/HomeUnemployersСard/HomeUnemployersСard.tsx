@@ -1,8 +1,7 @@
-import { Box, Stack, useTheme } from '@mui/material'
+import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { SparkLineChart } from '@mui/x-charts'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import ThemeText from '../themeText/ThemeText'
 
 export default function HomeUnemployersCard() {
 	const theme = useTheme()
@@ -38,7 +37,9 @@ export default function HomeUnemployersCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<ThemeText text='Безработные' variant='h6' />
+			<Typography variant='h6' fontWeight='bold'>
+				Безработные
+			</Typography>
 			<p className='text-gray-400'>{data?.data[1]['2023']} тыс человек</p>
 			<Stack direction='row' sx={{ width: '100%', height: '77px' }}>
 				<Box sx={{ flexGrow: 1 }}>

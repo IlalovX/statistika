@@ -1,7 +1,7 @@
-import { Box, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import ThemeText from '../themeText/ThemeText'
+import YearDropdown from '../../YearDropdown'
 
 function HomeAgesCard() {
 	const theme = useTheme()
@@ -40,9 +40,11 @@ function HomeAgesCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<ThemeText text='Население' variant='h6' />
-			<p className='text-gray-400'>за 2024г</p>
-			<ul className='space-y-2'>
+			<Typography variant='h6' fontWeight='bold'>
+				Население
+			</Typography>
+			<YearDropdown />
+			<ul className='space-y-1  mt-1'>
 				{ageGroups.map(([age, value]) => {
 					const percentage = (Number(value) / total) * 100
 					return (

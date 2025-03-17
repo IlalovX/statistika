@@ -1,14 +1,13 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import HomeAgesCard from '../ui/homeAgesCard/HomeAgesCard'
 import HomeCompaniesCard from '../ui/homeCompaniesCard/HomeCompaniesCard'
-import HomeDoughnut from '../ui/homeDoughnut/HomeDoughnut'
 import HomeExportImport from '../ui/homeExportImport/HomeExportImport'
 import HomeExportImportButton from '../ui/homeExportImportButton/HomeExportImportButton'
 import HomeMapCard from '../ui/homeMapCard/HomeMapCard'
 import HomePopultaionCard from '../ui/homePopulationCard/HomePopultaionCard'
 import HomeProfit from '../ui/homeProfit/HomeProfit'
-import HomeUnemployersСard from '../ui/HomeUnemployersСard/HomeUnemployersСard'
-import ThemeText from '../ui/themeText/ThemeText'
+import HomeSelfEmployedCard from '../ui/homeSelfEmployedCard/HomeSelfEmployedCard'
+import HomeUnemployersСard from '../ui/homeUnemployersСard/HomeUnemployersСard'
 function HomeBody() {
 	const theme = useTheme()
 
@@ -22,17 +21,7 @@ function HomeBody() {
 				</div>
 				<div className='grid grid-cols-1 grid-rows-2 gap-2'>
 					<HomeAgesCard />
-					<Box
-						className='shadow-xl rounded-2xl p-1.5'
-						sx={{
-							bgcolor: 'background.paper',
-							border: `1px solid ${theme.palette.divider}`,
-						}}
-					>
-						<ThemeText text='Самозанятый' variant='h6' />
-						<p className='text-gray-400'>за 2025г</p>
-						<HomeDoughnut total='250' />
-					</Box>
+					<HomeSelfEmployedCard />
 				</div>
 				<HomeCompaniesCard />
 			</div>
