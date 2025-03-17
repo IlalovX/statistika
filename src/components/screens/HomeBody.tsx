@@ -13,9 +13,9 @@ function HomeBody() {
 
 	return (
 		<div>
-			<div className='grid grid-cols-4 grid-rows-[380px] gap-3'>
+			<div className='grid grid-cols-4 grid-rows-[400px] gap-3'>
 				<HomeMapCard />
-				<div className='grid grid-cols-1 grid-rows-[70%,30%] gap-2'>
+				<div className='grid grid-cols-1 grid-rows-[2fr_1fr] gap-2'>
 					<HomePopultaionCard />
 					<HomeUnemployersСard />
 				</div>
