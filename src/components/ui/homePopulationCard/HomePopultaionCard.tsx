@@ -13,8 +13,8 @@ import YearDropdown from '../../YearDropdown'
 
 const CustomizedLabel: FunctionComponent<any> = (props: any) => {
 	const { x, y, value } = props
-	const theme = useTheme() // Доступ к MUI-теме
-	const color = theme.palette.text.primary // Цвет из темы
+	const theme = useTheme()
+	const color = theme.palette.text.primary
 
 	return (
 		<text x={x} y={y} dy={-4} fill={color} fontSize={14} textAnchor='middle'>
@@ -46,14 +46,11 @@ function HomePopulationCard() {
 	const theme = useTheme()
 	const [chartData, setChartData] = useState<number[]>([])
 	const [xLabels, setXLabels] = useState<string[]>([
-		'2020',
-		'2021',
 		'2022',
 		'2023',
 		'2024',
 		'2025',
 	])
-	console.log(xLabels, chartData)
 
 	const { data } = useQuery({
 		queryKey: ['population'],
@@ -68,7 +65,7 @@ function HomePopulationCard() {
 		if (data && data['Qaraqalpaqstan Respublikası']) {
 			const populationData = data['Qaraqalpaqstan Respublikası']
 			const keys = Object.keys(populationData).sort()
-			setXLabels(keys.slice(-6))
+			setXLabels(keys.slice(-4))
 			const validData = keys
 				.slice(-6)
 				.map(year => {
@@ -95,24 +92,22 @@ function HomePopulationCard() {
 				Население
 			</Typography>
 			<YearDropdown />
-			<ResponsiveContainer width='100%' height={160}>
+			<ResponsiveContainer width='100%' height={120}>
 				<LineChart
-					width={350}
-					height={160}
 					data={xLabels.map((label, index) => ({
 						name: label,
 						population: chartData[index],
 					}))}
-					margin={{ top: 20, right: 25, left: 0, bottom: 20 }}
+					margin={{ top: 20, right: 55, left: 0, bottom: 20 }}
 				>
 					<Tooltip
 						contentStyle={{
-							backgroundColor: theme.palette.background.default, // Фон тултипа
-							borderColor: theme.palette.divider, // Граница тултипа
-							color: theme.palette.text.primary, // Цвет текста тултипа
+							backgroundColor: theme.palette.background.default,
+							borderColor: theme.palette.divider,
+							color: theme.palette.text.primary,
 						}}
 						formatter={value => `${value} тыс.`}
-						labelStyle={{ color: theme.palette.text.secondary }} // Цвет заголовка тултипа
+						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis
 						dataKey='name'
@@ -130,10 +125,11 @@ function HomePopulationCard() {
 						tick={false}
 					/>
 					<Line
+						strokeWidth={4}
 						type='monotone'
 						dataKey='population'
 						stroke='#00BAD1'
-						dot={{ r: 3 }}
+						dot={{ r: 5 }}
 						label={<CustomizedLabel />}
 					/>
 				</LineChart>

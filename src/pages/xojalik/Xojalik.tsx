@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import AgricultureBarChart from '../../components/ui/agricultureBarChart/AgricultureBarChart'
 import AgricultureTable from '../../components/ui/agricultureTable/AgricultureTable'
 import ChartCard from '../../components/ui/chartCard/ChartCard'
@@ -8,7 +8,6 @@ import ThemeText from '../../components/ui/themeText/ThemeText'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 
 function Xojalik() {
-	const theme = useTheme()
 	return (
 		<div>
 			<ThemeText variant='h4' text='Туризм' />
