@@ -116,11 +116,13 @@ export default function HomeExportImport() {
 						dataKey='name'
 						tickLine={false}
 						axisLine={false}
-						textAnchor='middle'
+						tick={{ textAnchor: 'middle', fontSize: 12 }}
+						interval={0} // Отображение всех подписей
 					/>
+
 					<YAxis tickLine={false} axisLine={false} />
 					<Bar label={{ position: 'top' }} dataKey='value'>
-						{chartData.map((entry, index) => (
+						{chartData.map((_, index) => (
 							<Cell
 								key={`cell-${index}`}
 								fill={selected === 'export' ? '#7367F0' : '#FF9F43'}
