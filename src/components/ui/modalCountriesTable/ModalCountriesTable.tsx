@@ -8,14 +8,6 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-const productIcons = {
-	Рис: '/svg/products/ris.svg',
-	Картофель: '/svg/products/kartoshka.svg',
-	Морковь: '/svg/products/markov.svg',
-	Лук: '/svg/products/polin.svg',
-	Кунжут: '/svg/products/kundjut.svg',
-	Хлопок: '/svg/products/hlopok.svg',
-}
 
 function CountriesTable() {
 	const [page, setPage] = useState(0)
