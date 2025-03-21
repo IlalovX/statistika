@@ -8,94 +8,30 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-const productIcons = {
-	Рис: '/svg/products/ris.svg',
-	Картофель: '/svg/products/kartoshka.svg',
-	Морковь: '/svg/products/markov.svg',
-	Лук: '/svg/products/polin.svg',
-	Кунжут: '/svg/products/kundjut.svg',
-	Хлопок: '/svg/products/hlopok.svg',
-}
-
-function ModalTable() {
+function RegionTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-
 	const rows = useMemo(
-		() =>
-			[
-				{
-					id: 17,
-					products: 'Рис',
-					weigh: 1050,
-					price: 200,
-					icon: productIcons['Рис'],
-				},
-				{
-					id: 18,
-					products: 'Картофель',
-					weigh: 2000,
-					price: 250,
-					icon: productIcons['Картофель'],
-				},
-				{
-					id: 19,
-					products: 'Морковь',
-					weigh: 1020,
-					price: 300,
-					icon: productIcons['Морковь'],
-				},
-				{
-					id: 20,
-					products: 'Лук',
-					weigh: 5000,
-					price: 100,
-					icon: productIcons['Лук'],
-				},
-				{
-					id: 21,
-					products: 'Кунжут',
-					weigh: 3005,
-					price: 150,
-					icon: productIcons['Кунжут'],
-				},
-			].concat(
-				Array.from({ length: 16 }, (_, i) => ({
-					id: i + 1,
-					products: 'Хлопок',
-					weigh: 2080,
-					price: 120,
-					icon: productIcons['Хлопок'],
-				}))
-			),
+		() => [
+			{ id: 1, region: 'Шымбай', area: 5000, mass: 5000, percent: '39.2%' },
+			{ id: 2, region: 'Кунград', area: 3000, mass: 3000, percent: '32.2%' },
+			{ id: 3, region: 'Нукус', area: 4200, mass: 4200, percent: '65.1%' },
+			{ id: 4, region: 'Тахтакопир', area: 1358, mass: 1358, percent: '20.3%' },
+			{ id: 5, region: 'Амударья', area: 9231, mass: 9231, percent: '24.1%' },
+			{ id: 6, region: 'Муйнак', area: 531, mass: 531, percent: '45.3%' },
+			{ id: 7, region: 'Шоманай', area: 159, mass: 159, percent: '75.4%' },
+			{ id: 8, region: 'Кегейли', area: 4026, mass: 4026, percent: '83.4%' },
+			{ id: 9, region: 'Тахиаташ', area: 2564, mass: 2564, percent: '34.1%' },
+		],
 		[]
 	)
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
-			{
-				field: 'products',
-				headerName: 'Продукты',
-				flex: 2,
-				renderCell: params => (
-					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-						<img
-							src={params.row.icon}
-							alt={params.value}
-							width={32}
-							height={32}
-						/>
-						{params.value}
-					</div>
-				),
-			},
-			{ field: 'weigh', headerName: 'Масса (т)', flex: 2 },
-			{
-				field: 'price',
-				headerName: 'Цена ($)',
-				flex: 1,
-				renderCell: params => <div>{params.value} $</div>,
-			},
+			{ field: 'region', headerName: 'Районы', flex: 2 },
+			{ field: 'area', headerName: 'Площадь (га)', flex: 2 },
+			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'percent', headerName: 'Процент', flex: 2 },
 		],
 		[]
 	)
@@ -106,7 +42,6 @@ function ModalTable() {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				checkboxSelection
 				sx={{ border: 0, height: 700 }}
 			/>
 			<Pagination
@@ -123,7 +58,7 @@ function ModalTable() {
 	)
 }
 
-export default function ModalPlantedTable() {
+function ModalRegionTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
@@ -155,10 +90,11 @@ export default function ModalPlantedTable() {
 							borderRadius: 2,
 						}}
 					>
-						<ModalTable />
+						<RegionTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+export default ModalRegionTable
