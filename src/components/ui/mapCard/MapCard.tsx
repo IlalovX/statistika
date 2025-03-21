@@ -25,7 +25,7 @@ const data = [
 function MapCard() {
 	return (
 		<Box
-			className={`shadow-2xl w-full rounded-2xl p-2.5 mb-20 grid grid-cols-2 ${'container'}`}
+			className={`shadow-2xl w-full rounded-2xl p-2.5 mb-20 grid grid-cols-2 $`}
 		>
 			<Box>
 				<header className='flex gap-5 mb-10'>

@@ -1,7 +1,14 @@
 import { Box, Typography } from '@mui/material'
-import { BarChart } from '@mui/x-charts/BarChart'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import {
+	Bar,
+	BarChart,
+	Cell,
+	ResponsiveContainer,
+	XAxis,
+	YAxis,
+} from 'recharts'
 
 const monthNames: { [key: string]: string } = {
 	M01: 'Янв',
@@ -19,10 +26,10 @@ const monthNames: { [key: string]: string } = {
 }
 
 export default function HomeExportImport() {
-	const [pData, setPData] = useState<number[]>(Array(12).fill(0))
-	const [uData, setUData] = useState<number[]>(Array(12).fill(0))
-	const [months, setMonths] = useState<string[]>([])
-	const [selected, setSelected] = useState('export')
+	const [chartData, setChartData] = useState<{ name: string; value: number }[]>(
+		[]
+	)
+	const [selected, setSelected] = useState<'export' | 'import'>('export')
 
 	const {
 		data: exports,
@@ -32,9 +39,7 @@ export default function HomeExportImport() {
 		queryKey: ['export'],
 		queryFn: async () => {
 			const res = await fetch('/db/export/eksport_ayma_ay.json')
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
+			if (!res.ok) throw new Error('Ошибка загрузки данных')
 			return res.json()
 		},
 	})
@@ -47,18 +52,16 @@ export default function HomeExportImport() {
 		queryKey: ['import'],
 		queryFn: async () => {
 			const res = await fetch('/db/import/import_kólemi_ayma_ay.json')
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
+			if (!res.ok) throw new Error('Ошибка загрузки данных')
 			return res.json()
 		},
 	})
 
 	const getYearData = (data: any, code: string) => {
-		if (!data) return Array(12).fill(0)
-		const region = data[0].data.find((item: any) => item.Code == code)
+		if (!data) return []
 
-		if (!region) return Array(12).fill(0)
+		const region = data[0].data.find((item: any) => item.Code === code)
+		if (!region) return []
 
 		const monthKeys = Object.keys(region)
 			.filter(key => key.match(/^\d{4}-M\d{2}$/))
@@ -66,38 +69,36 @@ export default function HomeExportImport() {
 
 		const last12Months = monthKeys.slice(-12)
 
-		const monthLabels = last12Months.map(month => {
-			const [, m] = month.split('-')
-			return monthNames[m] || month
-		})
-
-		setMonths(monthLabels)
-
-		return last12Months.map(month =>
-			parseFloat((region[month] || '0').toString().replace(',', '.'))
-		)
+		return last12Months.map(month => ({
+			name: monthNames[month.split('-')[1]] || month,
+			value: parseFloat(region[month]?.toString().replace(',', '.') || '0'),
+		}))
 	}
 
 	useEffect(() => {
-		if (exports) setPData(getYearData(exports, '1735'))
-		if (imports) setUData(getYearData(imports, '1735'))
-	}, [exports, imports])
+		if (exports && selected === 'export') {
+			setChartData(getYearData(exports, '1735'))
+		}
+		if (imports && selected === 'import') {
+			setChartData(getYearData(imports, '1735'))
+		}
+	}, [exports, imports, selected])
 
 	if (isLoadingExports || isLoadingImports) return <p>Загрузка данных...</p>
 	if (isErrorExports || isErrorImports) return <p>Ошибка загрузки данных</p>
 
 	return (
-		<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200'>
+		<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200 p-4'>
 			<header>
-				<div className='font-bold flex gap-2'>
+				<div className='font-bold flex gap-4'>
 					<Typography
-						className={`text-[#7367F0] cursor-pointer ${selected === 'export' && '!font-bold'}`}
+						className={`cursor-pointer ${selected === 'export' ? 'text-[#7367F0] font-bold' : 'text-gray-500'}`}
 						onClick={() => setSelected('export')}
 					>
 						Экспорт
 					</Typography>
 					<Typography
-						className={`text-[#FF9F43] cursor-pointer ${selected === 'import' && '!font-bold'}`}
+						className={`cursor-pointer ${selected === 'import' ? 'text-[#FF9F43] font-bold' : 'text-gray-500'}`}
 						onClick={() => setSelected('import')}
 					>
 						Импорт
@@ -105,36 +106,31 @@ export default function HomeExportImport() {
 				</div>
 				<p className='text-gray-400'>за последние 12 месяцев</p>
 			</header>
-
-			<BarChart
-				height={300}
-				borderRadius={5}
-				barLabel='value'
-				series={[
-					{
-						data: selected === 'export' ? pData : uData,
-						id: 'pvId',
-						stack: 'stack1',
-						color: selected === 'export' ? '#7367F0' : '#FF9F43',
-						valueFormatter: value => `$${value} млн`,
-					},
-					// {
-					// 	data: uData.map(value => -value),
-					// 	id: 'uvId',
-					// 	stack: 'stack1',
-					// 	color: '#FF9F43',
-					// 	valueFormatter: value => `$${Math.abs(value as number)} млн `,
-					// },
-				]}
-				xAxis={[
-					{
-						data: months,
-						scaleType: 'band',
-						tickPlacement: 'middle',
-						tickSize: 5,
-					},
-				]}
-			/>
+			<ResponsiveContainer>
+				<BarChart
+					data={chartData}
+					margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+					barCategoryGap='50%'
+				>
+					<XAxis
+						dataKey='name'
+						tickLine={false}
+						axisLine={false}
+						textAnchor='middle'
+					/>
+					<YAxis tickLine={false} axisLine={false} />
+					<Bar label={{ position: 'top' }} dataKey='value'>
+						{chartData.map((entry, index) => (
+							<Cell
+								key={`cell-${index}`}
+								fill={selected === 'export' ? '#7367F0' : '#FF9F43'}
+								radius={18}
+								width={15}
+							/>
+						))}
+					</Bar>
+				</BarChart>
+			</ResponsiveContainer>
 		</Box>
 	)
 }

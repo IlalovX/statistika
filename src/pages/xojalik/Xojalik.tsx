@@ -5,7 +5,7 @@ import ChartCard from '../../components/ui/chartCard/ChartCard'
 import HomeCompaniesCard from '../../components/ui/homeCompaniesCard/HomeCompaniesCard'
 import MapCard from '../../components/ui/mapCard/MapCard'
 import ThemeText from '../../components/ui/themeText/ThemeText'
-import XojalikPlantedCard from '../../components/xojalikPlantedCard/XojalikPlantedCard'
+import XojalikPlantedCard from '../../components/ui/xojalikPlantedCard/XojalikPlantedCard'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 
 function Xojalik() {

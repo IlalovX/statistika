@@ -58,9 +58,8 @@ export default function AgricultureTable() {
 					<TableBody>
 						{data.map((item, index) => (
 							<TableRow key={index}>
-								{/* Название культуры */}
 								<TableCell>
-									<Typography className='flex items-center gap-2 text-gray-700 font-medium'>
+									<Typography className='flex items-center gap-2  font-medium'>
 										<Avatar sx={{ width: 24, height: 24 }}>
 											<Agriculture fontSize='small' />
 										</Avatar>

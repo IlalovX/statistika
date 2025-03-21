@@ -1,4 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material'
+import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
 
 function HomeSelfEmployedCard() {
@@ -14,8 +15,9 @@ function HomeSelfEmployedCard() {
 			<Typography variant='h6' fontWeight='bold'>
 				Самозанятый
 			</Typography>
-			<p className='text-gray-400'>за 2025г</p>
-			<HomeDoughnut total='250' />
+
+			<YearDropdown />
+			<HomeDoughnut total='0' />
 		</Box>
 	)
 }

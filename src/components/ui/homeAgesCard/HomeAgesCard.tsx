@@ -1,11 +1,17 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
 import YearDropdown from '../../YearDropdown'
+
+interface AgeDataItem {
+	name: string
+	uv: number
+}
 
 function HomeAgesCard() {
 	const theme = useTheme()
-	const [ageData, setAgeData] = useState<Record<string, string> | null>(null)
+	const [chartData, setChartData] = useState<AgeDataItem[]>([])
 
 	const { data: ages } = useQuery({
 		queryKey: ['ages'],
@@ -23,14 +29,20 @@ function HomeAgesCard() {
 	useEffect(() => {
 		if (ages) {
 			const ageStats = ages['Qaraqalpaqstan Respublikası']['2024']
-			setAgeData(ageStats)
+			if (!ageStats) return
+
+			const formattedData = Object.entries(ageStats)
+				.filter(([key]) => key !== 'total') // Убираем "total"
+				.map(([key, value]) => ({
+					name: key === 'up to 80' ? 'за 80' : `до ${key}`,
+					uv: Number(value),
+				}))
+
+			setChartData(formattedData)
 		}
 	}, [ages])
 
-	if (!ageData) return <p>Загрузка...</p>
-
-	const total = Number(ageData.total)
-	const ageGroups = Object.entries(ageData).filter(([key]) => key !== 'total')
+	if (chartData.length === 0) return <p>Загрузка...</p>
 
 	return (
 		<Box
@@ -44,24 +56,30 @@ function HomeAgesCard() {
 				Население
 			</Typography>
 			<YearDropdown />
-			<ul className='space-y-1  mt-1'>
-				{ageGroups.map(([age, value]) => {
-					const percentage = (Number(value) / total) * 100
-					return (
-						<li key={age} className='flex justify-between items-center'>
-							<div
-								className='bg-[#7367F0] h-2 rounded-xl flex items-center justify-center'
-								style={{ width: `${percentage}%` }}
-							>
-							</div>
-							<span className='text-xs'>
-								{age === 'up to 80' ? `больше ${age.slice(-2)}` : `до ${age}`}{' '}
-								лет
-							</span>
-						</li>
-					)
-				})}
-			</ul>
+			<ResponsiveContainer height={135}>
+				<BarChart
+					data={chartData}
+					margin={{
+						top: 20,
+						right: 30,
+						left: 20,
+						bottom: 5,
+					}}
+					barCategoryGap='50%'
+				>
+					<XAxis dataKey='name' tickLine={false} axisLine={false} />
+					<Bar dataKey='uv' label={{ position: 'top' }}>
+						{chartData.map((entry, index) => (
+							<Cell
+								key={`cell-${index}-${entry}`}
+								fill='#7367F0'
+								radius={20}
+								width={10}
+							/>
+						))}
+					</Bar>
+				</BarChart>
+			</ResponsiveContainer>
 		</Box>
 	)
 }

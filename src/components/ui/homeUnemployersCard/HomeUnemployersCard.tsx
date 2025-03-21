@@ -56,7 +56,7 @@ function HomeUnemployersСard() {
 						name: label,
 						безработные: chartData[index],
 					}))}
-					margin={{ top: 20, right: 55, left: 0, bottom: 20 }}
+					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<Tooltip
 						contentStyle={{

@@ -62,13 +62,13 @@ function HomePopulationCard() {
 				Население
 			</Typography>
 			<YearDropdown />
-			<ResponsiveContainer width='100%' height={120}>
+			<ResponsiveContainer width='100%' height={130}>
 				<LineChart
 					data={xLabels.map((label, index) => ({
 						name: label,
 						население: chartData[index],
 					}))}
-					margin={{ top: 20, right: 55, left: 0, bottom: 20 }}
+					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<Tooltip
 						contentStyle={{

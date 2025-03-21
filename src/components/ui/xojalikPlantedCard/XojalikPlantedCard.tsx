@@ -10,7 +10,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import ModalRegionTable from '../ui/modalRegionTable/ModalRegionTable'
+import ModalRegionTable from '../modalRegionTable/ModalRegionTable'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 5.svg'
@@ -28,7 +28,7 @@ function XojalikPlantedCard() {
 	const theme = useTheme()
 	return (
 		<Box
-			className={`mt-5 shadow-2xl w-full rounded-2xl p-2.5 mb-20 grid grid-cols-2 ${'container'}`}
+			className={`mt-5 shadow-2xl w-full rounded-2xl p-2.5  grid grid-cols-2 `}
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
