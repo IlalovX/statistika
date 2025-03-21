@@ -29,7 +29,7 @@ export default function YearDropdown() {
 				endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 				sx={{ border: 'none', color: '#8D8A94' }}
 			>
-				{selectedYear}
+				<span className='lowercase mr-1'>за</span> {selectedYear}
 			</Button>
 
 			<Menu anchorEl={anchorEl} open={open} onClose={() => handleClose()}>
