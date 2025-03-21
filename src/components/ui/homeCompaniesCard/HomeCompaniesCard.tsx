@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 
 import { useQuery } from '@tanstack/react-query'
+import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
@@ -43,7 +44,7 @@ function HomeCompaniesCard() {
 						<Typography variant='h6' fontWeight='bold'>
 							Открытые фирмы
 						</Typography>
-						<p className='text-gray-400'>за 2025г</p>
+						<YearDropdown />
 					</div>
 					<div>
 						<Typography variant='h6'>100</Typography>

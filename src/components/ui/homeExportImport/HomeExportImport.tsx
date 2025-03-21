@@ -22,6 +22,7 @@ export default function HomeExportImport() {
 	const [pData, setPData] = useState<number[]>(Array(12).fill(0))
 	const [uData, setUData] = useState<number[]>(Array(12).fill(0))
 	const [months, setMonths] = useState<string[]>([])
+	const [selected, setSelected] = useState('export')
 
 	const {
 		data: exports,
@@ -89,8 +90,18 @@ export default function HomeExportImport() {
 		<Box className='flex flex-col justify-between h-full border-r-2 border-gray-200'>
 			<header>
 				<div className='font-bold flex gap-2'>
-					<Typography className='text-[#7367F0]'>Экспорт</Typography>
-					<Typography className='text-[#FF9F43]'>Импорт</Typography>
+					<Typography
+						className={`text-[#7367F0] cursor-pointer ${selected === 'export' && '!font-bold'}`}
+						onClick={() => setSelected('export')}
+					>
+						Экспорт
+					</Typography>
+					<Typography
+						className={`text-[#FF9F43] cursor-pointer ${selected === 'import' && '!font-bold'}`}
+						onClick={() => setSelected('import')}
+					>
+						Импорт
+					</Typography>
 				</div>
 				<p className='text-gray-400'>за последние 12 месяцев</p>
 			</header>
@@ -98,22 +109,22 @@ export default function HomeExportImport() {
 			<BarChart
 				height={300}
 				borderRadius={5}
+				barLabel='value'
 				series={[
 					{
-						data: pData,
+						data: selected === 'export' ? pData : uData,
 						id: 'pvId',
 						stack: 'stack1',
-						color: '#7367F0',
-
+						color: selected === 'export' ? '#7367F0' : '#FF9F43',
 						valueFormatter: value => `$${value} млн`,
 					},
-					{
-						data: uData.map(value => -value),
-						id: 'uvId',
-						stack: 'stack1',
-						color: '#FF9F43',
-						valueFormatter: value => `$${Math.abs(value as number)} млн `,
-					},
+					// {
+					// 	data: uData.map(value => -value),
+					// 	id: 'uvId',
+					// 	stack: 'stack1',
+					// 	color: '#FF9F43',
+					// 	valueFormatter: value => `$${Math.abs(value as number)} млн `,
+					// },
 				]}
 				xAxis={[
 					{

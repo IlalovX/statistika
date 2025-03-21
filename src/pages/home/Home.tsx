@@ -4,7 +4,7 @@ import HomeCompaniesCard from '../../components/ui/homeCompaniesCard/HomeCompani
 import HomeExportImport from '../../components/ui/homeExportImport/HomeExportImport'
 import HomeExportImportButton from '../../components/ui/homeExportImportButton/HomeExportImportButton'
 import HomeMapCard from '../../components/ui/homeMapCard/HomeMapCard'
-import HomePopulationCard from '../../components/ui/homePopulationCard/HomePopulationCard'
+import HomePopulationCard from '../../components/ui/homePopulationCard/HomePopultaionCard'
 import HomeProfit from '../../components/ui/homeProfit/HomeProfit'
 import HomeSelfEmployedCard from '../../components/ui/homeSelfEmployedCard/HomeSelfEmployedCard'
 import HomeUnemployersCard from '../../components/ui/homeUnemployersСard/HomeUnemployersСard'
