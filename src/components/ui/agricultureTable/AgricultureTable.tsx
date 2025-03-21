@@ -10,6 +10,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
+import ModalPlantedTable from '../modalPlantedTable/ModalPlantedTable'
 
 const data = [
 	{
@@ -48,30 +49,10 @@ export default function AgricultureTable() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			{/* Заголовок */}
 			<Typography variant='h6' className='font-semibold text-gray-700'>
 				Посажено <span className='text-blue-600 font-bold'>265 га</span>
 			</Typography>
 
-			{/* Прогресс-бар */}
-			{/* <Box className='flex items-center gap-2 mt-2'>
-				{data.map((item, index) => (
-					<Box key={index} className='w-full'>
-						<LinearProgress
-							variant='determinate'
-							value={item.percentage}
-							sx={{
-								height: 10,
-								width: '100%',
-								backgroundColor: '#E5E7EB',
-								'& .MuiLinearProgress-bar': { backgroundColor: item.color },
-							}}
-						/>
-					</Box>
-				))}
-			</Box> */}
-
-			{/* Таблица */}
 			<TableContainer className='mt-4'>
 				<Table>
 					<TableBody>
@@ -86,13 +67,11 @@ export default function AgricultureTable() {
 										{item.name}
 									</Typography>
 								</TableCell>
-								{/* Площадь */}
+
 								<TableCell sx={{ color: 'gray.600' }}>{item.area}</TableCell>
 
-								{/* Урожайность */}
 								<TableCell sx={{ color: 'gray.600' }}>{item.yield}</TableCell>
 
-								{/* Процент */}
 								<TableCell sx={{ color: 'gray.600' }}>
 									{item.percentage}%
 								</TableCell>
@@ -102,13 +81,12 @@ export default function AgricultureTable() {
 				</Table>
 			</TableContainer>
 
-			{/* Ссылка */}
 			<Box className='mt-3 text-right'>
 				<Typography
 					variant='body2'
 					className='text-blue-600 font-medium cursor-pointer hover:underline'
 				>
-					Полное информация →
+					<ModalPlantedTable />
 				</Typography>
 			</Box>
 		</Box>

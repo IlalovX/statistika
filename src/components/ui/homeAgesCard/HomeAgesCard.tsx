@@ -50,14 +50,12 @@ function HomeAgesCard() {
 					return (
 						<li key={age} className='flex justify-between items-center'>
 							<div
-								className='bg-[#7367F0] h-2 rounded-xl'
+								className='bg-[#7367F0] h-2 rounded-xl flex items-center justify-center'
 								style={{ width: `${percentage}%` }}
-							/>
+							>
+							</div>
 							<span className='text-xs'>
-								{' '}
-								{age === 'up to 80'
-									? `больше ${age.slice(-2)}`
-									: `до ${age}`}{' '}
+								{age === 'up to 80' ? `больше ${age.slice(-2)}` : `до ${age}`}{' '}
 								лет
 							</span>
 						</li>
