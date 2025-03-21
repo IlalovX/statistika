@@ -11,7 +11,7 @@ import {
 } from 'recharts'
 import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
 
-export default function HomeUnemployersCard() {
+function HomeUnemployersСard() {
 	const theme = useTheme()
 	const [chartData, setChartData] = useState([210, 240, 230, 250])
 	const xLabels = ['2020', '2021', '2022', '2023']
@@ -95,3 +95,4 @@ export default function HomeUnemployersCard() {
 		</Box>
 	)
 }
+export default HomeUnemployersСard

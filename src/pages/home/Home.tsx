@@ -7,7 +7,7 @@ import HomeMapCard from '../../components/ui/homeMapCard/HomeMapCard'
 import HomePopulationCard from '../../components/ui/homePopulationCard/HomePopultaionCard'
 import HomeProfit from '../../components/ui/homeProfit/HomeProfit'
 import HomeSelfEmployedCard from '../../components/ui/homeSelfEmployedCard/HomeSelfEmployedCard'
-import HomeUnemployersCard from '../../components/ui/homeUnemployersСard/HomeUnemployersСard'
+import HomeUnemployersСard from '../../components/ui/homeUnemployersCard/HomeUnemployersCard'
 
 function Home() {
 	const theme = useTheme()
@@ -18,7 +18,7 @@ function Home() {
 				<HomeMapCard />
 				<div className='grid grid-cols-1 grid-rows-[2fr_1fr] gap-2'>
 					<HomePopulationCard />
-					<HomeUnemployersCard />
+					<HomeUnemployersСard />
 				</div>
 				<div className='grid grid-cols-1 grid-rows-2 gap-2'>
 					<HomeAgesCard />
