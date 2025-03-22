@@ -25,6 +25,12 @@ function Sanaat() {
 			<ChartCard
 				start='Общее количество Продукция'
 				end='Общее прибыль  продукции'
+				data={{
+					start: '2024',
+					end: '2025',
+					startValue: '0',
+					endValue: '0',
+				}}
 			/>
 			<ThemeText variant='h4' text='Инвесторы из зарубежа' />
 			<Typography variant='h6' color='gray'>

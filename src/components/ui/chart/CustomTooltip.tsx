@@ -5,7 +5,17 @@ import Typography from '@mui/material/Typography'
 import { useAxisTooltip, useMouseTracker } from '@mui/x-charts/ChartsTooltip'
 import { generateVirtualElement } from './genrateElement'
 
-export function CustomAxisTooltip() {
+export function CustomAxisTooltip({
+	start,
+	end,
+	startValue,
+	endValue,
+}: {
+	start: string
+	end: string
+	startValue: string
+	endValue: string
+}) {
 	const tooltipData = useAxisTooltip()
 	const mousePosition = useMouseTracker() // Track the mouse position on chart.
 
@@ -48,16 +58,16 @@ export function CustomAxisTooltip() {
 						table: { borderSpacing: 0 },
 						thead: {
 							td: {
-								px: .75,
+								px: 0.75,
 								py: 0.5,
 							},
 						},
 						tbody: {
-							'tr:first-child': { td: { paddingTop: .5 } },
-							'tr:last-child': { td: { paddingBottom: .5 } },
+							'tr:first-child': { td: { paddingTop: 0.5 } },
+							'tr:last-child': { td: { paddingBottom: 0.5 } },
 							tr: {
-								'td:first-child': { paddingLeft: .5 },
-								'td:last-child': { paddingRight: .5 },
+								'td:first-child': { paddingLeft: 0.5 },
+								'td:last-child': { paddingRight: 0.5 },
 								td: {
 									paddingRight: '5px',
 									paddingBottom: '5px',
@@ -78,16 +88,16 @@ export function CustomAxisTooltip() {
 							{tooltipData.seriesItems.map(seriesItem => (
 								<tr key={seriesItem.seriesId}>
 									<td>
-										<Typography fontWeight='bold'>Туристы</Typography>
+										<Typography fontWeight='bold'>{start}</Typography>
 										<Typography color='blue' fontWeight='500' variant='h6'>
-											250$
+{startValue}
 										</Typography>
 									</td>
 
 									<td>
-										<Typography fontWeight='bold'>Прибыль</Typography>
+										<Typography fontWeight='bold'>{end}</Typography>
 										<Typography color='blue' fontWeight='500' variant='h6'>
-											1000$
+											{endValue}
 										</Typography>
 									</td>
 								</tr>

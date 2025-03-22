@@ -1,13 +1,13 @@
 import { Box, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import AgricultureBarChart from '../../components/ui/agricultureBarChart/AgricultureBarChart'
-import AgricultureTable from '../../components/ui/agricultureTable/AgricultureTable'
 import ChartCard from '../../components/ui/chartCard/ChartCard'
 import MapCard from '../../components/ui/mapCard/MapCard'
 import ThemeText from '../../components/ui/themeText/ThemeText'
+import AgricultureBarChart from '../../components/ui/xojalikBarChart/AgricultureBarChart'
 import XojalikCompaniesCard from '../../components/ui/xojalikCompaniesCard/XojalikCompaniesCard'
 import XojalikHarvestTable from '../../components/ui/xojalikHarvestTable/XojalikHarvestTable'
 import XojalikPlantedCard from '../../components/ui/xojalikPlantedCard/XojalikPlantedCard'
+import AgricultureTable from '../../components/ui/xojalikTable/AgricultureTable'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 
 function Xojalik() {
@@ -33,6 +33,12 @@ function Xojalik() {
 			<ChartCard
 				start='Общее количество собранных урожаев'
 				end='Общий прибыль от собранных урожаев'
+				data={{
+					start: 'Урожай',
+					end: 'Прибыль',
+					startValue: '700',
+					endValue: '1 000$',
+				}}
 			/>
 			<ThemeText variant='h4' text='Экспорт Импорт' />
 			<MapCard start='Экспорт' end='Импорт' />

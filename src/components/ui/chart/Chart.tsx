@@ -7,7 +7,17 @@ import * as React from 'react'
 import { dataset, valueFormatter } from '../../../const/lineGraphData'
 import { CustomAxisTooltip } from './CustomTooltip'
 
-export default function ChartWithCustomTooltip() {
+export default function ChartWithCustomTooltip({
+	start,
+	startValue,
+	end,
+	endValue,
+}: {
+	start: string
+	endValue: string
+	startValue: string
+	end: string
+}) {
 	const id = React.useId()
 	const clipPathId = `${id}-clip-path`
 
@@ -62,7 +72,12 @@ export default function ChartWithCustomTooltip() {
 				</g>
 				<ChartsXAxis />
 				<ChartsYAxis />
-				<CustomAxisTooltip />
+				<CustomAxisTooltip
+					start={start}
+					startValue={startValue}
+					end={end}
+					endValue={endValue}
+				/>
 			</ResponsiveChartContainer>
 		</div>
 	)

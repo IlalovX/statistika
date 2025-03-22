@@ -65,7 +65,6 @@ function HomeAgesCard() {
 						left: 20,
 						bottom: 5,
 					}}
-					barCategoryGap='50%'
 				>
 					<XAxis dataKey='name' tickLine={false} axisLine={false} />
 					<Bar dataKey='uv' label={{ position: 'top' }}>

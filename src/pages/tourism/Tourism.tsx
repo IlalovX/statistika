@@ -11,6 +11,12 @@ function Tourism() {
 			<ChartCard
 				start='Общее количество Туристов'
 				end='Общее прибыль от Туристов'
+				data={{
+					start: 'Туристы',
+					end: 'Прибыль',
+					startValue: '700',
+					endValue: '1 000$',
+				}}
 			/>
 			<ThemeText variant='h4' text='Источники/страны' />
 
