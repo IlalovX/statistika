@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import ChartCard from '../../components/ui/chartCard/ChartCard'
 import MapCard from '../../components/ui/mapCard/MapCard'
-import SanaatTable from '../../components/ui/sanaatTable/SanaatTable'
+import SanaatTable from '../../components/ui/sanaat/sanaatTable/SanaatTable'
 import ThemeText from '../../components/ui/themeText/ThemeText'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
