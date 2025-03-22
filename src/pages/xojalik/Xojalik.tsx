@@ -30,7 +30,10 @@ function Xojalik() {
 			<Typography variant='body2' color='grey'>
 				Последний обновления 10.03.2025
 			</Typography>
-			<ChartCard start="Общее количество собранных урожаев" end="Общий прибыль от собранных урожаев"/>
+			<ChartCard
+				start='Общее количество собранных урожаев'
+				end='Общий прибыль от собранных урожаев'
+			/>
 			<ThemeText variant='h4' text='Экспорт Импорт' />
 			<MapCard start='Экспорт' end='Импорт' />
 			<div className='grid grid-cols-2 grid-rows-1'>
@@ -44,7 +47,9 @@ function Xojalik() {
 							<p>Урожай</p>
 							<div className='flex gap-2'>
 								<p className='font-bold text-[20px]'>
-									{xojalik['Dán hám dukkakli dán eginleri jámi']['2024']}
+									{xojalik
+										? xojalik['Dán hám dukkakli dán eginleri jámi']['2024']
+										: 0}
 								</p>
 								<img src={arrowUp} alt='' />
 							</div>
