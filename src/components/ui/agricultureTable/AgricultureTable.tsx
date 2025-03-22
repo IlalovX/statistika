@@ -13,34 +13,15 @@ import {
 import ModalPlantedTable from '../modalPlantedTable/ModalPlantedTable'
 
 const data = [
-	{
-		name: 'Рис',
-		area: '20 га',
-		yield: '354 т',
-		percentage: 39.7,
-	},
-	{
-		name: 'Картошка',
-		area: '30 га',
-		yield: '287 т',
-		percentage: 28.3,
-	},
-	{
-		name: 'Хлопок',
-		area: '100 га',
-		yield: '256 т',
-		percentage: 17.4,
-	},
-	{
-		name: 'Полынь',
-		area: '10 га',
-		yield: '195 т',
-		percentage: 14.6,
-	},
+	{ name: 'Рис', area: '0 га', yield: '0 т', percentage: 0 },
+	{ name: 'Картошка', area: '0 га', yield: '0 т', percentage: 0 },
+	{ name: 'Хлопок', area: '0 га', yield: '0 т', percentage: 0 },
+	{ name: 'Полынь', area: '0 га', yield: '0 т', percentage: 0 },
 ]
 
 export default function AgricultureTable() {
 	const theme = useTheme()
+
 	return (
 		<Box
 			className='p-5 bg-white rounded-xl shadow-md'
@@ -50,7 +31,7 @@ export default function AgricultureTable() {
 			}}
 		>
 			<Typography variant='h6' className='font-semibold text-gray-700'>
-				Посажено <span className='text-blue-600 font-bold'>265 га</span>
+				Посадено <span className='text-blue-600 font-bold'>0 га</span>
 			</Typography>
 
 			<TableContainer className='mt-4'>

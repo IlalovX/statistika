@@ -23,7 +23,7 @@ export default function ChartWithCustomTooltip() {
 						label: 'Values',
 						color: 'blue',
 						showMark: true,
-						area: true, // Включаем заливку
+						area: true,
 					},
 				]}
 				xAxis={[

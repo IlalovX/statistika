@@ -1,24 +1,24 @@
 import { Box, Typography } from '@mui/material'
 
-function StatsHeader() {
+function StatsHeader({ start, end }: { start: string; end: string }) {
 	return (
 		<header className='flex justify-between items-start m-10'>
 			<Box className='flex gap-10'>
 				<Box>
-					<p className='text-gray-400'>Общее количество Туристов</p>
-					<Typography variant='h6'>1500</Typography>
+					<p className='text-gray-400'>{start}</p>
+					<Typography variant='h6'>0</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-xl'>+3,4%</span> за последний
+						<span className='text-green-500 text-xl'>0%</span> за последний
 						месяц
 					</p>
 				</Box>
 				<Box>
-					<p className='text-gray-400'>Общее прибыль от Туристов</p>
+					<p className='text-gray-400'>{end}</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
-						3 500 $
+						0 $
 					</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-xl'>+3,4%</span> за последний
+						<span className='text-green-500 text-xl'>0%</span> за последний
 						месяц
 					</p>
 				</Box>

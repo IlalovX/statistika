@@ -16,13 +16,21 @@ import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 
 const data = [
-	{ country: 'Узбекистан', amount: 50, extra: 1.5 },
-	{ country: 'Россия', amount: 100, extra: 1.6 },
-	{ country: 'Казахстан', amount: 75, extra: 3.5 },
-	{ country: 'Киргизстан', amount: 298, extra: 3.5 },
-	{ country: 'Украина', amount: 158, extra: 3.5 },
+	{ country: 'Узбекистан', amount: 0, extra: 0 },
+	{ country: 'Россия', amount: 0, extra: 0 },
+	{ country: 'Казахстан', amount: 0, extra: 0 },
+	{ country: 'Киргизстан', amount: 0, extra: 0 },
+	{ country: 'Украина', amount: 0, extra: 0 },
 ]
-function MapCard() {
+function MapCard({
+	start,
+	end,
+
+}: {
+	start: string
+	end: string
+
+}) {
 	return (
 		<Box
 			className={`shadow-2xl w-full rounded-2xl p-2.5 mb-20 grid grid-cols-2 $`}
@@ -35,7 +43,7 @@ function MapCard() {
 						fontWeight='bold'
 						color='blue'
 					>
-						Прибывшие туристы
+						{start}
 					</Typography>
 					<Typography
 						variant='h6'
@@ -43,7 +51,7 @@ function MapCard() {
 						fontWeight='bold'
 						color='gray'
 					>
-						Уехавшие туристы
+						{end}
 					</Typography>
 				</header>
 				<img src={EARTH} alt='' />

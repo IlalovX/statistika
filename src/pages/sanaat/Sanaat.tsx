@@ -22,9 +22,15 @@ function Sanaat() {
 					10.03.2025
 				</span>
 			</p>
-			<ChartCard />
-			<ThemeText variant='h4' text='Экспорт/Импорт' />
-			<MapCard />
+			<ChartCard
+				start='Общее количество Продукция'
+				end='Общее прибыль  продукции'
+			/>
+			<ThemeText variant='h4' text='Инвесторы из зарубежа' />
+			<Typography variant='h6' color='gray'>
+				с начало года
+			</Typography>
+			<MapCard start='' end='' />
 			<ThemeText variant='h4' text='Краткая информация' />
 			<Typography variant='h6' color='gray'>
 				сравнее прошлым годом
@@ -33,28 +39,28 @@ function Sanaat() {
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Средний чек</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>5000$</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowUp} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Посители музея</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>2000</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowUp} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Поездка Арал</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>500</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowUp} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Туризм</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>500</p>
+						<p className='font-bold text-[20px]'>0</p>
 					</div>
 				</Box>
 			</div>
@@ -66,28 +72,28 @@ function Sanaat() {
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Площадь посевных земель</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>5 000 га</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowUp} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Посевная площадь</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>3 000 га</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowDown} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Площадь свободных земель</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>2 000</p>
+						<p className='font-bold text-[20px]'>0</p>
 						<img src={arrowUp} alt='' />
 					</div>
 				</Box>
 				<Box className='flex flex-col justify-center items-center shadow-2xl min-w-[250px] min-h-[130px] rounded-2xl p-2.5'>
 					<p>Другие</p>
 					<div className='flex gap-2'>
-						<p className='font-bold text-[20px]'>67</p>
+						<p className='font-bold text-[20px]'>0</p>
 					</div>
 				</Box>
 			</div>

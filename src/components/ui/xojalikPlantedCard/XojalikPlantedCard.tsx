@@ -16,12 +16,12 @@ import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 5.svg'
 
 const data = [
-	{ region: 'Шымбай', amount: 355, change: 1.5, up: true },
-	{ region: 'Кунград', amount: 658, change: 1.5, up: false },
-	{ region: 'Нукус', amount: 298, change: 3.5, up: false },
-	{ region: 'Тахтакопир', amount: 158, change: 0.5, up: true },
-	{ region: 'Амударья', amount: 658, change: 1.5, up: false },
-	{ region: 'Муйнак', amount: 658, change: 1.5, up: false },
+	{ region: 'Шымбай', amount: 0, change: 0, up: true },
+	{ region: 'Кунград', amount: 0, change: 0, up: false },
+	{ region: 'Нукус', amount: 0, change: 0, up: false },
+	{ region: 'Тахтакопир', amount: 0, change: 0, up: true },
+	{ region: 'Амударья', amount: 0, change: 0, up: false },
+	{ region: 'Муйнак', amount: 0, change: 0, up: false },
 ]
 
 function XojalikPlantedCard() {
@@ -42,16 +42,9 @@ function XojalikPlantedCard() {
 						fontWeight='bold'
 						color='blue'
 					>
-						Прибывшие туристы
+						Посадено 0т
 					</Typography>
-					<Typography
-						variant='h6'
-						className='cursor-pointer'
-						fontWeight='bold'
-						color='gray'
-					>
-						Уехавшие туристы
-					</Typography>
+					
 				</header>
 				<img src={QQ} alt='' className='h-[300px w-[300px] m-auto' />
 			</Box>

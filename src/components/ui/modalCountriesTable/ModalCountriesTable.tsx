@@ -8,7 +8,6 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-
 function CountriesTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
@@ -19,66 +18,66 @@ function CountriesTable() {
 					id: 1,
 					country: 'Россия',
 					flag: 'RU',
-					mass: 5000,
-					percent: '39.2%',
-					price: 5000,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 2,
 					country: 'Казахстан',
 					flag: 'KZ',
-					mass: 3000,
-					percent: '32.2%',
-					price: 3000,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 3,
 					country: 'Кыргызстан',
 					flag: 'KG',
-					mass: 4200,
-					percent: '65.1%',
-					price: 4200,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 4,
 					country: 'Беларусь',
 					flag: 'BY',
-					mass: 1358,
-					percent: '20.3%',
-					price: 1358,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 5,
 					country: 'Украина',
 					flag: 'UA',
-					mass: 9231,
-					percent: '24.1%',
-					price: 9231,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 6,
 					country: 'Франция',
 					flag: 'FR',
-					mass: 531,
-					percent: '45.3%',
-					price: 531,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
 					id: 7,
 					country: 'Испания',
 					flag: 'ES',
-					mass: 159,
-					percent: '75.4%',
-					price: 159,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 			].concat(
 				Array.from({ length: 16 }, (_, i) => ({
 					id: 8 + i,
 					country: 'Испания',
 					flag: 'ES',
-					mass: 159,
-					percent: '75.4%',
-					price: 159,
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				}))
 			),
 		[]
