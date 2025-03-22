@@ -19,15 +19,6 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
-const productIcons: Record<string, string> = {
-	Рис: '/',
-	Картофель: '/svg/products/kartoshka.svg',
-	Морковь: '/svg/products/markov.svg',
-	Лук: '/svg/products/polin.svg',
-	Кунжут: '/svg/products/kundjut.svg',
-	Хлопок: '/svg/products/hlopok.svg',
-}
-
 function ModalTable({ rows, isLoading }: { rows: any[]; isLoading: boolean }) {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
@@ -47,7 +38,6 @@ function ModalTable({ rows, isLoading }: { rows: any[]; isLoading: boolean }) {
 							textTransform: 'capitalize',
 						}}
 					>
-						<img src='/svg/products/ris.svg' alt='' width={24} height={24} />
 						{params.value}
 					</div>
 				),
