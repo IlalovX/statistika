@@ -119,7 +119,7 @@ function CountriesTable() {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				sx={{ border: 0, height: 700 }}
+				sx={{ border: 0, height: 600 }}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}
@@ -156,7 +156,7 @@ function ModalCountriesTable() {
 							left: '50%',
 							transform: 'translate(-50%, -50%)',
 							minWidth: 1000,
-							minHeight: 700,
+							minHeight: 600,
 							bgcolor:
 								theme.palette.mode === 'dark'
 									? theme.palette.background.default

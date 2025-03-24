@@ -9,24 +9,25 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import ModalCountriesTable from '../modalCountriesTable/ModalCountriesTable'
-import './MapCard.css'
-import EARTH from '/svg/Earth.svg'
+import ModalRegionTable from '../modalRegionTable/ModalRegionTable'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
+import QQ from '/svg/Слой 6.svg'
 
 const data = [
-	{ country: 'Узбекистан', amount: 0, extra: 0 },
-	{ country: 'Россия', amount: 0, extra: 0 },
-	{ country: 'Казахстан', amount: 0, extra: 0 },
-	{ country: 'Киргизстан', amount: 0, extra: 0 },
-	{ country: 'Украина', amount: 0, extra: 0 },
+	{ region: 'Шымбай', amount: 0, change: 0, up: true },
+	{ region: 'Кунград', amount: 0, change: 0, up: false },
+	{ region: 'Нукус', amount: 0, change: 0, up: false },
+	{ region: 'Тахтакопир', amount: 0, change: 0, up: true },
+	{ region: 'Амударья', amount: 0, change: 0, up: false },
+	{ region: 'Муйнак', amount: 0, change: 0, up: false },
 ]
-function MapCard({ start, end }: { start: string; end: string }) {
+
+function XojalikPlantedCard() {
 	const theme = useTheme()
 	return (
 		<Box
-			className={`shadow-2xl w-full rounded-2xl p-2.5 my-5 grid grid-cols-2 `}
+			className={`mt-5 shadow-2xl w-full rounded-2xl p-2.5  grid grid-cols-2 `}
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -40,18 +41,10 @@ function MapCard({ start, end }: { start: string; end: string }) {
 						fontWeight='bold'
 						color='blue'
 					>
-						{start}
-					</Typography>
-					<Typography
-						variant='h6'
-						className='cursor-pointer'
-						fontWeight='bold'
-						color='gray'
-					>
-						{end}
+						Посадено 0т
 					</Typography>
 				</header>
-				<img src={EARTH} alt='' />
+				<img src={QQ} alt='' className='h-[300px] w-[300px] m-auto ' />
 			</Box>
 
 			<Box className='flex  flex-col items-end  justify-end gap-2'>
@@ -71,7 +64,7 @@ function MapCard({ start, end }: { start: string; end: string }) {
 									key={index}
 									sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
 								>
-									<TableCell>{row.country}</TableCell>
+									<TableCell>{row.region}</TableCell>
 									<TableCell
 										sx={{
 											display: 'grid',
@@ -80,22 +73,18 @@ function MapCard({ start, end }: { start: string; end: string }) {
 										}}
 									>
 										<span className='3xl'>{row.amount} T</span>
-										{index % 2 !== 0 ? (
-											<img src={arrowDown} />
-										) : (
-											<img src={arrowUp} />
-										)}
-										<span className='3xl '>{row.extra}%</span>
+										{row.up ? <img src={arrowDown} /> : <img src={arrowUp} />}
+										<span className='3xl '>{row.change}%</span>
 									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<ModalCountriesTable />
+				<ModalRegionTable />
 			</Box>
 		</Box>
 	)
 }
 
-export default MapCard
+export default XojalikPlantedCard

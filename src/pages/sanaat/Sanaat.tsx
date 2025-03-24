@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import ChartCard from '../../components/ui/chartCard/ChartCard'
 import MapCard from '../../components/ui/mapCard/MapCard'
-import SanaatTable from '../../components/ui/sanaat/sanaatTable/SanaatTable'
+import SanaatChartCard from '../../components/ui/sanaatChartCard/SanaatChartCard'
+import SanaatTable from '../../components/ui/sanaatTable/SanaatTable'
 import ThemeText from '../../components/ui/themeText/ThemeText'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
@@ -22,16 +22,7 @@ function Sanaat() {
 					10.03.2025
 				</span>
 			</p>
-			<ChartCard
-				start='Общее количество Продукция'
-				end='Общее прибыль  продукции'
-				data={{
-					start: '2024',
-					end: '2025',
-					startValue: '0',
-					endValue: '0',
-				}}
-			/>
+			<SanaatChartCard />
 			<ThemeText variant='h4' text='Инвесторы из зарубежа' />
 			<Typography variant='h6' color='gray'>
 				с начало года

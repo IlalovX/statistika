@@ -107,7 +107,7 @@ function ModalTable() {
 				columns={columns}
 				hideFooter
 				checkboxSelection
-				sx={{ border: 0, height: 700 }}
+				sx={{ border: 0, height: 600 }}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}
@@ -144,7 +144,7 @@ export default function ModalPlantedTable() {
 							left: '50%',
 							transform: 'translate(-50%, -50%)',
 							minWidth: 1000,
-							minHeight: 700,
+							minHeight: 600,
 							bgcolor:
 								theme.palette.mode === 'dark'
 									? theme.palette.background.default

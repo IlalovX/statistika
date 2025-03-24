@@ -1,12 +1,12 @@
 import { Box, useTheme } from '@mui/material'
-import HomeAgesCard from '../../components/ui/home/homeAgesCard/HomeAgesCard'
-import HomeCompaniesCard from '../../components/ui/home/homeCompaniesCard/HomeCompaniesCard'
-import HomeExportImport from '../../components/ui/home/homeExportImport/HomeExportImport'
-import HomeMapCard from '../../components/ui/home/homeMapCard/HomeMapCard'
-import HomePopulationCard from '../../components/ui/home/homePopulationCard/HomePopultaionCard'
-import HomeProfit from '../../components/ui/home/homeProfit/HomeProfit'
-import HomeSelfEmployedCard from '../../components/ui/home/homeSelfEmployedCard/HomeSelfEmployedCard'
-import HomeUnemployersСard from '../../components/ui/home/homeUnemployersCard/HomeUnemployersCard'
+import HomeAgesCard from '../../components/ui/homeAgesCard/HomeAgesCard'
+import HomeCompaniesCard from '../../components/ui/homeCompaniesCard/HomeCompaniesCard'
+import HomeExportImport from '../../components/ui/homeExportImport/HomeExportImport'
+import HomeMapCard from '../../components/ui/homeMapCard/HomeMapCard'
+import HomePopulationCard from '../../components/ui/homePopulationCard/HomePopultaionCard'
+import HomeSelfEmployedCard from '../../components/ui/homeSelfEmployedCard/HomeSelfEmployedCard'
+import HomeUnemployersСard from '../../components/ui/homeUnemployersCard/HomeUnemployersCard'
+import HomeProfit from '../../components/ui/homeProfit/HomeProfit'
 
 function Home() {
 	const theme = useTheme()
