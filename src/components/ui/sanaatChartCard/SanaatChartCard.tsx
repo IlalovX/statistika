@@ -9,7 +9,7 @@ import {
 	YAxis,
 } from 'recharts'
 import { CustomizedAxisTick } from '../../ChartComponents'
-import StatsHeader from '../chartStatsHeader/ChartStatsHeader'
+import StatsHeader from '../../ChartStatsHeader'
 
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; products: number; profit: number }[]
@@ -62,10 +62,10 @@ function SanaatChartCard() {
 				start='Общее количество Продукция'
 				end='Общее прибыль  продукции'
 			/>
-			<ResponsiveContainer width='100%' height={300}>
+			<ResponsiveContainer width='100%' height={400}>
 				<ComposedChart
 					data={data}
-					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
+					margin={{ top: 30, right: 20, left: 0, bottom: 10 }}
 				>
 					<defs>
 						<linearGradient id='colorproducts' x1='0' y1='0' x2='0' y2='1'>
@@ -78,9 +78,9 @@ function SanaatChartCard() {
 						dataKey='year'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						padding={{ left: 55, right: 20 }}
+						padding={{ left: 55, right: 50 }}
 					/>
-					<YAxis type='number' domain={[0, 'dataMax']} />
+					<YAxis type='number' domain={[0, 'dataMax+500']} />
 
 					<Area
 						type='linear'

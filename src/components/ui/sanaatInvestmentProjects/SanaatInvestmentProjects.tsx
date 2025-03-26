@@ -8,16 +8,12 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-
 import { useQuery } from '@tanstack/react-query'
 import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
-import ModalCompaniesTable from '../modalCompaniesTable/ModalCompaniesTable'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
-
-function HomeCompaniesCard() {
-	const theme = useTheme()
+function SanaatInvestmentProjects() {
 	const { data: companies } = useQuery({
 		queryKey: ['economic'],
 		queryFn: async () => {
@@ -30,7 +26,7 @@ function HomeCompaniesCard() {
 			return res.json()
 		},
 	})
-
+	const theme = useTheme()
 	return (
 		<Box
 			className='shadow-xl rounded-2xl p-1.5'
@@ -43,7 +39,7 @@ function HomeCompaniesCard() {
 				<div className='flex flex-col gap-5'>
 					<div>
 						<Typography variant='h6' fontWeight='bold'>
-							Открытые фирмы
+							Проекты
 						</Typography>
 						<YearDropdown />
 					</div>
@@ -102,11 +98,8 @@ function HomeCompaniesCard() {
 						)
 					})}
 			</List>
-			<div className='flex justify-end items-center'>
-				<ModalCompaniesTable data={companies} />
-			</div>
 		</Box>
 	)
 }
 
-export default HomeCompaniesCard
+export default SanaatInvestmentProjects

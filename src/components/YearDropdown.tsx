@@ -1,6 +1,6 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess' // Стрелка вверх
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore' // Стрелка вниз
-import { Button, Menu, MenuItem } from '@mui/material'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Button, Menu, MenuItem, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 const years = [2025, 2024, 2023]
@@ -19,6 +19,7 @@ export default function YearDropdown() {
 		setAnchorEl(null)
 	}
 
+	const theme = useTheme()
 	return (
 		<div>
 			<Button
@@ -35,7 +36,16 @@ export default function YearDropdown() {
 			>
 				<span className='lowercase mr-1'>за</span> {selectedYear}
 			</Button>
-			<Menu anchorEl={anchorEl} open={open} onClose={() => handleClose()}>
+			<Menu
+				anchorEl={anchorEl}
+				open={open}
+				onClose={() => handleClose()}
+				sx={{
+					'& .MuiPaper-root': {
+						bgcolor: theme.palette.background.paper,
+					},
+				}}
+			>
 				{years.map(year => (
 					<MenuItem key={year} onClick={() => handleClose(year)}>
 						{year}

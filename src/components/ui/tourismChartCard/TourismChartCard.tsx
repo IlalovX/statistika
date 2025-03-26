@@ -9,7 +9,7 @@ import {
 	YAxis,
 } from 'recharts'
 import { CustomizedAxisTick } from '../../ChartComponents'
-import StatsHeader from '../chartStatsHeader/ChartStatsHeader'
+import StatsHeader from '../../ChartStatsHeader'
 
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; guests: number; profit: number }[]
@@ -80,7 +80,7 @@ function TourismChartCard() {
 						type='category'
 						padding={{ left: 55, right: 20 }}
 					/>
-					<YAxis type='number' domain={[0, 'dataMax']} />
+					<YAxis type='number' domain={[0, 'dataMax+500']} />
 
 					<Area
 						type='linear'

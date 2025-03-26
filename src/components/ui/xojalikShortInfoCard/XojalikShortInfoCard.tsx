@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import ThemeText from '../themeText/ThemeText'
+import ThemeText from '../../ThemeText'
 
 function XojalikShortInfoCard({ harvest }: { harvest: string }) {
 	const infoData = [

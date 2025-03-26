@@ -9,7 +9,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import ModalCountriesTable from '../modalCountriesTable/ModalCountriesTable'
+import ModalCountriesTable from '../ui/modalCountriesTable/ModalCountriesTable'
 import './MapCard.css'
 import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'

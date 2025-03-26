@@ -8,8 +8,8 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
+import ThemeText from '../../ThemeText'
 import HomeWeeklyBarChart from '../homeWeeklyBarChart/HomeWeeklyBarChart'
-import ThemeText from '../themeText/ThemeText'
 
 const data = [
 	{
