@@ -13,6 +13,7 @@ import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
+import SanaatModaAmountlTable from '../sanaatAmountInvestment/SanaatModaAmountlTable'
 function SanaatInvestmentProjects() {
 	const { data: companies } = useQuery({
 		queryKey: ['economic'],
@@ -26,6 +27,7 @@ function SanaatInvestmentProjects() {
 			return res.json()
 		},
 	})
+
 	const theme = useTheme()
 	return (
 		<Box
@@ -44,10 +46,10 @@ function SanaatInvestmentProjects() {
 						<YearDropdown />
 					</div>
 					<div>
-						<Typography variant='h6'>100</Typography>
+						<Typography variant='h6'>0</Typography>
 						<p className='flex gap-1 items-center'>
 							<img src={arrowup} alt='' />
-							15.8%
+							0%
 						</p>
 					</div>
 				</div>
@@ -98,6 +100,9 @@ function SanaatInvestmentProjects() {
 						)
 					})}
 			</List>
+			<div className='flex justify-end items-center'>
+				<SanaatModaAmountlTable />
+			</div>
 		</Box>
 	)
 }

@@ -59,7 +59,6 @@ function ModalTable({ rows, isLoading }: { rows: any[]; isLoading: boolean }) {
 						rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 						columns={columns}
 						hideFooter
-						checkboxSelection
 						sx={{ border: 0, height: 600 }}
 					/>
 					<Pagination
@@ -82,7 +81,6 @@ export default function XojalikHarvestTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
-	// Запрос данных с сервера
 	const { data: harvest, isLoading } = useQuery({
 		queryKey: ['harvest'],
 		queryFn: async () => {
@@ -102,8 +100,8 @@ export default function XojalikHarvestTable() {
 		return Object.keys(harvest).map((key, index) => ({
 			id: index + 1,
 			products: key,
-			weigh: harvest[key][2024] || 0, 
-			price: '-', 
+			weigh: harvest[key][2024] || 0,
+			price: '-',
 			percent: 0,
 		}))
 	}, [harvest])

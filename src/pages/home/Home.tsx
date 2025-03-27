@@ -4,16 +4,16 @@ import HomeCompaniesCard from '../../components/ui/homeCompaniesCard/HomeCompani
 import HomeExportImport from '../../components/ui/homeExportImport/HomeExportImport'
 import HomeMapCard from '../../components/ui/homeMapCard/HomeMapCard'
 import HomePopulationCard from '../../components/ui/homePopulationCard/HomePopultaionCard'
+import HomeProfit from '../../components/ui/homeProfit/HomeProfit'
 import HomeSelfEmployedCard from '../../components/ui/homeSelfEmployedCard/HomeSelfEmployedCard'
 import HomeUnemployersСard from '../../components/ui/homeUnemployersCard/HomeUnemployersCard'
-import HomeProfit from '../../components/ui/homeProfit/HomeProfit'
 
 function Home() {
 	const theme = useTheme()
 
 	return (
 		<div>
-			<div className='grid grid-cols-4 grid-rows-[400px] gap-3'>
+			<section className='grid grid-cols-4 grid-rows-[400px] gap-3'>
 				<HomeMapCard />
 				<div className='grid grid-cols-1 grid-rows-[2fr_1fr] gap-2'>
 					<HomePopulationCard />
@@ -24,8 +24,8 @@ function Home() {
 					<HomeSelfEmployedCard />
 				</div>
 				<HomeCompaniesCard />
-			</div>
-			<div className='grid grid-cols-4 gap-2 mt-3'>
+			</section>
+			<section className='grid grid-cols-4 gap-2 mt-3'>
 				<div>
 					<HomeProfit />
 				</div>
@@ -38,7 +38,7 @@ function Home() {
 				>
 					<HomeExportImport />
 				</Box>
-			</div>
+			</section>
 		</div>
 	)
 }

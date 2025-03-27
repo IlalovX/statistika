@@ -8,16 +8,21 @@ import TourismShortInfo from '../../components/ui/tourismShortInfo/TourismShortI
 
 function Tourism() {
 	return (
-		<div>
-			<ThemeText variant='h4' text='Туризм' />
-			<TourismChartCard />
-			<ThemeText variant='h4' text='Источники/страны' />
-
-			<MapCard start='Прибывшие туристы' end='Уехавшие туристы' />
-			<TourismShortInfo />
-			<TourismPurpose />
-			<TourismDirection />
-			<TourismInfostructure />
+		<div className='space-y-10'>
+			<section>
+				<ThemeText variant='h4' text='Туризм' />
+				<TourismChartCard />
+			</section>
+			<section>
+				<ThemeText variant='h4' text='Источники/страны' />
+				<MapCard start='Прибывшие туристы' end='Уехавшие туристы' />
+			</section>
+			<section>
+				<TourismShortInfo />
+				<TourismPurpose />
+				<TourismDirection />
+				<TourismInfostructure />
+			</section>
 		</div>
 	)
 }

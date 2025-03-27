@@ -8,107 +8,28 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-function CountriesTable() {
+function RegionTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
+
 	const rows = useMemo(
-		() =>
-			[
-				{
-					id: 1,
-					country: 'Россия',
-					flag: 'RU',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 2,
-					country: 'Казахстан',
-					flag: 'KZ',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 3,
-					country: 'Кыргызстан',
-					flag: 'KG',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 4,
-					country: 'Беларусь',
-					flag: 'BY',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 5,
-					country: 'Украина',
-					flag: 'UA',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 6,
-					country: 'Франция',
-					flag: 'FR',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 7,
-					country: 'Испания',
-					flag: 'ES',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-			].concat(
-				Array.from({ length: 16 }, (_, i) => ({
-					id: 8 + i,
-					country: 'Испания',
-					flag: 'ES',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				}))
-			),
+		() => [
+			{ id: 1, region: 'Шымбай', quantity: 50, percent: '38.2%' },
+			{ id: 2, region: 'Кунград', quantity: 10, percent: '32.2%' },
+			{ id: 3, region: 'Нукус', quantity: 80, percent: '65.1%' },
+			{ id: 4, region: 'Тахтакопир', quantity: 58, percent: '20.3%' },
+			{ id: 5, region: 'Амударья', quantity: 20, percent: '24.1%' },
+			{ id: 6, region: 'Муйнак', quantity: 36, percent: '45.3%' },
+			{ id: 7, region: 'Шоманай', quantity: 59, percent: '75.4%' },
+		],
 		[]
 	)
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
-			{
-				field: 'country',
-				headerName: 'страны',
-				flex: 2,
-				renderCell: params => (
-					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-						<img
-							src={`/svg/countries/${params.row.flag}.svg`}
-							alt={params.value}
-							width={32}
-							height={32}
-						/>
-						{params.value}
-					</div>
-				),
-			},
-			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'region', headerName: 'Районы', flex: 2 },
+			{ field: 'quantity', headerName: 'Количество', flex: 2 },
 			{ field: 'percent', headerName: 'Процент', flex: 2 },
-			{
-				field: 'price',
-				headerName: 'Цена ($)',
-				flex: 1,
-				renderCell: params => <div>{params.value} $</div>,
-			},
 		],
 		[]
 	)
@@ -135,7 +56,7 @@ function CountriesTable() {
 	)
 }
 
-function ModalCountriesTable() {
+function SanaatQQModal() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
@@ -167,11 +88,12 @@ function ModalCountriesTable() {
 							borderRadius: 2,
 						}}
 					>
-						<CountriesTable />
+						<RegionTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
-export default ModalCountriesTable
+
+export default SanaatQQModal

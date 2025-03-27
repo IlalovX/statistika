@@ -27,23 +27,23 @@ const data = [
 const industries = [
 	{
 		name: 'Горнодобывающая промышленность и разработка карьеров',
-		value: '$ 2 млн',
-		change: '+0.24%',
+		value: '$ 0 млн',
+		change: '+0.00%',
 	},
 	{
 		name: 'Производственная промышленность',
-		value: '$ 2 млн',
-		change: '+0.24%',
+		value: '$ 0 млн',
+		change: '+0.00%',
 	},
 	{
 		name: 'Производство продуктов питания',
-		value: '$ 2 млн',
-		change: '+0.24%',
+		value: '$ 0 млн',
+		change: '+0.00%',
 	},
 	{
 		name: 'Производство напитков',
-		value: '$ 2 млн',
-		change: '+0.24%',
+		value: '$ 0 млн',
+		change: '+0.0%',
 	},
 ]
 const SanaatVolumeProducts = () => {
@@ -98,7 +98,7 @@ const SanaatVolumeProducts = () => {
 					textAlign='center'
 				>
 					<Typography variant='h6' fontWeight='bold'>
-						$10
+						$0
 					</Typography>
 					<Typography variant='body2' fontWeight='bold'>
 						МЛН
@@ -115,7 +115,9 @@ const SanaatVolumeProducts = () => {
 						endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 						sx={{
 							bgcolor: '#A9E9C5',
-							color: theme.palette.mode === 'light' ? '#355CBF' : 'white',
+
+							color: theme.palette.mode === 'light' ? 'black' : 'white',
+							border: 'black',
 						}}
 					>
 						<span className='lowercase mr-1'>за</span> {selectedYear}

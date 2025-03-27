@@ -74,7 +74,8 @@ function SanaatJobsCreatedCard() {
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					sx={{
 						bgcolor: '#A9E9C5',
-						color: theme.palette.mode === 'light' ? '#355CBF' : 'white',
+						color: theme.palette.mode === 'light' ? 'black' : 'white',
+						border: 'black',
 					}}
 				>
 					<span className='lowercase mr-1'>за</span> {selectedYear}

@@ -9,25 +9,25 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import XojalikModalRegionTable from '../xojalikModalRegionTable/XojalikModalRegionTable'
+import XojalikModalExportImport from '../xojalikModalExportImport/XojalikModalExportImport'
+import './XojalikMapCard.css'
+import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
-import QQ from '/svg/Слой 6.svg'
 
 const data = [
-	{ region: 'Шымбай', amount: 0, change: 0, up: true },
-	{ region: 'Кунград', amount: 0, change: 0, up: false },
-	{ region: 'Нукус', amount: 0, change: 0, up: false },
-	{ region: 'Тахтакопир', amount: 0, change: 0, up: true },
-	{ region: 'Амударья', amount: 0, change: 0, up: false },
-	{ region: 'Муйнак', amount: 0, change: 0, up: false },
+	{ country: 'Узбекистан', amount: 0, extra: 0 },
+	{ country: 'Россия', amount: 0, extra: 0 },
+	{ country: 'Казахстан', amount: 0, extra: 0 },
+	{ country: 'Киргизстан', amount: 0, extra: 0 },
+	{ country: 'Украина', amount: 0, extra: 0 },
 ]
 
-function XojalikPlantedCard() {
+function XojalikMapCard() {
 	const theme = useTheme()
 	return (
 		<Box
-			className={`mt-5 shadow-2xl w-full rounded-2xl p-2.5  grid grid-cols-2 `}
+			className={`shadow-2xl w-full rounded-2xl p-2.5 my-5 grid grid-cols-2 `}
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -41,10 +41,18 @@ function XojalikPlantedCard() {
 						fontWeight='bold'
 						color='blue'
 					>
-						Посадено 0т
+						Экспорт
+					</Typography>
+					<Typography
+						variant='h6'
+						className='cursor-pointer'
+						fontWeight='bold'
+						color='gray'
+					>
+						Импорт
 					</Typography>
 				</header>
-				<img src={QQ} alt='' className='h-[300px] w-[300px] m-auto ' />
+				<img src={EARTH} alt='' />
 			</Box>
 
 			<Box className='flex  flex-col items-end  justify-end gap-2'>
@@ -64,7 +72,7 @@ function XojalikPlantedCard() {
 									key={index}
 									sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
 								>
-									<TableCell>{row.region}</TableCell>
+									<TableCell>{row.country}</TableCell>
 									<TableCell
 										sx={{
 											display: 'grid',
@@ -73,18 +81,22 @@ function XojalikPlantedCard() {
 										}}
 									>
 										<span className='3xl'>{row.amount} T</span>
-										{row.up ? <img src={arrowDown} /> : <img src={arrowUp} />}
-										<span className='3xl '>{row.change}%</span>
+										{index % 2 !== 0 ? (
+											<img src={arrowDown} />
+										) : (
+											<img src={arrowUp} />
+										)}
+										<span className='3xl '>{row.extra}%</span>
 									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<XojalikModalRegionTable />
+				<XojalikModalExportImport />
 			</Box>
 		</Box>
 	)
 }
 
-export default XojalikPlantedCard
+export default XojalikMapCard

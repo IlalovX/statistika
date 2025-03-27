@@ -7,65 +7,76 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
-
-const productIcons = {
-	Рис: '/svg/products/ris.svg',
-	Картофель: '/svg/products/kartoshka.svg',
-	Морковь: '/svg/products/markov.svg',
-	Лук: '/svg/products/polin.svg',
-	Кунжут: '/svg/products/kundjut.svg',
-	Хлопок: '/svg/products/hlopok.svg',
-}
-
-function ModalTable() {
+function CountriesTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-
 	const rows = useMemo(
 		() =>
 			[
 				{
-					id: 17,
-					products: 'Рис',
-					weigh: 1050,
-					price: 200,
-					icon: productIcons['Рис'],
+					id: 1,
+					country: 'Россия',
+					flag: 'RU',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
-					id: 18,
-					products: 'Картофель',
-					weigh: 2000,
-					price: 250,
-					icon: productIcons['Картофель'],
+					id: 2,
+					country: 'Казахстан',
+					flag: 'KZ',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
-					id: 19,
-					products: 'Морковь',
-					weigh: 1020,
-					price: 300,
-					icon: productIcons['Морковь'],
+					id: 3,
+					country: 'Кыргызстан',
+					flag: 'KG',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
-					id: 20,
-					products: 'Лук',
-					weigh: 5000,
-					price: 100,
-					icon: productIcons['Лук'],
+					id: 4,
+					country: 'Беларусь',
+					flag: 'BY',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 				{
-					id: 21,
-					products: 'Кунжут',
-					weigh: 3005,
-					price: 150,
-					icon: productIcons['Кунжут'],
+					id: 5,
+					country: 'Украина',
+					flag: 'UA',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 6,
+					country: 'Франция',
+					flag: 'FR',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 7,
+					country: 'Испания',
+					flag: 'ES',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				},
 			].concat(
 				Array.from({ length: 16 }, (_, i) => ({
-					id: i + 1,
-					products: 'Хлопок',
-					weigh: 2080,
-					price: 120,
-					icon: productIcons['Хлопок'],
+					id: 8 + i,
+					country: 'Испания',
+					flag: 'ES',
+					mass: 0,
+					percent: '0%',
+					price: 0,
 				}))
 			),
 		[]
@@ -74,13 +85,13 @@ function ModalTable() {
 	const columns = useMemo<GridColDef[]>(
 		() => [
 			{
-				field: 'products',
-				headerName: 'Продукты',
+				field: 'country',
+				headerName: 'страны',
 				flex: 2,
 				renderCell: params => (
 					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
 						<img
-							src={params.row.icon}
+							src={`/svg/countries/${params.row.flag}.svg`}
 							alt={params.value}
 							width={32}
 							height={32}
@@ -89,7 +100,8 @@ function ModalTable() {
 					</div>
 				),
 			},
-			{ field: 'weigh', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'percent', headerName: 'Процент', flex: 2 },
 			{
 				field: 'price',
 				headerName: 'Цена ($)',
@@ -122,10 +134,9 @@ function ModalTable() {
 	)
 }
 
-export default function ModalPlantedTable() {
+function ModalCountriesTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
-
 	return (
 		<div>
 			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
@@ -154,10 +165,11 @@ export default function ModalPlantedTable() {
 							borderRadius: 2,
 						}}
 					>
-						<ModalTable />
+						<CountriesTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+export default ModalCountriesTable

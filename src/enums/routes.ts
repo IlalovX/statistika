@@ -3,5 +3,6 @@ export enum RoutesEnums {
 	TOURISM = '/tourism',
 	SANAAT = '/sanaat',
 	XOJALIK = '/xojalik',
+	PROJECTS = '/projects',
 	AUTH = '/auth',
 }

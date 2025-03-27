@@ -1,8 +1,6 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import {
 	Avatar,
 	Box,
-	Button,
 	Divider,
 	List,
 	ListItem,
@@ -13,38 +11,40 @@ import {
 } from '@mui/material'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import YearDropdown from '../../YearDropdown'
+import SanaatModaAmountlTable from './SanaatModaAmountlTable'
 import dollar from '/svg/dollar.svg'
 
 const categories = [
 	{
 		title: 'IT проекты',
-		amount: '$2 млн',
+		amount: '$0 млн',
 		change: '+0.24%',
 		color: '#007bff',
 		icon: '💻',
 	},
 	{
 		title: 'Сельское хозяйство',
-		amount: '$3 млн',
+		amount: '$0 млн',
 		change: '-0.24%',
 		color: '#d9534f',
 		icon: '🌾',
 	},
 	{
 		title: 'Промышленность',
-		amount: '$4 млн',
+		amount: '$0 млн',
 		change: '+0.24%',
 		color: '#d43f3a',
 		icon: '🏭',
 	},
 	{
 		title: 'Бизнес',
-		amount: '$5 млн',
+		amount: '$0 млн',
 		change: '-0.14%',
 		color: '#28a745',
 		icon: '💼',
 	},
 ]
+
 const data = [
 	{ name: 'Segment 1', value: 25, color: '#1A237E' },
 	{ name: 'Segment 2', value: 10, color: '#E57373' },
@@ -97,7 +97,7 @@ function SanaatAmountInvestment() {
 						textAlign='center'
 					>
 						<Typography variant='h6' fontWeight='bold'>
-							$10
+							$0
 						</Typography>
 						<Typography variant='body2' fontWeight='bold'>
 							МЛН
@@ -113,7 +113,7 @@ function SanaatAmountInvestment() {
 						</div>
 					</header>
 					<Divider />
-					<Box>
+					<Box mt={2}>
 						<List sx={{ padding: 0 }}>
 							{categories.map((item, index) => (
 								<ListItem key={index} sx={{ padding: 0 }}>
@@ -155,12 +155,7 @@ function SanaatAmountInvestment() {
 							))}
 						</List>
 						<div className='flex justify-end items-center'>
-							<Button
-								endIcon={<ArrowForwardIcon />}
-								sx={{ textTransform: 'none', color: '#007bff' }}
-							>
-								Подробнее
-							</Button>
+							<SanaatModaAmountlTable />
 						</div>
 					</Box>
 				</Box>

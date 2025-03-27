@@ -16,66 +16,45 @@ function ModalTable() {
 		() => [
 			{
 				id: 1,
-				region: 'Горнодобывающая промышленность и разработка карьеров',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'ИТ проекты',
+				amount: 5000,
+				percentage: '39.2%',
 			},
 			{
 				id: 2,
-				region: 'Производственная промышленность',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'Сельское хозяйство',
+				amount: 3000,
+				percentage: '32.2%',
 			},
 			{
 				id: 3,
-				region: 'Производство продуктов питания',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'Промышленность',
+				amount: 4200,
+				percentage: '65.1%',
 			},
 			{
 				id: 4,
-				region: 'Производство напитков',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'Бизнес',
+				amount: 1358,
+				percentage: '20.3%',
 			},
 			{
 				id: 5,
-				region: 'Производство табачной продукции',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'ИТ проекты',
+				amount: 9231,
+				percentage: '24.1%',
 			},
 			{
 				id: 6,
-				region: 'Производство текстильной продукции',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'Промышленность',
+				amount: 531,
+				percentage: '45.3%',
 			},
 			{
 				id: 7,
-				region: 'Производство одежды',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
-			},
-			{
-				id: 8,
-				region: 'Производство кожи и связанных с ней изделий',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
-			},
-			{
-				id: 9,
-				region: 'Производство одежды',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				direction: 'Бизнес',
+				amount: 159,
+				percentage: '75.4%',
 			},
 		],
 		[]
@@ -83,10 +62,22 @@ function ModalTable() {
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
-			{ field: 'region', headerName: 'Районы', flex: 3 },
-			{ field: 'year2023', headerName: '2023', flex: 1 },
-			{ field: 'year2024', headerName: '2024', flex: 1 },
-			{ field: 'year2025', headerName: '2025', flex: 1 },
+			{
+				field: 'direction',
+				headerName: 'Направление',
+				flex: 2,
+				renderCell: params => (
+					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+						{params.value}
+					</div>
+				),
+			},
+			{ field: 'amount', headerName: 'Сумма', flex: 2 },
+			{
+				field: 'percentage',
+				headerName: 'Процент',
+				flex: 1,
+			},
 		],
 		[]
 	)
@@ -113,15 +104,13 @@ function ModalTable() {
 	)
 }
 
-export default function ModalVolumeProducts() {
+export default function SanaatModaAmountlTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
 	return (
 		<div>
-			<Button onClick={() => setOpen(true)} sx={{ float: 'right' }}>
-				Подробнее →
-			</Button>
+			<Button onClick={() => setOpen(true)}>Подробнее →</Button>
 			<Modal
 				open={open}
 				onClose={() => setOpen(false)}

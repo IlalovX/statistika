@@ -8,7 +8,7 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-function ModalTable() {
+function RegionTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
 
@@ -16,66 +16,84 @@ function ModalTable() {
 		() => [
 			{
 				id: 1,
-				region: 'Горнодобывающая промышленность и разработка карьеров',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Шымбай',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 2,
-				region: 'Производственная промышленность',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Кунград',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 3,
-				region: 'Производство продуктов питания',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Нукус',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 4,
-				region: 'Производство напитков',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Тахтакопир',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 5,
-				region: 'Производство табачной продукции',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Амударья',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 6,
-				region: 'Производство текстильной продукции',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Муйнак',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 7,
-				region: 'Производство одежды',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Шоманай',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 8,
-				region: 'Производство кожи и связанных с ней изделий',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Кегейли',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 			{
 				id: 9,
-				region: 'Производство одежды',
-				year2023: 0,
-				year2024: 0,
-				year2025: 0,
+				region: 'Тахиаташ',
+				area: 0,
+				mass: 0,
+				export: 0,
+				market: 0,
+				limit: 0,
 			},
 		],
 		[]
@@ -83,10 +101,12 @@ function ModalTable() {
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
-			{ field: 'region', headerName: 'Районы', flex: 3 },
-			{ field: 'year2023', headerName: '2023', flex: 1 },
-			{ field: 'year2024', headerName: '2024', flex: 1 },
-			{ field: 'year2025', headerName: '2025', flex: 1 },
+			{ field: 'region', headerName: 'Районы', flex: 2 },
+			{ field: 'area', headerName: 'Площадь (га)', flex: 2 },
+			{ field: 'mass', headerName: 'Масса урожая (т)', flex: 2 },
+			{ field: 'export', headerName: 'Экспорт', flex: 2 },
+			{ field: 'market', headerName: 'Внутренний рынок', flex: 2 },
+			{ field: 'limit', headerName: 'Лимит в (м³)', flex: 2 },
 		],
 		[]
 	)
@@ -113,15 +133,13 @@ function ModalTable() {
 	)
 }
 
-export default function ModalVolumeProducts() {
+function XojalikModalRegionTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
 	return (
 		<div>
-			<Button onClick={() => setOpen(true)} sx={{ float: 'right' }}>
-				Подробнее →
-			</Button>
+			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
 			<Modal
 				open={open}
 				onClose={() => setOpen(false)}
@@ -147,10 +165,12 @@ export default function ModalVolumeProducts() {
 							borderRadius: 2,
 						}}
 					>
-						<ModalTable />
+						<RegionTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+
+export default XojalikModalRegionTable

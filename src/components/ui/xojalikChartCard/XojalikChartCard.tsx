@@ -1,4 +1,5 @@
-import { Box, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import {
 	Area,
 	ComposedChart,
@@ -9,7 +10,6 @@ import {
 	YAxis,
 } from 'recharts'
 import { CustomizedAxisTick } from '../../ChartComponents'
-import StatsHeader from '../../ChartStatsHeader'
 
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; harvest: number; profit: number }[]
@@ -31,7 +31,7 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 			fontWeight='bold'
 		>
 			<tspan x={x} dy='-40'>
-				Урожай: {value}
+				Урожай: {value}т
 			</tspan>
 			<tspan x={x} dy='15'>
 				Прибыль: {profit}$
@@ -39,32 +39,68 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 		</text>
 	)
 }
-function XojalikChartCard() {
-	const data = [
-		{ year: '2020', harvest: 700, profit: 100 },
-		{ year: '2021', harvest: 2000, profit: 150 },
-		{ year: '2022', harvest: 1000, profit: 200 },
-		{ year: '2023', harvest: 2000, profit: 250 },
-		{ year: '2024', harvest: 2500, profit: 300 },
-		{ year: '2025', harvest: 1800, profit: 180 },
-	]
 
+function XojalikChartCard() {
 	const theme = useTheme()
+
+	const { data: plants } = useQuery({
+		queryKey: ['plants'],
+		queryFn: async () => {
+			const res = await fetch(
+				'/db/plants/awıl_xojalıq_ónimleri_mlrd_swmda_aymawlar_boyınsha.json'
+			)
+			if (!res.ok) {
+				throw new Error('Ошибка загрузки данных')
+			}
+			return res.json()
+		},
+		select: data => {
+			const regionData =
+				data?.awıl_xojalıq_ónimleri_mlrd_swmda_aymawlar_boyınsha?.[
+					'Qaraqalpaqstan Respublikası'
+				] || {}
+
+			return Object.entries(regionData)
+				.map(([year, harvest]) => ({
+					year,
+					harvest: typeof harvest === 'number' ? harvest : Number(harvest) || 0,
+					profit: 0,
+				}))
+				.slice(-6)
+		},
+	})
+
 	return (
 		<Box
-			className='shadow-xl rounded-2xl  my-5'
+			className='shadow-xl rounded-2xl my-5'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<StatsHeader
-				start='Общее количество собранных урожаев'
-				end='Общий прибыль от собранных урожаев'
-			/>
-			<ResponsiveContainer width='100%' height={300}>
+			<Box className='flex gap-10 m-5'>
+				<Box>
+					<p className='text-gray-400'>Общее количество собранных урожаев</p>
+					<Typography variant='h6'>0</Typography>
+					<p className='text-gray-400'>
+						<span className='text-green-500 text-xl'>0%</span> за последний
+						месяц
+					</p>
+				</Box>
+				<Box>
+					<p className='text-gray-400'>Общий прибыль от собранных урожаев</p>
+					<Typography variant='h6' className='text-[#355CBF]'>
+						0 $
+					</Typography>
+					<p className='text-gray-400'>
+						<span className='text-green-500 text-xl'>0%</span> за последний
+						месяц
+					</p>
+				</Box>
+			</Box>
+			<ResponsiveContainer width='100%' height={400}>
 				<ComposedChart
-					data={data}
+					data={plants || []}
 					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<defs>
@@ -78,9 +114,9 @@ function XojalikChartCard() {
 						dataKey='year'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						padding={{ left: 55, right: 20 }}
+						padding={{ left: 60, right: 20 }}
 					/>
-					<YAxis type='number' domain={[0, 'dataMax+500']} />
+					<YAxis type='number' domain={[0, 'dataMax+5000']} />
 
 					<Area
 						type='linear'
@@ -95,7 +131,7 @@ function XojalikChartCard() {
 						dataKey='harvest'
 						stroke='#00BAD1'
 						dot={{ r: 5 }}
-						label={<CustomizedLabel data={data} />}
+						label={<CustomizedLabel data={plants ?? []} />}
 					/>
 				</ComposedChart>
 			</ResponsiveContainer>

@@ -9,7 +9,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import XojalikModalRegionTable from '../xojalikModalRegionTable/XojalikModalRegionTable'
+import SanaatQQModal from './SanaatQQModal'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 6.svg'
@@ -23,7 +23,7 @@ const data = [
 	{ region: 'Муйнак', amount: 0, change: 0, up: false },
 ]
 
-function XojalikPlantedCard() {
+function SanaatQQProjects() {
 	const theme = useTheme()
 	return (
 		<Box
@@ -81,10 +81,10 @@ function XojalikPlantedCard() {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<XojalikModalRegionTable />
+				<SanaatQQModal />
 			</Box>
 		</Box>
 	)
 }
 
-export default XojalikPlantedCard
+export default SanaatQQProjects

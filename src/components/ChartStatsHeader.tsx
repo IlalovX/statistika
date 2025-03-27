@@ -45,7 +45,7 @@ function StatsHeader({ start, end }: { start: string; end: string }) {
 				onClick={handleClick}
 				endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 				sx={{
-					color: '#E9E7FD',
+					
 				}}
 			>
 				<span className='lowercase mr-1'>за</span> {selectedYear}

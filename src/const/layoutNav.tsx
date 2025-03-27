@@ -21,4 +21,9 @@ export const NAVIGATION: Navigation = [
 		title: 'Ауыл-хожалық',
 		icon: <CreditCard />,
 	},
+	{
+		segment: 'projects',
+		title: 'Проекты',
+		icon: <CreditCard />,
+	},
 ]
