@@ -46,53 +46,7 @@ const cards = [
 		icon: '/svg/projects/Background (4).svg',
 	},
 ]
-const tableData = [
-	{
-		city: 'Нукус',
-		initiator: 'Зарубежнефть МЧЖ',
-		project: 'Сув таъминоти',
-		cost: 7.5,
-		jobs: 10,
-		launch: '01.12.2025',
-		responsible: 'Андижон вилояти ҳокимлиги',
-	},
-	{
-		city: 'Шымбай',
-		initiator: 'Kogon parranda qut-baraka MCHJ',
-		project: 'Паррандачилик',
-		cost: 10.5,
-		jobs: 110,
-		launch: '01.12.2025',
-		responsible: 'Бухоро вилояти ҳокимлиги',
-	},
-	{
-		city: 'Кунград',
-		initiator: 'Kogon parranda qut-baraka MCHJ',
-		project: 'Паррандачилик',
-		cost: 10.5,
-		jobs: 110,
-		launch: '01.12.2025',
-		responsible: 'Бухоро вилояти ҳокимлиги',
-	},
-	{
-		city: 'Амударья',
-		initiator: 'Kogon parranda qut-baraka MCHJ',
-		project: 'Паррандачилик',
-		cost: 10.5,
-		jobs: 110,
-		launch: '01.12.2025',
-		responsible: 'Бухоро вилояти ҳокимлиги',
-	},
-	{
-		city: 'Беруни',
-		initiator: 'Kogon parranda qut-baraka MCHJ',
-		project: 'Паррандачилик',
-		cost: 10.5,
-		jobs: 110,
-		launch: '01.12.2025',
-		responsible: 'Бухоро вилояти ҳокимлиги',
-	},
-]
+
 function Projects() {
 	const theme = useTheme()
 	return (

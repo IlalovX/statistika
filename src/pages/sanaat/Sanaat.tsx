@@ -6,9 +6,8 @@ import SanaatAmountInvestment from '../../components/ui/sanaatAmountInvestment/S
 import SanaatChartCard from '../../components/ui/sanaatChartCard/SanaatChartCard'
 import SanaatIndicators from '../../components/ui/sanaatIndicators/SanaatIndicators'
 import SanaatInvestmentProjects from '../../components/ui/sanaatInvestmentProjects/SanaatInvestmentProjects'
-import SanaatVolumeProducts from '../../components/ui/sanaatVolumeProducts/SanaatVolumeProducts'
-import XojalikPlantedCard from '../../components/ui/xojalikPlantedCard/XojalikPlantedCard'
 import SanaatQQProjects from '../../components/ui/sanaatQQProjects/SanaatQQProjects'
+import SanaatVolumeProducts from '../../components/ui/sanaatVolumeProducts/SanaatVolumeProducts'
 
 function Sanaat() {
 	const theme = useTheme()
@@ -59,7 +58,7 @@ function Sanaat() {
 				<Typography variant='h6' color='gray'>
 					с начало года
 				</Typography>
-				<SanaatQQProjects/>
+				<SanaatQQProjects />
 			</section>
 			<section>
 				<ThemeText variant='h4' text='Инвесторы из зарубежа' />
