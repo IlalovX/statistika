@@ -10,13 +10,19 @@ const infoData = [
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (1).svg',
 		value: '0',
-		label: 'Отели',
+		label: 'Гостевые дома',
 		amt: '+18.2%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (2).svg',
 		value: '0',
 		label: 'Хостелы',
+		amt: '+18.2%',
+	},
+	{
+		icon: '/svg/tourism/TourismInfostructure/Background (7).svg',
+		value: '0',
+		label: 'Юртовые лагеря',
 		amt: '+18.2%',
 	},
 	{
@@ -31,22 +37,17 @@ const infoData = [
 		label: 'Кафе',
 		amt: '+18.2%',
 	},
-	{
-		icon: '/svg/tourism/TourismInfostructure/Background (5).svg',
-		value: '0',
-		label: 'Столовая',
-		amt: '+18.2%',
-	},
+
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (6).svg',
 		value: '0',
-		label: 'Парк',
+		label: 'Развлекательные центры',
 		amt: '+18.2%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (1).svg',
 		value: '0',
-		label: 'Другие',
+		label: 'Торговые центры',
 		amt: '+18.2%',
 	},
 ]

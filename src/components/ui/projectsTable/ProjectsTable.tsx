@@ -20,7 +20,7 @@ interface Column {
 		| 'comment'
 	label: string
 	minWidth?: number
-	align?: 'right'
+	align?: 'left'
 }
 
 const columns: readonly Column[] = [
@@ -31,19 +31,19 @@ const columns: readonly Column[] = [
 		id: 'cost',
 		label: 'Стоимость проекта (млн долл)',
 		minWidth: 170,
-		align: 'right',
+		align: 'left',
 	},
 	{
 		id: 'jobs',
 		label: 'Созданное рабочее место',
 		minWidth: 170,
-		align: 'right',
+		align: 'left',
 	},
 	{ id: 'date', label: 'Срок запуска', minWidth: 170 },
 	{ id: 'responsible', label: 'Ответственный', minWidth: 200 },
 	{ id: 'status', label: 'Статус', minWidth: 150 },
 	{ id: 'reason', label: 'Причина', minWidth: 200 },
-	{ id: 'comment', label: 'Комментарий', minWidth: 250 },
+	{ id: 'comment', label: 'Общее состояние', minWidth: 250 },
 ]
 
 interface Data {

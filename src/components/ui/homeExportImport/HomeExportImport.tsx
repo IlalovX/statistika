@@ -83,13 +83,13 @@ export default function HomeExportImport() {
 				<div className='font-bold  '>
 					<div className='flex gap-4'>
 						<Typography
-							className={`cursor-pointer ${selected === 'export' ? 'text-[#7367F0] font-bold' : 'text-gray-500'}`}
+							className={`cursor-pointer ${selected === 'export' ? 'text-[#7367F0] font-bold p-1 border-2 rounded-[5px]' : 'text-gray-500 p-1'}`}
 							onClick={() => setSelected('export')}
 						>
 							Экспорт
 						</Typography>
 						<Typography
-							className={`cursor-pointer ${selected === 'import' ? 'text-[#FF9F43] font-bold' : 'text-gray-500'}`}
+							className={`cursor-pointer ${selected === 'import' ? 'text-[#FF9F43] font-bold border-2 p-1 rounded-[5px]' : 'text-gray-500 p-1'}`}
 							onClick={() => setSelected('import')}
 						>
 							Импорт

@@ -3,27 +3,33 @@ import ThemeText from '../../ThemeText'
 const infoData = [
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (3).svg',
-		value: `0 т`,
-		label: 'Спорт',
-		amt: '+18.2%',
+		value: `0 `,
+		label: 'Навещание родственников',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background.svg',
 		value: '0',
 		label: 'Отдых',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (2).svg',
 		value: '0',
 		label: 'Лечение',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (3).svg',
 		value: '0',
 		label: 'Бизнес',
-		amt: '+18.2%',
+		amt: '0%',
+	},
+	{
+		icon: '/svg/tourism/TourismPurpose/Background (3).svg',
+		value: '0',
+		label: 'Транзит',
+		amt: '0%',
 	},
 ]
 
@@ -31,11 +37,11 @@ function TourismPurpose() {
 	const theme = useTheme()
 	return (
 		<div className='my-5'>
-			<ThemeText variant='h4' text='Цели туризма' />
+			<ThemeText variant='h4' text='Цели поездки' />
 			<Typography variant='h6' color='gray'>
 				с начало месяца
 			</Typography>
-			<div className='grid grid-cols-4 gap-4 my-5'>
+			<div className='grid grid-cols-5 gap-4 my-5'>
 				{infoData.map((item, index) => (
 					<Box
 						key={index}
@@ -55,7 +61,7 @@ function TourismPurpose() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За последний месяц</span>
+								{item.amt} <span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>

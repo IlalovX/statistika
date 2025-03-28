@@ -3,6 +3,7 @@ import MapCard from '../../components/mapCard/MapCard'
 import TourismChartCard from '../../components/ui/tourismChartCard/TourismChartCard'
 import TourismDirection from '../../components/ui/tourismDirection/TourismDirection'
 import TourismInfostructure from '../../components/ui/tourismInfostructure/TourismInfostructure'
+import TourismMapCard from '../../components/ui/tourismMapCard/TourismMapCard'
 import TourismPurpose from '../../components/ui/tourismPurpose/TourismPurpose'
 import TourismShortInfo from '../../components/ui/tourismShortInfo/TourismShortInfo'
 
@@ -15,7 +16,7 @@ function Tourism() {
 			</section>
 			<section>
 				<ThemeText variant='h4' text='Источники/страны' />
-				<MapCard start='Прибывшие туристы' end='Уехавшие туристы' />
+				<TourismMapCard start='Прибывшие туристы' end='Уехавшие туристы' />
 			</section>
 			<section>
 				<TourismShortInfo />

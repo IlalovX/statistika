@@ -12,29 +12,46 @@ import {
 import { CustomizedAxisTick } from '../../ChartComponents'
 
 interface CustomizedLabelProps extends LabelProps {
-	data: { year: string; harvest: number; profit: number }[]
+	data: { year: string; harvest?: number; profit?: number }[]
+}
+
+const formatNumber = (num: number): string => {
+	return (
+		(num / 1000).toLocaleString('ru-RU', {
+			maximumFractionDigits: 1,
+		}) + ' тыс.'
+	)
+}
+
+const formatCurrency = (num: number): string => {
+	return (
+		num.toLocaleString('ru-RU', {
+			minimumFractionDigits: 1,
+			maximumFractionDigits: 1,
+		}) + ' $'
+	)
 }
 
 const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 	const { x, y, value, index, data } = props
 
 	const profit = index !== undefined && data[index] ? data[index].profit : 0
-
+	const isLast = index === data.length - 1
 	return (
 		<text
 			x={x}
 			y={y}
 			dy={-15}
-			textAnchor='middle'
+			textAnchor={isLast ? 'end' : 'start'}
 			fill='#00BAD1'
 			fontSize={14}
 			fontWeight='bold'
 		>
-			<tspan x={x} dy='-40'>
-				Урожай: {value}т
+			<tspan x={x} dy={isLast ? '-50' : '-40'}>
+				Урожай: {formatNumber(value as number)}
 			</tspan>
-			<tspan x={x} dy='15'>
-				Прибыль: {profit}$
+			<tspan x={x} dy={isLast ? '20' : '15'}>
+				Прибыль: {formatCurrency(profit as number)}
 			</tspan>
 		</text>
 	)
@@ -43,8 +60,30 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 function XojalikChartCard() {
 	const theme = useTheme()
 
-	const { data: plants } = useQuery({
-		queryKey: ['plants'],
+	// Запрос данных об урожае
+	const { data: harvestData } = useQuery({
+		queryKey: ['harvest'],
+		queryFn: async () => {
+			const res = await fetch(
+				'/db/others/bárshe_turlerinde_islep_shıģılģan_dıyqanshılıq_ònimleri_haqqında.json'
+			)
+			if (!res.ok) {
+				throw new Error('Ошибка загрузки данных')
+			}
+			return res.json()
+		},
+		select: data => {
+			const harvest = data?.['total'] || {}
+
+			return Object.entries(harvest).map(([year, value]) => ({
+				year,
+				harvest: typeof value === 'number' ? value : Number(value) || 0,
+			}))
+		},
+	})
+
+	const { data: profitData } = useQuery({
+		queryKey: ['profit'],
 		queryFn: async () => {
 			const res = await fetch(
 				'/db/plants/awıl_xojalıq_ónimleri_mlrd_swmda_aymawlar_boyınsha.json'
@@ -60,15 +99,32 @@ function XojalikChartCard() {
 					'Qaraqalpaqstan Respublikası'
 				] || {}
 
-			return Object.entries(regionData)
-				.map(([year, harvest]) => ({
-					year,
-					harvest: typeof harvest === 'number' ? harvest : Number(harvest) || 0,
-					profit: 0,
-				}))
-				.slice(-6)
+			return Object.entries(regionData).map(([year, value]) => ({
+				year,
+				profit: typeof value === 'number' ? value : Number(value) || 0,
+			}))
 		},
 	})
+
+	const combinedData = (harvestData || []).reduce(
+		(acc, item) => {
+			acc[item.year] = { year: item.year, harvest: item.harvest }
+			return acc
+		},
+		{} as Record<string, { year: string; harvest?: number; profit?: number }>
+	)
+
+	profitData?.forEach(item => {
+		if (combinedData[item.year]) {
+			combinedData[item.year].profit = item.profit
+		} else {
+			combinedData[item.year] = { year: item.year, profit: item.profit }
+		}
+	})
+
+	const finalChartData = Object.values(combinedData)
+		.sort((a, b) => Number(a.year) - Number(b.year))
+		.slice(-6)
 
 	return (
 		<Box
@@ -81,16 +137,23 @@ function XojalikChartCard() {
 			<Box className='flex gap-10 m-5'>
 				<Box>
 					<p className='text-gray-400'>Общее количество собранных урожаев</p>
-					<Typography variant='h6'>0</Typography>
+					<Typography variant='h6'>
+						{formatNumber(
+							finalChartData.reduce((sum, d) => sum + (d.harvest || 0), 0)
+						)}
+					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
 						месяц
 					</p>
 				</Box>
+
 				<Box>
 					<p className='text-gray-400'>Общий прибыль от собранных урожаев</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
-						0 $
+						{formatCurrency(
+							finalChartData.reduce((sum, d) => sum + (d.profit || 0), 0)
+						)}
 					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
@@ -100,7 +163,7 @@ function XojalikChartCard() {
 			</Box>
 			<ResponsiveContainer width='100%' height={400}>
 				<ComposedChart
-					data={plants || []}
+					data={finalChartData}
 					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<defs>
@@ -114,9 +177,14 @@ function XojalikChartCard() {
 						dataKey='year'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						padding={{ left: 60, right: 20 }}
+						padding={{ left: 10, right: 10 }}
 					/>
-					<YAxis type='number' domain={[0, 'dataMax+5000']} />
+					<YAxis
+						type='number'
+						fontSize={11}
+						domain={[0, (dataMax: number) => dataMax * 1.5]}
+						tickFormatter={value => `${Math.round(value / 1000)}тыс.`}
+					/>
 
 					<Area
 						type='linear'
@@ -131,7 +199,7 @@ function XojalikChartCard() {
 						dataKey='harvest'
 						stroke='#00BAD1'
 						dot={{ r: 5 }}
-						label={<CustomizedLabel data={plants ?? []} />}
+						label={<CustomizedLabel data={finalChartData} />}
 					/>
 				</ComposedChart>
 			</ResponsiveContainer>

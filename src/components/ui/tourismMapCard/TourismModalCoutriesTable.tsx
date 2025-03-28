@@ -1,7 +1,13 @@
+import { useTheme } from '@mui/material'
+import Backdrop from '@mui/material/Backdrop'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Fade from '@mui/material/Fade'
+import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
-function Table() {
+function CountriesTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
 	const rows = useMemo(
@@ -94,14 +100,14 @@ function Table() {
 					</div>
 				),
 			},
-			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'mass', headerName: 'Количество', flex: 2 },
+			{ field: 'percent', headerName: 'Процент', flex: 2 },
 			{
 				field: 'price',
 				headerName: 'Цена ($)',
-				flex: 2,
+				flex: 1,
 				renderCell: params => <div>{params.value} $</div>,
 			},
-			{ field: 'percent', headerName: 'Процент', flex: 1 },
 		],
 		[]
 	)
@@ -128,8 +134,42 @@ function Table() {
 	)
 }
 
-function CountriesTable() {
-	return <Table />
+function TourismModalCoutriesTable() {
+	const theme = useTheme()
+	const [open, setOpen] = useState(false)
+	return (
+		<div>
+			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
+			<Modal
+				open={open}
+				onClose={() => setOpen(false)}
+				closeAfterTransition
+				slots={{ backdrop: Backdrop }}
+			>
+				<Fade in={open}>
+					<Box
+						sx={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							minWidth: 1000,
+							minHeight: 600,
+							bgcolor:
+								theme.palette.mode === 'dark'
+									? theme.palette.background.default
+									: theme.palette.background.paper,
+							border: '2px solid #00000026',
+							boxShadow: 24,
+							p: 4,
+							borderRadius: 2,
+						}}
+					>
+						<CountriesTable />
+					</Box>
+				</Fade>
+			</Modal>
+		</div>
+	)
 }
-
-export default CountriesTable
+export default TourismModalCoutriesTable

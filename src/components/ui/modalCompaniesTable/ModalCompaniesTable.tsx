@@ -36,12 +36,12 @@ const CompaniesTable: React.FC<CountriesTableProps> = ({ data }) => {
 	}, [data])
 
 	const columns: GridColDef[] = [
-		{ field: 'year', headerName: 'Год', flex: 1 },
-		{ field: 'total', headerName: 'Общее', flex: 2 },
-		{ field: 'Sanaat', headerName: 'Санаат', flex: 2 },
-		{ field: 'Qurılıs', headerName: 'Құрылыс', flex: 2 },
-		{ field: 'Sawda', headerName: 'Сауда', flex: 2 },
-		{ field: 'Tasıw_hám_saqlaw', headerName: 'Тасымалдау', flex: 2 },
+		{ field: 'year', headerName: 'Jil', flex: 1 },
+		{ field: 'total', headerName: 'Barshe', flex: 2 },
+		{ field: 'Sanaat', headerName: 'Sanaat', flex: 2 },
+		{ field: 'Qurılıs', headerName: 'Qurılıs', flex: 2 },
+		{ field: 'Sawda', headerName: 'Sawda', flex: 2 },
+		{ field: 'Tasıw_hám_saqlaw', headerName: 'Tasıw hám saqlaw', flex: 2 },
 	]
 
 	return (

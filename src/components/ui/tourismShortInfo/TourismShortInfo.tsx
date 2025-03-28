@@ -5,31 +5,31 @@ const infoData = [
 		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
 		value: `0 т`,
 		label: 'Количество туристов',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/xojalik/XojalikShortInfo/Background.svg',
 		value: '0',
 		label: 'Внешний туризм',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/xojalik/XojalikShortInfo/Background (2).svg',
 		value: '0',
 		label: 'Внутренний туризм',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
 		value: '0',
-		label: 'Средний чек',
-		amt: '+18.2%',
+		label: 'Экспорт туриста',
+		amt: '0%',
 	},
 	{
 		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
 		value: '0',
 		label: 'Средний длительность поездки',
-		amt: '+18.2%',
+		amt: '0%',
 	},
 ]
 function TourismShortInfo() {
@@ -60,7 +60,7 @@ function TourismShortInfo() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За последний месяц</span>
+								{item.amt} <span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>
