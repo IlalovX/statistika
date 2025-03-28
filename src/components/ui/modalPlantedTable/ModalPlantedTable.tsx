@@ -3,13 +3,7 @@ import Backdrop from '@mui/material/Backdrop'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import React, { useMemo, useState } from 'react'
 
-interface DataItem {
-	name: string
-	area: number
-	planted: number
-	yield: number
-	percentage: number
-}
+
 
 interface TableRow {
 	id: number
