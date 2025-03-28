@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import YearDropdown from '../../YearDropdown'
-import ModalProjectsTable from '../modalProjectsTable/ModalProjectsTable'
+import ModalProjectsTable from './ModalProjectsTable'
 
 const institutions = [
 	{ id: 1, name: 'IT компании', icon: '💻' },

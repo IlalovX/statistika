@@ -8,76 +8,106 @@ import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 import ThemeText from '../../ThemeText'
-
-function ModalTable() {
+function CountriesTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-
 	const rows = useMemo(
-		() => [
-			{
-				id: 1,
-				direction: 'ИТ проекты',
-				amount: 5000,
-				percentage: '39.2%',
-			},
-			{
-				id: 2,
-				direction: 'Сельское хозяйство',
-				amount: 3000,
-				percentage: '32.2%',
-			},
-			{
-				id: 3,
-				direction: 'Промышленность',
-				amount: 4200,
-				percentage: '65.1%',
-			},
-			{
-				id: 4,
-				direction: 'Бизнес',
-				amount: 1358,
-				percentage: '20.3%',
-			},
-			{
-				id: 5,
-				direction: 'ИТ проекты',
-				amount: 9231,
-				percentage: '24.1%',
-			},
-			{
-				id: 6,
-				direction: 'Промышленность',
-				amount: 531,
-				percentage: '45.3%',
-			},
-			{
-				id: 7,
-				direction: 'Бизнес',
-				amount: 159,
-				percentage: '75.4%',
-			},
-		],
+		() =>
+			[
+				{
+					id: 1,
+					country: 'Россия',
+					flag: 'RU',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 2,
+					country: 'Казахстан',
+					flag: 'KZ',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 3,
+					country: 'Кыргызстан',
+					flag: 'KG',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 4,
+					country: 'Беларусь',
+					flag: 'BY',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 5,
+					country: 'Украина',
+					flag: 'UA',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 6,
+					country: 'Франция',
+					flag: 'FR',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+				{
+					id: 7,
+					country: 'Испания',
+					flag: 'ES',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				},
+			].concat(
+				Array.from({ length: 16 }, (_, i) => ({
+					id: 8 + i,
+					country: 'Испания',
+					flag: 'ES',
+					mass: 0,
+					percent: '0%',
+					price: 0,
+				}))
+			),
 		[]
 	)
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
 			{
-				field: 'direction',
-				headerName: 'Направление',
+				field: 'country',
+				headerName: 'страны',
 				flex: 2,
 				renderCell: params => (
 					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+						<img
+							src={`/svg/countries/${params.row.flag}.svg`}
+							alt={params.value}
+							width={32}
+							height={32}
+						/>
 						{params.value}
 					</div>
 				),
 			},
-			{ field: 'amount', headerName: 'Сумма', flex: 2 },
+			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
+			{ field: 'percent', headerName: 'Процент', flex: 2 },
 			{
-				field: 'percentage',
-				headerName: 'Процент',
+				field: 'price',
+				headerName: 'Цена ($)',
 				flex: 1,
+				renderCell: params => <div>{params.value} $</div>,
 			},
 		],
 		[]
@@ -105,13 +135,12 @@ function ModalTable() {
 	)
 }
 
-export default function SanaatModalProjects() {
+function SanaatModalInvest() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
-
 	return (
 		<div>
-			<Button onClick={() => setOpen(true)}>Подробнее →</Button>
+			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
 			<Modal
 				open={open}
 				onClose={() => setOpen(false)}
@@ -137,11 +166,12 @@ export default function SanaatModalProjects() {
 							borderRadius: 2,
 						}}
 					>
-						<ThemeText variant='h4' text='Сумма инвестиции' />
-						<ModalTable />
+						<ThemeText text='Инвесторы из зарубежа' variant='h6' />
+						<CountriesTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+export default SanaatModalInvest

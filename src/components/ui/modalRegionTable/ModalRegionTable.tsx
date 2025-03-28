@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
+import ThemeText from '../../ThemeText'
 
 function RegionTable() {
 	const [page, setPage] = useState(0)
@@ -58,7 +59,7 @@ function RegionTable() {
 	)
 }
 
-function ModalRegionTable() {
+function ModalRegionTable({ text }: { text: string }) {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
@@ -90,6 +91,7 @@ function ModalRegionTable() {
 							borderRadius: 2,
 						}}
 					>
+						<ThemeText text={text} variant='h6' />
 						<RegionTable />
 					</Box>
 				</Fade>

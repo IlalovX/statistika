@@ -1,10 +1,10 @@
 import { Typography, useTheme } from '@mui/material'
-import MapCard from '../../components/mapCard/MapCard'
 import ThemeText from '../../components/ThemeText'
 import SanaatJobsCreatedCard from '../../components/ui/sanaaJobsCreatedCard/SanaatJobsCreatedCard'
 import SanaatAmountInvestment from '../../components/ui/sanaatAmountInvestment/SanaatAmountInvestment'
 import SanaatChartCard from '../../components/ui/sanaatChartCard/SanaatChartCard'
 import SanaatIndicators from '../../components/ui/sanaatIndicators/SanaatIndicators'
+import SanaatInvestMap from '../../components/ui/sanaatInvestMap/SanaatInvestMap'
 import SanaatInvestmentProjects from '../../components/ui/sanaatInvestmentProjects/SanaatInvestmentProjects'
 import SanaatQQProjects from '../../components/ui/sanaatQQProjects/SanaatQQProjects'
 import SanaatVolumeProducts from '../../components/ui/sanaatVolumeProducts/SanaatVolumeProducts'
@@ -46,7 +46,7 @@ function Sanaat() {
 				<Typography variant='h6' color='gray'>
 					с начало года
 				</Typography>
-				<div className='grid grid-cols-[1fr_3fr] gap-2 mb-6'>
+				<div className='grid grid-cols-[1fr_3fr] gap-2 my-6'>
 					<SanaatInvestmentProjects />
 					<SanaatAmountInvestment />
 				</div>
@@ -65,7 +65,7 @@ function Sanaat() {
 				<Typography variant='h6' color='gray'>
 					с начало года
 				</Typography>
-				<MapCard end='' start='' />
+				<SanaatInvestMap />
 			</section>
 		</div>
 	)

@@ -7,53 +7,55 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
+import ThemeText from '../../ThemeText'
 
-function ProjectTable() {
+function ModalTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
+
 	const rows = useMemo(
 		() => [
 			{
 				id: 1,
-				company: 'IT компании',
-				prof: 'Разработчик',
-				amount: 2,
+				direction: 'ИТ проекты',
+				amount: 5000,
+				percentage: '39.2%',
 			},
 			{
 				id: 2,
-				company: 'Гос учреждения',
-				prof: 'Отдел кадров',
-				amount: 4,
+				direction: 'Сельское хозяйство',
+				amount: 3000,
+				percentage: '32.2%',
 			},
 			{
 				id: 3,
-				company: 'Банк',
-				prof: 'Охранник',
-				amount: 5,
+				direction: 'Промышленность',
+				amount: 4200,
+				percentage: '65.1%',
 			},
 			{
 				id: 4,
-				company: 'Частные компании',
-				prof: 'Бизнес аналитик',
-				amount: 1,
+				direction: 'Бизнес',
+				amount: 1358,
+				percentage: '20.3%',
 			},
 			{
 				id: 5,
-				company: 'Больницы',
-				prof: 'Врач',
-				amount: 7,
+				direction: 'ИТ проекты',
+				amount: 9231,
+				percentage: '24.1%',
 			},
 			{
 				id: 6,
-				company: 'Клиники',
-				prof: 'Медсестра',
-				amount: 4,
+				direction: 'Промышленность',
+				amount: 531,
+				percentage: '45.3%',
 			},
 			{
 				id: 7,
-				company: 'Ферма',
-				prof: 'Фермер',
-				amount: 5,
+				direction: 'Бизнес',
+				amount: 159,
+				percentage: '75.4%',
 			},
 		],
 		[]
@@ -62,12 +64,21 @@ function ProjectTable() {
 	const columns = useMemo<GridColDef[]>(
 		() => [
 			{
-				field: 'company',
-				headerName: 'Учреждении',
+				field: 'direction',
+				headerName: 'Направление',
 				flex: 2,
+				renderCell: params => (
+					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+						{params.value}
+					</div>
+				),
 			},
-			{ field: 'prof', headerName: 'Профессия', flex: 2 },
-			{ field: 'amount', headerName: 'Количество', flex: 2 },
+			{ field: 'amount', headerName: 'Сумма', flex: 2 },
+			{
+				field: 'percentage',
+				headerName: 'Процент',
+				flex: 1,
+			},
 		],
 		[]
 	)
@@ -94,13 +105,13 @@ function ProjectTable() {
 	)
 }
 
-function ModalProjectsTable() {
+export default function SanaatModalProjects() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
 	return (
 		<div>
-			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
+			<Button onClick={() => setOpen(true)}>Подробнее →</Button>
 			<Modal
 				open={open}
 				onClose={() => setOpen(false)}
@@ -126,11 +137,11 @@ function ModalProjectsTable() {
 							borderRadius: 2,
 						}}
 					>
-						<ProjectTable />
+						<ThemeText variant='h4' text='Проекты 0' />
+						<ModalTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
-export default ModalProjectsTable

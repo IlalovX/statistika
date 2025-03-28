@@ -9,53 +9,52 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 import ThemeText from '../../ThemeText'
 
-function ModalTable() {
+function ProjectTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-
 	const rows = useMemo(
 		() => [
 			{
 				id: 1,
-				direction: 'ИТ проекты',
-				amount: 5000,
-				percentage: '39.2%',
+				company: 'IT компании',
+				prof: 'Разработчик',
+				amount: 2,
 			},
 			{
 				id: 2,
-				direction: 'Сельское хозяйство',
-				amount: 3000,
-				percentage: '32.2%',
+				company: 'Гос учреждения',
+				prof: 'Отдел кадров',
+				amount: 4,
 			},
 			{
 				id: 3,
-				direction: 'Промышленность',
-				amount: 4200,
-				percentage: '65.1%',
+				company: 'Банк',
+				prof: 'Охранник',
+				amount: 5,
 			},
 			{
 				id: 4,
-				direction: 'Бизнес',
-				amount: 1358,
-				percentage: '20.3%',
+				company: 'Частные компании',
+				prof: 'Бизнес аналитик',
+				amount: 1,
 			},
 			{
 				id: 5,
-				direction: 'ИТ проекты',
-				amount: 9231,
-				percentage: '24.1%',
+				company: 'Больницы',
+				prof: 'Врач',
+				amount: 7,
 			},
 			{
 				id: 6,
-				direction: 'Промышленность',
-				amount: 531,
-				percentage: '45.3%',
+				company: 'Клиники',
+				prof: 'Медсестра',
+				amount: 4,
 			},
 			{
 				id: 7,
-				direction: 'Бизнес',
-				amount: 159,
-				percentage: '75.4%',
+				company: 'Ферма',
+				prof: 'Фермер',
+				amount: 5,
 			},
 		],
 		[]
@@ -64,21 +63,12 @@ function ModalTable() {
 	const columns = useMemo<GridColDef[]>(
 		() => [
 			{
-				field: 'direction',
-				headerName: 'Направление',
+				field: 'company',
+				headerName: 'Учреждении',
 				flex: 2,
-				renderCell: params => (
-					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-						{params.value}
-					</div>
-				),
 			},
-			{ field: 'amount', headerName: 'Сумма', flex: 2 },
-			{
-				field: 'percentage',
-				headerName: 'Процент',
-				flex: 1,
-			},
+			{ field: 'prof', headerName: 'Профессия', flex: 2 },
+			{ field: 'amount', headerName: 'Количество', flex: 2 },
 		],
 		[]
 	)
@@ -105,13 +95,13 @@ function ModalTable() {
 	)
 }
 
-export default function SanaatModalProjects() {
+function ModalProjectsTable() {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
 	return (
 		<div>
-			<Button onClick={() => setOpen(true)}>Подробнее →</Button>
+			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
 			<Modal
 				open={open}
 				onClose={() => setOpen(false)}
@@ -137,11 +127,12 @@ export default function SanaatModalProjects() {
 							borderRadius: 2,
 						}}
 					>
-						<ThemeText variant='h4' text='Сумма инвестиции' />
-						<ModalTable />
+						<ThemeText variant='h4' text='Рабочие места 0' />
+						<ProjectTable />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+export default ModalProjectsTable

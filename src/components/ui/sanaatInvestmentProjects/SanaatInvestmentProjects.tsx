@@ -11,9 +11,9 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
+import SanaatModalProjects from './SanaatModalProjects'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
-import SanaatModaAmountlTable from '../sanaatAmountInvestment/SanaatModaAmountlTable'
 function SanaatInvestmentProjects() {
 	const { data: companies } = useQuery({
 		queryKey: ['economic'],
@@ -101,7 +101,7 @@ function SanaatInvestmentProjects() {
 					})}
 			</List>
 			<div className='flex justify-end items-center'>
-				<SanaatModaAmountlTable />
+				<SanaatModalProjects />
 			</div>
 		</Box>
 	)

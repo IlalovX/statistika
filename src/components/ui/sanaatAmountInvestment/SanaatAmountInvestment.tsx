@@ -109,7 +109,7 @@ function SanaatAmountInvestment() {
 						<img src={dollar} alt='' width={50} height={50} />
 						<div>
 							<Typography variant='body1'>Полученные инвестиции</Typography>
-							<Typography variant='h6'>$6 051 450</Typography>
+							<Typography variant='h6'>$ 6 051 450</Typography>
 						</div>
 					</header>
 					<Divider />

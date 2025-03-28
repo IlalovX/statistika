@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
+import ThemeText from '../../ThemeText'
 
 function RegionTable() {
 	const [page, setPage] = useState(0)
@@ -88,6 +89,7 @@ function SanaatQQModal() {
 							borderRadius: 2,
 						}}
 					>
+						<ThemeText variant='h4' text='Проекты 0' />
 						<RegionTable />
 					</Box>
 				</Fade>
