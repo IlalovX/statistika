@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { Typography, useTheme } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,7 +7,6 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
-import ThemeText from '../../ThemeText'
 function CountriesTable() {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
@@ -87,7 +86,7 @@ function CountriesTable() {
 		() => [
 			{
 				field: 'country',
-				headerName: 'страны',
+				headerName: 'Cтраны',
 				flex: 2,
 				renderCell: params => (
 					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -101,13 +100,12 @@ function CountriesTable() {
 					</div>
 				),
 			},
-			{ field: 'mass', headerName: 'Масса (т)', flex: 2 },
-			{ field: 'percent', headerName: 'Процент', flex: 2 },
 			{
 				field: 'price',
 				headerName: 'Цена ($)',
+				align: 'center',
+				headerAlign: 'center',
 				flex: 1,
-				renderCell: params => <div>{params.value} $</div>,
 			},
 		],
 		[]
@@ -166,7 +164,14 @@ function SanaatModalInvest() {
 							borderRadius: 2,
 						}}
 					>
-						<ThemeText text='Инвесторы из зарубежа' variant='h6' />
+						<Typography
+							variant='h4'
+							sx={{
+								color: theme.palette.mode === 'light' ? '#355CBF' : 'white',
+							}}
+						>
+							Инвесторы из зарубежа
+						</Typography>
 						<CountriesTable />
 					</Box>
 				</Fade>

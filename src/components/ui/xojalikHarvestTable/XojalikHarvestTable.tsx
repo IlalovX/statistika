@@ -94,7 +94,6 @@ export default function XojalikHarvestTable() {
 		},
 	})
 
-	// Преобразуем данные для таблицы
 	const processedData = useMemo(() => {
 		if (!harvest) return []
 		return Object.keys(harvest).map((key, index) => ({
@@ -108,7 +107,7 @@ export default function XojalikHarvestTable() {
 
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-5'
+			className='shadow-xl rounded-2xl p-5 relative'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -128,7 +127,7 @@ export default function XojalikHarvestTable() {
 								</TableCell>
 							</TableRow>
 						) : (
-							processedData.slice(0, 4).map(item => (
+							processedData.slice(0, 5).map(item => (
 								<TableRow key={item.id}>
 									<TableCell>
 										<Typography className='flex items-center gap-2 font-medium '>
@@ -150,7 +149,12 @@ export default function XojalikHarvestTable() {
 			</TableContainer>
 
 			<Box className='mt-3 text-right'>
-				<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
+				<Button
+					onClick={() => setOpen(true)}
+					className='!absolute bottom-2 right-2'
+				>
+					Посмотреть все →
+				</Button>
 				<Modal
 					open={open}
 					onClose={() => setOpen(false)}
@@ -176,6 +180,9 @@ export default function XojalikHarvestTable() {
 								borderRadius: 2,
 							}}
 						>
+							<Typography variant='h6' className='font-semibold text-gray-700'>
+							Показатели
+              </Typography>
 							<ModalTable rows={processedData} isLoading={isLoading} />
 						</Box>
 					</Fade>

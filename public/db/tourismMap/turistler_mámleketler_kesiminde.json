@@ -1,0 +1,64 @@
+{
+    "turistler_mámleketler_kesiminde": [
+      {
+        "country": "Qazaqstan",
+        "count": 54522
+      },
+      {
+        "country": "Túrkmenistan",
+        "count": 18036
+      },
+      {
+        "country": "Rossiya Federaciyası",
+        "count": 29258
+      },
+      {
+        "country": "Tajikstan",
+        "count": 12988
+      },
+      {
+        "country": "Qırǵızstan",
+        "count": 16735
+      },
+      {
+        "country": "Belarus",
+        "count": 105
+      },
+      {
+        "country": "Italiya",
+        "count": 8183
+      },
+      {
+        "country": "Qıtay Xalıq Respublikası",
+        "count": 7778
+      },
+      {
+        "country": "Turkiya",
+        "count": 8573
+      },
+      {
+        "country": "India",
+        "count": 3511
+      },
+      {
+        "country": "Qubla Korea",
+        "count": 2074
+      },
+      {
+        "country": "Pakistan",
+        "count": 89
+      },
+      {
+        "country": "Iran",
+        "count": 33
+      },
+      {
+        "country": "Basqa",
+        "count": 38832
+      },
+      {
+        "country": "total",
+        "count": 200718
+      }
+    ]
+  }

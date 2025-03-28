@@ -5,7 +5,6 @@ import XojalikBarChart from '../../components/ui/xojalikBarChart/XojalikBarChart
 import XojalikChartCard from '../../components/ui/xojalikChartCard/XojalikChartCard'
 import XojalikCompaniesCard from '../../components/ui/xojalikCompaniesCard/XojalikCompaniesCard'
 import XojalikFieldCard from '../../components/ui/xojalikFieldCard/XojalikFieldCard'
-import XojalikHarvestTable from '../../components/ui/xojalikHarvestTable/XojalikHarvestTable'
 import XojalikMapCard from '../../components/ui/xojalikMapCard/XojalikMapCard'
 import XojalikPlantedCard from '../../components/ui/xojalikPlantedCard/XojalikPlantedCard'
 import XojalikPlantedTable from '../../components/ui/xojalikPlantedTable/XojalikPlantedTable'
@@ -53,15 +52,14 @@ function Xojalik() {
 				<Typography variant='h6' color='gray'>
 					за 2025 год
 				</Typography>
-				<Box className='grid grid-cols-2 grid-rows-[350px] gap-5 mt-5'>
+				<Box className='grid grid-cols-2 grid-rows-1 gap-5 mt-5'>
 					<XojalikPlantedTable />
-					<XojalikHarvestTable />
+					<XojalikCompaniesCard />
 				</Box>
 			</section>
 			<section>
-				<Box className='grid grid-cols-[3fr_1fr] grid-rows-[350px] gap-5 mt-5'>
+				<Box className='mt-5'>
 					<XojalikBarChart />
-					<XojalikCompaniesCard />
 				</Box>
 			</section>
 			<section>

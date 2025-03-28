@@ -8,25 +8,19 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
 import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
 import SanaatModalProjects from './SanaatModalProjects'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
 function SanaatInvestmentProjects() {
-	const { data: companies } = useQuery({
-		queryKey: ['economic'],
-		queryFn: async () => {
-			const res = await fetch(
-				'/db/economic/ekonomikalıq_túrleri_boyınsha_jańada_ashılǵan_kárxana_sanları.json'
-			)
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
-			return res.json()
-		},
-	})
+	const data = {
+		'IT проекты': { '2025': '0' },
+		'Сельское хозяйство': { '2025': '0' },
+		Промышленность: { '2025': '0' },
+		Бизнес: { '2025': '0' },
+		total: { '2025': '0' },
+	}
 
 	const theme = useTheme()
 	return (
@@ -54,14 +48,14 @@ function SanaatInvestmentProjects() {
 					</div>
 				</div>
 				<div className='mt-5'>
-					<HomeDoughnut total={companies?.total['2025']} />
+					<HomeDoughnut total={data?.total['2025']} />
 				</div>
 			</div>
 			<List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-				{Object.entries(companies ?? {})
+				{Object.entries(data ?? {})
 					.filter(([key]) => key !== 'total')
 					.map(([key, values]) => {
-						const yearData = values as Record<string, number>
+						const yearData = values as { 2025: string }
 						return (
 							<ListItem
 								key={key}
@@ -94,7 +88,7 @@ function SanaatInvestmentProjects() {
 									color='green'
 									className='text-[11px]'
 								>
-									20%
+									0%
 								</Typography>
 							</ListItem>
 						)

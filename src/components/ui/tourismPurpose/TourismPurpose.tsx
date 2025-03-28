@@ -4,25 +4,25 @@ const infoData = [
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (3).svg',
 		value: `0 `,
-		label: 'Навещание родственников',
+		label: 'Бизнес',
 		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background.svg',
 		value: '0',
-		label: 'Отдых',
+		label: 'Лечение',
 		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (2).svg',
 		value: '0',
-		label: 'Лечение',
+		label: 'Отдых',
 		amt: '0%',
 	},
 	{
 		icon: '/svg/tourism/TourismPurpose/Background (3).svg',
 		value: '0',
-		label: 'Бизнес',
+		label: 'Спорт',
 		amt: '0%',
 	},
 	{
@@ -61,7 +61,8 @@ function TourismPurpose() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								{item.amt} <span className='text-gray-400'>За последний месяц</span>
+								{item.amt}{' '}
+								<span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>

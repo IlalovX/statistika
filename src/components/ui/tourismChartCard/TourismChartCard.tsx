@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
 	Area,
 	ComposedChart,
@@ -9,7 +9,6 @@ import {
 	YAxis,
 } from 'recharts'
 import { CustomizedAxisTick } from '../../ChartComponents'
-import StatsHeader from '../../ChartStatsHeader'
 
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; guests: number; profit: number }[]
@@ -31,10 +30,12 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 			fontWeight='bold'
 		>
 			<tspan x={x} dy='-40'>
-				Туристы: {value}
+				{/* Туристы: {value} */}
+				Туристы: 0
 			</tspan>
 			<tspan x={x} dy='15'>
-				Прибыль: {profit}$
+				{/* Прибыль: {profit}$ */}
+				Прибыль: 0$
 			</tspan>
 		</text>
 	)
@@ -58,10 +59,28 @@ function TourismChartCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<StatsHeader
-				start='Общее количество Туристов'
-				end='Общее прибыль от Туристов'
-			/>
+			<header className='flex justify-between items-start m-10'>
+				<Box className='flex gap-10'>
+					<Box>
+						<p className='text-gray-400'>Общее количество Туристов</p>
+						<Typography variant='h6'>0</Typography>
+						<p className='text-gray-400'>
+							<span className='text-green-500 text-xl'>0%</span> за последний
+							месяц
+						</p>
+					</Box>
+					<Box>
+						<p className='text-gray-400'>Общее прибыль от Туристов</p>
+						<Typography variant='h6' className='text-[#355CBF]'>
+							0 $
+						</Typography>
+						<p className='text-gray-400'>
+							<span className='text-green-500 text-xl'>0%</span> за последний
+							месяц
+						</p>
+					</Box>
+				</Box>
+			</header>
 			<ResponsiveContainer width='100%' height={300}>
 				<ComposedChart
 					data={data}

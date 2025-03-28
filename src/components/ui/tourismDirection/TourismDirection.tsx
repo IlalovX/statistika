@@ -2,28 +2,40 @@ import { Box, Typography, useTheme } from '@mui/material'
 import ThemeText from '../../ThemeText'
 const infoData = [
 	{
-		icon: '/svg/tourism/TourismDirection/Background (3).svg',
-		value: `0 т`,
+		icon: '/svg/tourism/TourismDirection/Background.svg',
+		value: `0`,
 		label: 'Музей',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
-		icon: '/svg/tourism/TourismDirection/Background.svg',
+		icon: '/svg/tourism/TourismDirection/Background (1).svg',
 		value: '0',
-		label: 'Арал',
-		amt: '+18.2%',
+		label: 'Эко туризм',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismDirection/Background (2).svg',
 		value: '0',
 		label: 'Исторические места',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismDirection/Background (3).svg',
 		value: '0',
-		label: 'Другие',
-		amt: '+18.2%',
+		label: 'Этно туризм',
+		amt: '+0%',
+	},
+	{
+		icon: '/svg/tourism/TourismDirection/Background (4).svg',
+		value: '0',
+		label: 'Фестивальный туризм',
+		amt: '+0%',
+	},
+	{
+		icon: '/svg/tourism/TourismDirection/Background (7).svg',
+		value: '0',
+		label: 'Паломничество',
+		amt: '+0%',
 	},
 ]
 
@@ -55,7 +67,7 @@ function TourismDirection() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За последний месяц</span>
+								+0% <span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>

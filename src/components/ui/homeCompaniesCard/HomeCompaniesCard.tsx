@@ -48,10 +48,10 @@ function HomeCompaniesCard() {
 						<YearDropdown />
 					</div>
 					<div>
-						<Typography variant='h6'>100</Typography>
+						<Typography variant='h6'>0</Typography>
 						<p className='flex gap-1 items-center'>
 							<img src={arrowup} alt='' />
-							15.8%
+							0%
 						</p>
 					</div>
 				</div>

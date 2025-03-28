@@ -19,6 +19,9 @@ function XojalikCompaniesCard() {
 		Животноводство: { 2024: 0 },
 		Земельные: { 2024: 0 },
 		Бизнес: { 2024: 0 },
+		Бизнес1: { 2024: 0 },
+		Бизнес2: { 2024: 0 },
+		Бизнес3: { 2024: 0 },
 	}
 
 	return (
@@ -50,7 +53,7 @@ function XojalikCompaniesCard() {
 					<HomeDoughnut total={'0'} />
 				</div>
 			</div>
-			<List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+			<List sx={{ width: '100%', bgcolor: 'background.paper', padding: 2 }}>
 				{Object.entries(companies ?? {})
 					.filter(([key]) => key !== 'total')
 					.map(([key, values]) => {

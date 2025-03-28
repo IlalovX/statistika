@@ -15,6 +15,7 @@ import YearDropdown from '../../YearDropdown'
 function HomePopulationCard() {
 	const theme = useTheme()
 	const [chartData, setChartData] = useState<number[]>([])
+
 	const [xLabels, setXLabels] = useState<string[]>([
 		'2022',
 		'2023',
@@ -34,10 +35,11 @@ function HomePopulationCard() {
 	useEffect(() => {
 		if (data && data['Qaraqalpaqstan Respublikası']) {
 			const populationData = data['Qaraqalpaqstan Respublikası']
+
 			const keys = Object.keys(populationData).sort()
 			setXLabels(keys.slice(-4))
 			const validData = keys
-				.slice(-6)
+				.slice(-4)
 				.map(year => {
 					const rawValue = populationData[year]
 						?.replace(/\s/g, '')

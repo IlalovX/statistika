@@ -81,7 +81,7 @@ function SanaatIndicators() {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<ModalRegionTable text='Продукция 265т' />
+				<ModalRegionTable text='Продукция 0т' />
 			</Box>
 		</Box>
 	)

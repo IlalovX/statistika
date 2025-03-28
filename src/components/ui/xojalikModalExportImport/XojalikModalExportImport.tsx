@@ -75,8 +75,8 @@ function XojalikModalExportImport() {
 							onChange={handleChange}
 							TabIndicatorProps={{ style: { display: 'none' } }}
 							sx={{
-								'& .MuiTab-root': { color: 'gray' }, // Цвет неактивных вкладок
-								'& .Mui-selected': { color: 'blue', fontWeight: 'bold' }, // Цвет активной вкладки
+								'& .MuiTab-root': { color: 'gray' }, 
+								'& .Mui-selected': { color: 'blue', fontWeight: 'bold' }, 
 							}}
 						>
 							<Tab label='По странам' />

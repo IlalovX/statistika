@@ -28,7 +28,7 @@ const formatCurrency = (num: number): string => {
 		num.toLocaleString('ru-RU', {
 			minimumFractionDigits: 1,
 			maximumFractionDigits: 1,
-		}) + ' $'
+		}) + ' млрд сум'
 	)
 }
 
@@ -48,10 +48,10 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 			fontWeight='bold'
 		>
 			<tspan x={x} dy={isLast ? '-50' : '-40'}>
-				Урожай: {formatNumber(value as number)}
+				Урожай: {formatNumber(value as number)} т
 			</tspan>
 			<tspan x={x} dy={isLast ? '20' : '15'}>
-				Прибыль: {formatCurrency(profit as number)}
+				Общий доход: {formatCurrency(profit as number)}
 			</tspan>
 		</text>
 	)
@@ -60,7 +60,6 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 function XojalikChartCard() {
 	const theme = useTheme()
 
-	// Запрос данных об урожае
 	const { data: harvestData } = useQuery({
 		queryKey: ['harvest'],
 		queryFn: async () => {
@@ -138,9 +137,9 @@ function XojalikChartCard() {
 				<Box>
 					<p className='text-gray-400'>Общее количество собранных урожаев</p>
 					<Typography variant='h6'>
-						{formatNumber(
-							finalChartData.reduce((sum, d) => sum + (d.harvest || 0), 0)
-						)}
+						{profitData &&
+							formatNumber(profitData[profitData.length - 1].profit)}{' '}
+						т
 					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
@@ -149,7 +148,7 @@ function XojalikChartCard() {
 				</Box>
 
 				<Box>
-					<p className='text-gray-400'>Общий прибыль от собранных урожаев</p>
+					<p className='text-gray-400'>Общий доход от собранных урожаев</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
 						{formatCurrency(
 							finalChartData.reduce((sum, d) => sum + (d.profit || 0), 0)

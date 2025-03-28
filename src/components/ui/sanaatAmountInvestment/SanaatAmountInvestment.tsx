@@ -18,28 +18,28 @@ const categories = [
 	{
 		title: 'IT проекты',
 		amount: '$0 млн',
-		change: '+0.24%',
+		change: '+0%',
 		color: '#007bff',
 		icon: '💻',
 	},
 	{
 		title: 'Сельское хозяйство',
 		amount: '$0 млн',
-		change: '-0.24%',
+		change: '-0%',
 		color: '#d9534f',
 		icon: '🌾',
 	},
 	{
 		title: 'Промышленность',
 		amount: '$0 млн',
-		change: '+0.24%',
+		change: '+0%',
 		color: '#d43f3a',
 		icon: '🏭',
 	},
 	{
 		title: 'Бизнес',
 		amount: '$0 млн',
-		change: '-0.14%',
+		change: '-0%',
 		color: '#28a745',
 		icon: '💼',
 	},
@@ -109,7 +109,7 @@ function SanaatAmountInvestment() {
 						<img src={dollar} alt='' width={50} height={50} />
 						<div>
 							<Typography variant='body1'>Полученные инвестиции</Typography>
-							<Typography variant='h6'>$ 6 051 450</Typography>
+							<Typography variant='h6'>$ 0</Typography>
 						</div>
 					</header>
 					<Divider />

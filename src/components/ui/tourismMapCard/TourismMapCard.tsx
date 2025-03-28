@@ -9,21 +9,38 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import './TourismMapCard.css'
+import TourismModalCountriesTable from './TourismModalCountriesTable'
 import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
-import TourismModalCoutriesTable from './TourismModalCoutriesTable'
+interface CountryData {
+	country: string
+	count: number
+}
 
-const data = [
-	{ country: 'Узбекистан', amount: 0, extra: 0 },
-	{ country: 'Россия', amount: 0, extra: 0 },
-	{ country: 'Казахстан', amount: 0, extra: 0 },
-	{ country: 'Киргизстан', amount: 0, extra: 0 },
-	{ country: 'Украина', amount: 0, extra: 0 },
-]
+interface TourismData {
+	turistler_mámleketler_kesiminde: CountryData[]
+}
+
 function TourismMapCard({ start, end }: { start: string; end: string }) {
 	const theme = useTheme()
+	const { data: countries } = useQuery({
+		queryKey: ['tourismcountries'],
+		queryFn: async (): Promise<TourismData> => {
+			const res = await fetch(
+				'/db/tourismMap/turistler_mámleketler_kesiminde.json'
+			)
+			if (!res.ok) {
+				if (!res.ok) {
+					throw new Error('Ошибка загрузки данных')
+				}
+			}
+			return res.json()
+		},
+	})
+
 	return (
 		<Box
 			className={`shadow-2xl w-full rounded-2xl p-2.5 my-5 grid grid-cols-2 `}
@@ -66,33 +83,37 @@ function TourismMapCard({ start, end }: { start: string; end: string }) {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{data.map((row, index) => (
-								<TableRow
-									key={index}
-									sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
-								>
-									<TableCell>{row.country}</TableCell>
-									<TableCell
-										sx={{
-											display: 'grid',
-											gridGap: '5px',
-											gridTemplateColumns: '1fr 1fr 1fr',
-										}}
-									>
-										<span className='3xl'>{row.amount} T</span>
-										{index % 2 !== 0 ? (
-											<img src={arrowDown} />
-										) : (
-											<img src={arrowUp} />
-										)}
-										<span className='3xl '>{row.extra}%</span>
-									</TableCell>
-								</TableRow>
-							))}
+							{countries &&
+								countries['turistler_mámleketler_kesiminde']
+									.slice(0, 4)
+									.map((row, index) => (
+										<TableRow
+											key={index}
+											sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
+										>
+											<TableCell>{row.country}</TableCell>
+											<TableCell
+												sx={{
+													display: 'grid',
+													gridGap: '5px',
+													gridTemplateColumns: '1fr 1fr 1fr',
+												}}
+											>
+												<span className='3xl'>{row.count}</span>
+												{index % 2 !== 0 ? (
+													<img src={arrowDown} />
+												) : (
+													<img src={arrowUp} />
+												)}
+											</TableCell>
+										</TableRow>
+									))}
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<TourismModalCoutriesTable />
+				<TourismModalCountriesTable
+					data={countries?.['turistler_mámleketler_kesiminde'] ?? []}
+				/>
 			</Box>
 		</Box>
 	)

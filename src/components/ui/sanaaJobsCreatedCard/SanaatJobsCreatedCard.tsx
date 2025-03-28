@@ -131,7 +131,7 @@ function SanaatJobsCreatedCard() {
 								sx={{ display: 'flex', justifyContent: 'space-between' }}
 							>
 								<ListItemText primary={`${item.icon} ${item.name}`} />
-								<span className='font-bold'>{item.id}</span>
+								<span className='font-bold'>0</span>
 							</ListItem>
 						))}
 					</List>
@@ -146,7 +146,7 @@ function SanaatJobsCreatedCard() {
 								sx={{ display: 'flex', justifyContent: 'space-between' }}
 							>
 								<ListItemText primary={`${item.icon} ${item.name}`} />
-								<span className='font-bold'>{item.id}</span>
+								<span className='font-bold'>0</span>
 							</ListItem>
 						))}
 					</List>

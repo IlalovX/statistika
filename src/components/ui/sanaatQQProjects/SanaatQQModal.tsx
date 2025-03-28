@@ -15,13 +15,13 @@ function RegionTable() {
 
 	const rows = useMemo(
 		() => [
-			{ id: 1, region: 'Шымбай', quantity: 50, percent: '38.2%' },
-			{ id: 2, region: 'Кунград', quantity: 10, percent: '32.2%' },
-			{ id: 3, region: 'Нукус', quantity: 80, percent: '65.1%' },
-			{ id: 4, region: 'Тахтакопир', quantity: 58, percent: '20.3%' },
-			{ id: 5, region: 'Амударья', quantity: 20, percent: '24.1%' },
-			{ id: 6, region: 'Муйнак', quantity: 36, percent: '45.3%' },
-			{ id: 7, region: 'Шоманай', quantity: 59, percent: '75.4%' },
+			{ id: 1, region: 'Шымбай', quantity: 0, percent: '0%' },
+			{ id: 2, region: 'Кунград', quantity: 0, percent: '0%' },
+			{ id: 3, region: 'Нукус', quantity: 0, percent: '0%' },
+			{ id: 4, region: 'Тахтакопир', quantity: 0, percent: '0%' },
+			{ id: 5, region: 'Амударья', quantity: 0, percent: '0%' },
+			{ id: 6, region: 'Муйнак', quantity: 0, percent: '0%' },
+			{ id: 7, region: 'Шоманай', quantity: 0, percent: '0%' },
 		],
 		[]
 	)

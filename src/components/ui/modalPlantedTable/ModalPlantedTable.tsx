@@ -1,74 +1,58 @@
-import { useTheme } from '@mui/material'
-import Backdrop from '@mui/material/Backdrop'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Fade from '@mui/material/Fade'
-import Modal from '@mui/material/Modal'
-import Pagination from '@mui/material/Pagination'
+import { Backdrop, Box, Button, Fade, Modal, Pagination } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
-const productIcons = {
-	Рис: '/svg/products/ris.svg',
-	Картофель: '/svg/products/kartoshka.svg',
-	Морковь: '/svg/products/markov.svg',
-	Лук: '/svg/products/polin.svg',
-	Кунжут: '/svg/products/kundjut.svg',
-	Хлопок: '/svg/products/hlopok.svg',
+interface DataItem {
+	name: string
+	area: number
+	planted: number
+	yield: number
+	percentage: number
+}
+interface TableRow {
+	id: number
+	products: string
+	weigh: number
+	price: number
+	icon: string
 }
 
-function ModalTable() {
+interface ModalTableProps {
+	data: DataItem[]
+}
+interface YearKey {
+	[year: number]: number
+}
+type DataType = Record<string, YearKey>
+const ModalTable: React.FC<ModalTableProps> = ({ data }) => {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
+	const processedData = useMemo(() => {
+		if (!data) return []
 
-	const rows = useMemo(
+		return Object.keys(data).map(key => {
+			const item = data[key] as DataType
+			return {
+				name: key,
+				area: 0,
+				planted: 0,
+				yield: item[2024] || 0,
+				percentage: 0,
+			}
+		})
+	}, [data])
+
+	const rows: TableRow[] = useMemo(
 		() =>
-			[
-				{
-					id: 17,
-					products: 'Рис',
-					weigh: 1050,
-					price: 200,
-					icon: productIcons['Рис'],
-				},
-				{
-					id: 18,
-					products: 'Картофель',
-					weigh: 2000,
-					price: 250,
-					icon: productIcons['Картофель'],
-				},
-				{
-					id: 19,
-					products: 'Морковь',
-					weigh: 1020,
-					price: 300,
-					icon: productIcons['Морковь'],
-				},
-				{
-					id: 20,
-					products: 'Лук',
-					weigh: 5000,
-					price: 100,
-					icon: productIcons['Лук'],
-				},
-				{
-					id: 21,
-					products: 'Кунжут',
-					weigh: 3005,
-					price: 150,
-					icon: productIcons['Кунжут'],
-				},
-			].concat(
-				Array.from({ length: 16 }, (_, i) => ({
-					id: i + 1,
-					products: 'Хлопок',
-					weigh: 2080,
-					price: 120,
-					icon: productIcons['Хлопок'],
-				}))
-			),
-		[]
+			processedData.map((item, index) => ({
+				id: index + 1,
+				products: item.name,
+				weigh: item.yield,
+				price: item.percentage,
+				icon: '/svg/projects/Background.svg',
+			})),
+		[data]
 	)
 
 	const columns = useMemo<GridColDef[]>(
@@ -121,8 +105,11 @@ function ModalTable() {
 		</div>
 	)
 }
+interface ModalPlantedTableProps {
+	data: DataItem[]
+}
 
-export default function ModalPlantedTable() {
+const ModalPlantedTable: React.FC<ModalPlantedTableProps> = ({ data }) => {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 
@@ -154,10 +141,12 @@ export default function ModalPlantedTable() {
 							borderRadius: 2,
 						}}
 					>
-						<ModalTable />
+						<ModalTable data={data} />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+
+export default ModalPlantedTable

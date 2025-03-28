@@ -3,52 +3,52 @@ import ThemeText from '../../ThemeText'
 const infoData = [
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background.svg',
-		value: `0 т`,
+		value: `0`,
 		label: 'Гостиницы',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (1).svg',
 		value: '0',
 		label: 'Гостевые дома',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (2).svg',
 		value: '0',
 		label: 'Хостелы',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (7).svg',
 		value: '0',
 		label: 'Юртовые лагеря',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (3).svg',
 		value: '0',
 		label: 'Рестораны',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (4).svg',
 		value: '0',
 		label: 'Кафе',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (6).svg',
 		value: '0',
 		label: 'Развлекательные центры',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 	{
 		icon: '/svg/tourism/TourismInfostructure/Background (1).svg',
 		value: '0',
 		label: 'Торговые центры',
-		amt: '+18.2%',
+		amt: '+0%',
 	},
 ]
 
@@ -80,7 +80,7 @@ function TourismInfostructure() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За последний месяц</span>
+								+0% <span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>

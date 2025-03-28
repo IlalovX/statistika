@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { Typography, useTheme } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,80 +7,22 @@ import Modal from '@mui/material/Modal'
 import Pagination from '@mui/material/Pagination'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
-function CountriesTable() {
+interface CountryData {
+	country: string
+	count: number
+}
+
+interface CountriesTableProps {
+	data: CountryData[]
+}
+
+interface TourismModalCountriesTableProps {
+	data: CountryData[]
+}
+const CountriesTable: React.FC<CountriesTableProps> = ({ data }) => {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-	const rows = useMemo(
-		() =>
-			[
-				{
-					id: 1,
-					country: 'Россия',
-					flag: 'RU',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 2,
-					country: 'Казахстан',
-					flag: 'KZ',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 3,
-					country: 'Кыргызстан',
-					flag: 'KG',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 4,
-					country: 'Беларусь',
-					flag: 'BY',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 5,
-					country: 'Украина',
-					flag: 'UA',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 6,
-					country: 'Франция',
-					flag: 'FR',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-				{
-					id: 7,
-					country: 'Испания',
-					flag: 'ES',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				},
-			].concat(
-				Array.from({ length: 16 }, (_, i) => ({
-					id: 8 + i,
-					country: 'Испания',
-					flag: 'ES',
-					mass: 0,
-					percent: '0%',
-					price: 0,
-				}))
-			),
-		[]
-	)
+	const rows = useMemo(() => data, [])
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
@@ -88,25 +30,11 @@ function CountriesTable() {
 				field: 'country',
 				headerName: 'страны',
 				flex: 2,
-				renderCell: params => (
-					<div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-						<img
-							src={`/svg/countries/${params.row.flag}.svg`}
-							alt={params.value}
-							width={32}
-							height={32}
-						/>
-						{params.value}
-					</div>
-				),
 			},
-			{ field: 'mass', headerName: 'Количество', flex: 2 },
-			{ field: 'percent', headerName: 'Процент', flex: 2 },
 			{
-				field: 'price',
-				headerName: 'Цена ($)',
-				flex: 1,
-				renderCell: params => <div>{params.value} $</div>,
+				field: 'count',
+				headerName: 'Количество',
+				flex: 2,
 			},
 		],
 		[]
@@ -115,6 +43,7 @@ function CountriesTable() {
 	return (
 		<div>
 			<DataGrid
+				getRowId={row => row.country}
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
@@ -133,8 +62,9 @@ function CountriesTable() {
 		</div>
 	)
 }
-
-function TourismModalCoutriesTable() {
+const TourismModalCountriesTable: React.FC<TourismModalCountriesTableProps> = ({
+	data,
+}) => {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 	return (
@@ -165,11 +95,19 @@ function TourismModalCoutriesTable() {
 							borderRadius: 2,
 						}}
 					>
-						<CountriesTable />
+						<Typography
+							variant='h4'
+							sx={{
+								color: theme.palette.mode === 'light' ? '#355CBF' : 'white',
+							}}
+						>
+							Прибывшие туристы
+						</Typography>
+						<CountriesTable data={data} />
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
-export default TourismModalCoutriesTable
+export default TourismModalCountriesTable

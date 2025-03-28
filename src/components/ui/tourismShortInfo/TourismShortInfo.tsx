@@ -3,7 +3,7 @@ import ThemeText from '../../ThemeText'
 const infoData = [
 	{
 		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
-		value: `0 т`,
+		value: `0`,
 		label: 'Количество туристов',
 		amt: '0%',
 	},
@@ -60,7 +60,8 @@ function TourismShortInfo() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								{item.amt} <span className='text-gray-400'>За последний месяц</span>
+								{item.amt}{' '}
+								<span className='text-gray-400'>За последний месяц</span>
 							</Typography>
 						</div>
 					</Box>
