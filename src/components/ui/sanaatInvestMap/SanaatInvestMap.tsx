@@ -9,7 +9,7 @@ import {
 	useTheme,
 } from '@mui/material'
 import './SanaatInvestMap.css'
-import SanaatModalInvest from './sanaatModalInvest'
+import SanaatModalInvest from './SanaatModalInvest'
 import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
@@ -31,7 +31,7 @@ function SanaatInvestMap() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Box className="flex items-center justify-center">
+			<Box className='flex items-center justify-center'>
 				<img src={EARTH} alt='' />
 			</Box>
 
