@@ -1,5 +1,4 @@
 import ThemeText from '../../components/ThemeText'
-import MapCard from '../../components/mapCard/MapCard'
 import TourismChartCard from '../../components/ui/tourismChartCard/TourismChartCard'
 import TourismDirection from '../../components/ui/tourismDirection/TourismDirection'
 import TourismInfostructure from '../../components/ui/tourismInfostructure/TourismInfostructure'

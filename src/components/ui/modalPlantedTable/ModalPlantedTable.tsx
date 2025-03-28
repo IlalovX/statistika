@@ -1,7 +1,7 @@
-import { Backdrop, Box, Button, Fade, Modal, Pagination } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Box, Button, Fade, Modal, Pagination, useTheme } from '@mui/material'
+import Backdrop from '@mui/material/Backdrop'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 interface DataItem {
 	name: string
@@ -10,6 +10,7 @@ interface DataItem {
 	yield: number
 	percentage: number
 }
+
 interface TableRow {
 	id: number
 	products: string
@@ -19,28 +20,21 @@ interface TableRow {
 }
 
 interface ModalTableProps {
-	data: DataItem[]
+	data: Record<string, Record<number, number>>
 }
-interface YearKey {
-	[year: number]: number
-}
-type DataType = Record<string, YearKey>
+
 const ModalTable: React.FC<ModalTableProps> = ({ data }) => {
 	const [page, setPage] = useState(0)
 	const pageSize = 10
-	const processedData = useMemo(() => {
-		if (!data) return []
 
-		return Object.keys(data).map(key => {
-			const item = data[key] as DataType
-			return {
-				name: key,
-				area: 0,
-				planted: 0,
-				yield: item[2024] || 0,
-				percentage: 0,
-			}
-		})
+	const processedData = useMemo(() => {
+		return Object.entries(data).map(([key, values]) => ({
+			name: key,
+			area: 0, // Если есть поле, можно добавить
+			planted: 0,
+			yield: values[2024] || 0,
+			percentage: 0, // Можно рассчитать, если есть данные
+		}))
 	}, [data])
 
 	const rows: TableRow[] = useMemo(
@@ -52,10 +46,10 @@ const ModalTable: React.FC<ModalTableProps> = ({ data }) => {
 				price: item.percentage,
 				icon: '/svg/projects/Background.svg',
 			})),
-		[data]
+		[processedData]
 	)
 
-	const columns = useMemo<GridColDef[]>(
+	const columns: GridColDef[] = useMemo(
 		() => [
 			{
 				field: 'products',
@@ -105,8 +99,9 @@ const ModalTable: React.FC<ModalTableProps> = ({ data }) => {
 		</div>
 	)
 }
+
 interface ModalPlantedTableProps {
-	data: DataItem[]
+	data: Record<string, Record<number, number>>
 }
 
 const ModalPlantedTable: React.FC<ModalPlantedTableProps> = ({ data }) => {

@@ -15,9 +15,10 @@ interface CustomizedLabelProps extends LabelProps {
 }
 
 const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
-	const { x, y, value, index, data } = props
+	// const { x, y, value, index, data } = props
+	const { x, y } = props
 
-	const profit = index !== undefined && data[index] ? data[index].profit : 0
+	// const profit = index !== undefined && data[index] ? data[index].profit : 0
 
 	return (
 		<text
