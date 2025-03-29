@@ -1,7 +1,6 @@
 import {
 	Box,
 	Button,
-	CircularProgress,
 	Modal,
 	Table,
 	TableBody,
@@ -12,7 +11,6 @@ import {
 	Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 interface Column {
@@ -87,19 +85,28 @@ interface Data {
 	Statuses: Status[]
 	Projects: Project[]
 }
+const colors = {
+	Истиқболсиз: '#ff9800', // Оранжевый
+	Бошланмаган: '#2196f3', // Синий
+	Бажарилмоқда: '#4caf50', // Зеленый
+	Кечикмоқда: '#f44336', // Красный
+	Тугатилган: '#616161', // Серый
+	'Рад этилган': '#f44336', // Красный
+	'Амалга оширилмоқда': '#4caf50', // Зеленый
+}
 
-export default function CustomTable() {
+export default function CustomTable({ data }: { data: Data }) {
 	const theme = useTheme()
 	const [modalOpen, setModalOpen] = useState(false)
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-	const { data, isLoading, error } = useQuery<Data>({
-		queryKey: ['tourismprojects'],
-		queryFn: async () => {
-			const res = await fetch('/db/projects/converted_data.json')
-			if (!res.ok) throw new Error('Ошибка загрузки данных')
-			return await res.json()
-		},
-	})
+	// const { data, isLoading, error } = useQuery<Data>({
+	// 	queryKey: ['tourismprojects'],
+	// 	queryFn: async () => {
+	// 		const res = await fetch('/db/projects/converted_data.json')
+	// 		if (!res.ok) throw new Error('Ошибка загрузки данных')
+	// 		return await res.json()
+	// 	},
+	// })
 
 	const handleOpenModal = ({ project }: { project: Project | null }) => {
 		setSelectedProject(project)
@@ -116,76 +123,84 @@ export default function CustomTable() {
 				p: 2,
 			}}
 		>
-			{isLoading ? (
-				<Box display='flex' justifyContent='center'>
-					<CircularProgress />
-				</Box>
-			) : error ? (
-				<Box textAlign='center' color='red'>
-					Ошибка загрузки данных
-				</Box>
-			) : (
-				<TableContainer>
-					<Table>
-						<TableHead>
-							<TableRow>
-								{columns.map(column => (
-									<TableCell
-										key={column.id}
-										align={column.align}
-										style={{ minWidth: column.minWidth }}
-									>
-										{column.label}
-									</TableCell>
-								))}
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{data?.Projects?.map(row => (
-								<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
-									{columns.map(column => {
-										let value = row[column.id as keyof Project]
+			<TableContainer>
+				<Table>
+					<TableHead>
+						<TableRow>
+							{columns.map(column => (
+								<TableCell
+									key={column.id}
+									align={column.align}
+									style={{ minWidth: column.minWidth }}
+								>
+									{column.label}
+								</TableCell>
+							))}
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{data?.Projects?.map(row => (
+							<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+								{columns.map(column => {
+									let value = row[column.id as keyof Project]
 
-										if (column.id === 'region_id') {
-											value =
-												data.Regions.find(r => r.id === row.region_id)?.name ||
-												'Неизвестный регион'
-										}
-										if (column.id === 'authority_id') {
-											value =
-												data.Authorities.find(a => a.id === row.authority_id)
-													?.name || 'Неизвестный ответственный'
-										}
-										if (column.id === 'status_id') {
-											value =
-												data.Statuses.find(s => s.id === row.status_id)?.name ||
-												'Неизвестный статус'
-										}
-										if (column.id === 'general_status') {
-											return (
-												<TableCell key={column.id} align={column.align}>
-													<Button
-														variant='contained'
-														color='primary'
-														onClick={() => handleOpenModal({ project: row })}
-													>
-														Подробнее
-													</Button>
-												</TableCell>
-											)
-										}
+									if (column.id === 'region_id') {
+										value =
+											data.Regions.find(r => r.id === row.region_id)?.name ||
+											'Неизвестный регион'
+									}
+									if (column.id === 'authority_id') {
+										value =
+											data.Authorities.find(a => a.id === row.authority_id)
+												?.name || 'Неизвестный ответственный'
+									}
+
+									if (column.id === 'status_id') {
+										value =
+											data.Statuses.find(s => s.id === row.status_id)?.name ||
+											'Неизвестный статус'
 										return (
-											<TableCell key={column.id} align={column.align}>
+											<TableCell
+												key={column.id}
+												align={column.align}
+												sx={{
+													color:
+														colors[value as keyof typeof colors] || 'black',
+												}}
+											>
 												{value}
 											</TableCell>
 										)
-									})}
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
-			)}
+									}
+
+									if (column.id === 'general_status') {
+										return (
+											<TableCell key={column.id} align={column.align}>
+												<Button
+													variant='contained'
+													color='primary'
+													onClick={() => handleOpenModal({ project: row })}
+												>
+													Подробнее
+												</Button>
+											</TableCell>
+										)
+									}
+									if (column.id === 'budget_million') {
+										value = Number(value).toFixed(2)
+									}
+
+									return (
+										<TableCell key={column.id} align={column.align}>
+											{value}
+										</TableCell>
+									)
+								})}
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 			<Modal open={modalOpen} onClose={() => setModalOpen(false)}>
 				<Box
 					sx={{

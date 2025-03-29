@@ -108,7 +108,8 @@ function XojalikBarChart() {
 						textAnchor='middle'
 					/>
 					<YAxis />
-					<Bar dataKey='uv' label={{ position: 'top' }} barSize={40}>
+					{/* <Bar dataKey='uv' label={{ position: 'top' }} barSize={40}> */}
+					<Bar dataKey='uv' barSize={40}>
 						{data.map((_, index) => (
 							<Cell
 								key={`cell-${index}`}

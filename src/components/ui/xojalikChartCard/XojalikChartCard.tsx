@@ -150,9 +150,10 @@ function XojalikChartCard() {
 				<Box>
 					<p className='text-gray-400'>Общий доход от собранных урожаев</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
-						{formatCurrency(
-							finalChartData.reduce((sum, d) => sum + (d.profit || 0), 0)
-						)}
+						{finalChartData[finalChartData.length - 1] &&
+							formatCurrency(
+								finalChartData[finalChartData.length - 1].harvest as number
+							)}
 					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
