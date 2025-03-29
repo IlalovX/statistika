@@ -150,10 +150,11 @@ function XojalikChartCard() {
 				<Box>
 					<p className='text-gray-400'>Общий доход от собранных урожаев</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
-						{finalChartData &&
-							formatCurrency(
-								finalChartData[finalChartData.length - 1].harvest as number
-							)}
+						{finalChartData?.length
+							? formatCurrency(
+									finalChartData[finalChartData.length - 1].harvest ?? 0
+								)
+							: 'Нет данных'}
 					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
