@@ -9,7 +9,10 @@ const Tourism = lazy(() => import('../pages/tourism/Tourism'))
 const Sanaat = lazy(() => import('../pages/sanaat/Sanaat'))
 const Xojalik = lazy(() => import('../pages/xojalik/Xojalik'))
 const Projects = lazy(() => import('../pages/projects/Projects'))
+
 const Auth = lazy(() => import('../pages/auth/Auth'))
+
+const Admin = lazy(() => import('../pages/admin/Admin'))
 function PathRoutes() {
 	return (
 		<Routes>
@@ -57,6 +60,14 @@ function PathRoutes() {
 					element={
 						<Suspense>
 							<Projects />
+						</Suspense>
+					}
+				/>
+				<Route
+					path={RoutesConsts[RoutesEnums.ADIMN]}
+					element={
+						<Suspense>
+							<Admin />
 						</Suspense>
 					}
 				/>

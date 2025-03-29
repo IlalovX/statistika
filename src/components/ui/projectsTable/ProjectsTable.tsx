@@ -94,19 +94,22 @@ const colors = {
 	'Рад этилган': '#f44336', // Красный
 	'Амалга оширилмоқда': '#4caf50', // Зеленый
 }
+const formatText = (text: string) => {
+	const parts = text.split(/(Ижро ҳолати:|Муаммо:|Таклиф:)/g)
+
+	return parts.map((part, index) =>
+		['Ижро ҳолати:', 'Муаммо:', 'Таклиф:'].includes(part) ? (
+			<strong key={index}>{part}</strong>
+		) : (
+			<span key={index}>{part}</span>
+		)
+	)
+}
 
 export default function CustomTable({ data }: { data: Data }) {
 	const theme = useTheme()
 	const [modalOpen, setModalOpen] = useState(false)
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-	// const { data, isLoading, error } = useQuery<Data>({
-	// 	queryKey: ['tourismprojects'],
-	// 	queryFn: async () => {
-	// 		const res = await fetch('/db/projects/converted_data.json')
-	// 		if (!res.ok) throw new Error('Ошибка загрузки данных')
-	// 		return await res.json()
-	// 	},
-	// })
 
 	const handleOpenModal = ({ project }: { project: Project | null }) => {
 		setSelectedProject(project)
@@ -217,17 +220,9 @@ export default function CustomTable({ data }: { data: Data }) {
 						p: 4,
 					}}
 				>
-					<Typography variant='h5'>
-						{
-							data?.Authorities[
-								selectedProject ? selectedProject?.authority_id : 0
-							].name
-						}
-					</Typography>
-					<Typography variant='body2'>{selectedProject?.name}</Typography>
-					<br />
-					<Typography variant='body1'>
-						{selectedProject?.general_status}
+					<Typography variant='body1' sx={{ whiteSpace: 'pre-line' }}>
+						{selectedProject?.general_status &&
+							formatText(selectedProject.general_status)}
 					</Typography>
 				</Box>
 			</Modal>
