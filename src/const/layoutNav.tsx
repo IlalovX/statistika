@@ -1,7 +1,6 @@
 import { Construction, CreditCard, Domain, Home } from '@mui/icons-material'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import SettingsIcon from '@mui/icons-material/Settings'
 import { type Navigation } from '@toolpad/core/AppProvider'
 export const NAVIGATION: Navigation = [
 	{
@@ -37,11 +36,7 @@ export const ADMIN_NAVIGATION: Navigation = [
 		title: 'Админ-панель',
 		icon: <AdminPanelSettingsIcon />,
 	},
-	{
-		segment: 'admin/settings',
-		title: 'Настройки',
-		icon: <SettingsIcon />,
-	},
+
 	{
 		segment: 'admin/projects',
 		title: 'Проекты',

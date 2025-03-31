@@ -12,6 +12,8 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
+import { Data, Project } from '../../../types/projects'
+import { colors } from '../../../const/projectsColors'
 
 interface Column {
 	id:
@@ -51,49 +53,6 @@ const columns: readonly Column[] = [
 	{ id: 'general_status', label: 'Общее состояние', minWidth: 150 },
 ]
 
-interface Project {
-	id: number
-	region_id: number
-	initiator: string
-	name: string
-	budget_million: number
-	jobs_created: number
-	completion_date: string
-	authority_id: number
-	status_id: number
-	general_status: string
-}
-
-interface Region {
-	id: number
-	name: string
-}
-
-interface Authority {
-	id: number
-	name: string
-}
-
-interface Status {
-	id: number
-	name: string
-}
-
-interface Data {
-	Regions: Region[]
-	Authorities: Authority[]
-	Statuses: Status[]
-	Projects: Project[]
-}
-const colors = {
-	Истиқболсиз: '#ff9800', // Оранжевый
-	Бошланмаган: '#2196f3', // Синий
-	Бажарилмоқда: '#4caf50', // Зеленый
-	Кечикмоқда: '#f44336', // Красный
-	Тугатилган: '#616161', // Серый
-	'Рад этилган': '#f44336', // Красный
-	'Амалга оширилмоқда': '#4caf50', // Зеленый
-}
 const formatText = (text: string) => {
 	const parts = text.split(/(Ижро ҳолати:|Муаммо:|Таклиф:)/g)
 
@@ -106,7 +65,7 @@ const formatText = (text: string) => {
 	)
 }
 
-export default function CustomTable({ data }: { data: Data }) {
+export default function ProjectsTable({ data }: { data: Data }) {
 	const theme = useTheme()
 	const [modalOpen, setModalOpen] = useState(false)
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null)

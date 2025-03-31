@@ -6,6 +6,5 @@ export enum RoutesEnums {
 	PROJECTS = '/projects',
 	AUTH = '/auth',
 	ADIMN = '/admin',
-	ADIMN_SETTINGS = '/admin/settings',
 	ADIMN_PROJECTS = '/admin/projects',
 }

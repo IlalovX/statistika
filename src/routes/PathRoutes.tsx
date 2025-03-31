@@ -13,6 +13,10 @@ const Projects = lazy(() => import('../pages/projects/Projects'))
 const Auth = lazy(() => import('../pages/auth/Auth'))
 
 const Admin = lazy(() => import('../pages/admin/Admin'))
+
+const AdminProjects = lazy(
+	() => import('../pages/admin-projects/AdminProjects')
+)
 function PathRoutes() {
 	return (
 		<Routes>
@@ -68,6 +72,15 @@ function PathRoutes() {
 					element={
 						<Suspense>
 							<Admin />
+						</Suspense>
+					}
+				/>
+
+				<Route
+					path={RoutesConsts[RoutesEnums.ADIMN_PROJECTS]}
+					element={
+						<Suspense>
+							<AdminProjects />
 						</Suspense>
 					}
 				/>
