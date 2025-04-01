@@ -14,24 +14,24 @@ import { CustomizedAxisTick } from '../../ChartComponents'
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; harvest?: number; profit?: number }[]
 }
-
-const formatNumber = (num: number): string => {
+const formatNumber = (num?: number): string => {
+	const safeNum = num ?? 0
 	return (
-		(num / 1000).toLocaleString('ru-RU', {
+		(safeNum / 1000).toLocaleString('ru-RU', {
 			maximumFractionDigits: 1,
 		}) + ' тыс.'
 	)
 }
 
-const formatCurrency = (num: number): string => {
+const formatCurrency = (num?: number): string => {
+	const safeNum = num ?? 0
 	return (
-		num.toLocaleString('ru-RU', {
+		safeNum.toLocaleString('ru-RU', {
 			minimumFractionDigits: 1,
 			maximumFractionDigits: 1,
 		}) + ' млрд сум'
 	)
 }
-
 const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 	const { x, y, value, index, data } = props
 
@@ -138,10 +138,10 @@ function XojalikChartCard() {
 					<Typography variant='h6'>
 						{finalChartData.length > 0 &&
 						finalChartData[finalChartData.length - 1].profit !== undefined
-							? formatCurrency(
-									finalChartData[finalChartData.length - 1].profit ?? 0
+							? formatNumber(
+									finalChartData[finalChartData.length - 1].harvest ?? 0
 								)
-							: 'Нет данных'}
+							: '0'}
 						т
 					</Typography>
 					<p className='text-gray-400'>
@@ -157,7 +157,7 @@ function XojalikChartCard() {
 							? formatCurrency(
 									finalChartData[finalChartData.length - 1].profit ?? 0
 								)
-							: 'Нет данных'}
+							: '0'}
 					</Typography>
 					<p className='text-gray-400'>
 						<span className='text-green-500 text-xl'>0%</span> за последний
