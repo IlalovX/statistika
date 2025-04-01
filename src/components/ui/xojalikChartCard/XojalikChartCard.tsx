@@ -124,8 +124,6 @@ function XojalikChartCard() {
 	const finalChartData = Object.values(combinedData)
 		.sort((a, b) => Number(a.year) - Number(b.year))
 		.slice(-6)
-	console.log(finalChartData)
-
 	return (
 		<Box
 			className='shadow-xl rounded-2xl my-5'
@@ -138,10 +136,12 @@ function XojalikChartCard() {
 				<Box>
 					<p className='text-gray-400'>Общее количество собранных урожаев</p>
 					<Typography variant='h6'>
-						{finalChartData &&
-							formatNumber(
-								finalChartData[finalChartData.length - 1].harvest ?? 0
-							)}{' '}
+						{finalChartData.length > 0 &&
+						finalChartData[finalChartData.length - 1].profit !== undefined
+							? formatCurrency(
+									finalChartData[finalChartData.length - 1].profit ?? 0
+								)
+							: 'Нет данных'}
 						т
 					</Typography>
 					<p className='text-gray-400'>
