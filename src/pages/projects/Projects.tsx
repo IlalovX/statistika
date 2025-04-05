@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import ThemeText from '../../components/ThemeText'
 import ProjectStatusCards from '../../components/ui/projectsStatusCards/ProjectStatusCards'
 import ProjectsTable from '../../components/ui/projectsTable/ProjectsTable'
+import { statusDetails } from '../../const/statuses'
 interface Project {
 	id: number
 	region_id: number
@@ -46,7 +47,8 @@ const cities = ['Нукус', 'Ташкент', 'Самарканд', 'Буха�
 interface FormData {
 	city?: string
 	projectName?: string
-	cost?: number
+	costTo: number
+	costFor: number
 	status?: string
 }
 function Projects() {
@@ -107,11 +109,12 @@ function Projects() {
 					{filter && (
 						<form
 							onSubmit={handleSubmit(onSubmit)}
-							className='flex items-center justify-between w-full gap-5 mt-5'
+							className='flex justify-between items-center gap-5 mt-5'
 						>
+							{/* Город */}
 							<TextField
 								select
-								label='Города'
+								label='Город'
 								{...register('city')}
 								variant='outlined'
 								size='small'
@@ -124,33 +127,44 @@ function Projects() {
 								))}
 							</TextField>
 
+							{/* Стоимость (от - до) */}
+							<div className='flex items-center gap-2 w-full'>
+								<TextField
+									label='от'
+									{...register('costFor')}
+									variant='outlined'
+									size='small'
+									fullWidth
+								/>
+								<span> | </span>
+								<TextField
+									label='до'
+									{...register('costTo')}
+									variant='outlined'
+									size='small'
+									fullWidth
+								/>
+							</div>
+
+							{/* Статус */}
 							<TextField
-								label='Название проекта'
-								{...register('projectName')}
-								variant='outlined'
-								size='small'
-								fullWidth
-							/>
-							<TextField
-								label='Стоимость'
-								{...register('cost')}
-								variant='outlined'
-								size='small'
-								fullWidth
-							/>
-							<TextField
+								select
 								label='Статус'
 								{...register('status')}
 								variant='outlined'
 								size='small'
 								fullWidth
-							/>
-							<div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
-								<Button
-									variant='outlined'
-									type='reset'
-									sx={{ height: '40px' }}
-								>
+							>
+								{Object.entries(statusDetails).map(([key]) => (
+									<MenuItem key={key} value={key}>
+										{key}
+									</MenuItem>
+								))}
+							</TextField>
+
+							{/* Buttons */}
+							<div className='flex gap-2'>
+								<Button variant='outlined' type='reset' sx={{ height: '40px' }}>
 									Отмена
 								</Button>
 								<Button

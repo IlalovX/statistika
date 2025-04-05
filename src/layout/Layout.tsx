@@ -3,7 +3,7 @@ import type { Router } from '@toolpad/core/AppProvider'
 import { AppProvider } from '@toolpad/core/AppProvider'
 import { DashboardLayout } from '@toolpad/core/DashboardLayout'
 import { Outlet, useLocation, useNavigate } from 'react-router'
-import { ADMIN_NAVIGATION, NAVIGATION } from '../const/layoutNav'
+import { NAVIGATION } from '../const/layoutNav'
 import { demoTheme } from '../const/layoutTheme'
 import { RoutesConsts } from '../const/routes'
 import { RoutesEnums } from '../enums/routes'
@@ -18,12 +18,9 @@ export default function DashboardLayoutAccount() {
 		searchParams: new URLSearchParams(location.search),
 	}
 
-	const navigationConfig = location.pathname.startsWith('/admin')
-		? ADMIN_NAVIGATION
-		: NAVIGATION
 	return (
 		<AppProvider
-			navigation={navigationConfig}
+			navigation={NAVIGATION}
 			router={router}
 			theme={demoTheme}
 			branding={{

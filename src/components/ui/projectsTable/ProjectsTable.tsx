@@ -12,8 +12,8 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
-import { Data, Project } from '../../../types/projects'
 import { colors } from '../../../const/projectsColors'
+import { Data, Project } from '../../../types/projects'
 
 interface Column {
 	id:
