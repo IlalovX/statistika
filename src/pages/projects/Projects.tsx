@@ -55,6 +55,14 @@ function Projects() {
 
 	const theme = useTheme()
 
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString)
+		const year = date.getFullYear()
+		const month = String(date.getMonth() + 1).padStart(2, '0')
+		const day = String(date.getDate()).padStart(2, '0')
+		return `${year}-${month}-${day}`
+	}
+
 	return (
 		<div className='space-y-10'>
 			<header>
@@ -67,7 +75,9 @@ function Projects() {
 							color: theme.palette.mode === 'light' ? 'black' : 'white',
 						}}
 					>
-						{last_update ? last_update.last_update : '01.01.2025'}
+						{last_update
+							? formatDate(last_update.last_update as string)
+							: '01.01.2025'}
 					</span>
 				</p>
 			</header>
