@@ -1,10 +1,3 @@
-import {
-	Business,
-	CheckCircle,
-	Error,
-	HourglassEmpty,
-	PlayArrow,
-} from '@mui/icons-material'
 import { Box, Typography, useTheme } from '@mui/material'
 import { ProjectSuccessType, StatusesSuccessType } from '../../../types/queries'
 
@@ -19,13 +12,34 @@ function ProjectStatusCards({
 		string,
 		{ color: string; icon: React.ReactNode }
 	> = {
-		Истиқболсиз: { color: '#ff9800', icon: <HourglassEmpty /> },
-		Бошланмаган: { color: '#2196f3', icon: <PlayArrow /> },
-		'Ишга туширилган': { color: '#4caf50', icon: <CheckCircle /> },
-		Кечикмоқда: { color: '#f44336', icon: <Error /> },
-		Тугатилган: { color: '#616161', icon: <CheckCircle /> },
-		'Рад этилган': { color: '#f44336', icon: <Error /> },
-		'Амалга оширилмоқда': { color: '#4caf50', icon: <Business /> },
+		Истиқболсиз: {
+			color: '#ff9800',
+			icon: <img src='/svg/projects/Background.svg' />,
+		},
+		Бошланмаган: {
+			color: '#2196f3',
+			icon: <img src='/svg/projects/Background (2).svg' />,
+		},
+		'Ишга туширилган': {
+			color: '#4caf50',
+			icon: <img src='/svg/projects/Background (2).svg' />,
+		},
+		Кечикмоқда: {
+			color: '#f44336',
+			icon: <img src='/svg/projects/Background (3).svg' />,
+		},
+		Тугатилган: {
+			color: '#616161',
+			icon: <img src='/svg/projects/Background (4).svg' />,
+		},
+		'Рад этилган': {
+			color: '#f44336',
+			icon: <img src='/svg/projects/Background (4).svg' />,
+		},
+		'Амалга оширилмоқда': {
+			color: '#4caf50',
+			icon: <img src='/svg/projects/Background (1).svg' />,
+		},
 	}
 
 	// Создаем мапу: статус ID => количество проектов
