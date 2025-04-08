@@ -11,7 +11,9 @@ export interface ProjectSuccessType {
 	status_id: number
 	general_status: string
 	id: number
-	deleted_at: string | null
+	deleted_at: string
+	created_at: string
+	updated_at: string
 }
 
 export type ProjectsErrorType = AxiosError<{
@@ -65,3 +67,18 @@ export interface UsersSuccessType {
 export type UsersErrorType = AxiosError<{
 	message: { [key: string]: string }
 }>
+
+export interface LastUpdateSuccessType {
+	last_update: null | string
+}
+
+export type LastUpdateErrorType = AxiosError<{
+	message: { [key: string]: string }
+}>
+
+export interface GetFiltersProjectsData {
+	region_id?: string
+	budget_min: number
+	budget_max: number
+	status_id?: string
+}

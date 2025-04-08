@@ -12,8 +12,12 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
-import { colors } from '../../../const/projectsColors'
-import { Data, Project } from '../../../types/projects'
+import {
+	AuthoritiesSuccessType,
+	ProjectSuccessType,
+	RegionsSuccessType,
+	StatusesSuccessType,
+} from '../../../types/queries'
 
 interface Column {
 	id:
@@ -25,6 +29,7 @@ interface Column {
 		| 'completion_date'
 		| 'authority_id'
 		| 'status_id'
+		| 'updated_at'
 		| 'general_status'
 	label: string
 	minWidth?: number
@@ -50,6 +55,7 @@ const columns: readonly Column[] = [
 	{ id: 'completion_date', label: 'Срок запуска', minWidth: 170 },
 	{ id: 'authority_id', label: 'Ответственный', minWidth: 200 },
 	{ id: 'status_id', label: 'Статус', minWidth: 150 },
+	{ id: 'updated_at', label: 'Последнее обновление', minWidth: 150 },
 	{ id: 'general_status', label: 'Общее состояние', minWidth: 150 },
 ]
 
@@ -65,12 +71,27 @@ const formatText = (text: string) => {
 	)
 }
 
-export default function ProjectsTable({ data }: { data: Data }) {
+export default function ProjectsTable({
+	projects,
+	statuses,
+	authorities,
+	regions,
+}: {
+	projects: ProjectSuccessType[]
+	authorities: AuthoritiesSuccessType[]
+	regions: RegionsSuccessType[]
+	statuses: StatusesSuccessType[]
+}) {
 	const theme = useTheme()
 	const [modalOpen, setModalOpen] = useState(false)
-	const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+	const [selectedProject, setSelectedProject] =
+		useState<ProjectSuccessType | null>(null)
 
-	const handleOpenModal = ({ project }: { project: Project | null }) => {
+	const handleOpenModal = ({
+		project,
+	}: {
+		project: ProjectSuccessType | null
+	}) => {
 		setSelectedProject(project)
 		setModalOpen(true)
 	}
@@ -85,8 +106,8 @@ export default function ProjectsTable({ data }: { data: Data }) {
 				p: 2,
 			}}
 		>
-			<TableContainer>
-				<Table>
+			<TableContainer sx={{ maxWidth: '100%' }}>
+				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
 							{columns.map(column => (
@@ -94,6 +115,9 @@ export default function ProjectsTable({ data }: { data: Data }) {
 									key={column.id}
 									align={column.align}
 									style={{ minWidth: column.minWidth }}
+									sx={{
+										bgcolor: 'background.paper',
+									}}
 								>
 									{column.label}
 								</TableCell>
@@ -101,65 +125,74 @@ export default function ProjectsTable({ data }: { data: Data }) {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{data?.Projects?.map(row => (
-							<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
-								{columns.map(column => {
-									let value = row[column.id as keyof Project]
+						{projects && projects.length > 0 ? (
+							projects.map(row => (
+								<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+									{columns.map(column => {
+										let value = row[column.id as keyof ProjectSuccessType]
 
-									if (column.id === 'region_id') {
-										value =
-											data.Regions.find(r => r.id === row.region_id)?.name ||
-											'Неизвестный регион'
-									}
-									if (column.id === 'authority_id') {
-										value =
-											data.Authorities.find(a => a.id === row.authority_id)
-												?.name || 'Неизвестный ответственный'
-									}
+										if (column.id === 'region_id') {
+											value =
+												regions?.find(r => r.id === row?.region_id)?.name ||
+												'Неизвестный регион'
+										}
+										if (column.id === 'authority_id') {
+											value =
+												authorities?.find(a => a.id === row?.authority_id)
+													?.name || 'Неизвестный ответственный'
+										}
 
-									if (column.id === 'status_id') {
-										value =
-											data.Statuses.find(s => s.id === row.status_id)?.name ||
-											'Неизвестный статус'
+										if (column.id === 'status_id') {
+											value =
+												statuses?.find(s => s.id === row?.status_id)?.name ||
+												'Неизвестный статус'
+										}
+
+										if (column.id === 'general_status') {
+											return (
+												<TableCell key={column.id} align={column.align}>
+													<Button
+														variant='contained'
+														color='primary'
+														onClick={() => {
+															handleOpenModal({ project: row })
+														}}
+													>
+														Подробнее
+													</Button>
+												</TableCell>
+											)
+										}
+
+										if (column.id === 'budget_million') {
+											value = new Intl.NumberFormat('ru-RU', {
+												minimumFractionDigits: 2,
+											}).format(Number(value))
+										}
+
+										if (column.id === 'completion_date' && value) {
+											value = new Date(value).toLocaleDateString('ru-RU')
+										}
+
+										if (column.id === 'updated_at' && value) {
+											value = new Date(value).toLocaleDateString('ru-RU')
+										}
+
 										return (
-											<TableCell
-												key={column.id}
-												align={column.align}
-												sx={{
-													color:
-														colors[value as keyof typeof colors] || 'black',
-												}}
-											>
+											<TableCell key={column.id} align={column.align}>
 												{value}
 											</TableCell>
 										)
-									}
-
-									if (column.id === 'general_status') {
-										return (
-											<TableCell key={column.id} align={column.align}>
-												<Button
-													variant='contained'
-													color='primary'
-													onClick={() => handleOpenModal({ project: row })}
-												>
-													Подробнее
-												</Button>
-											</TableCell>
-										)
-									}
-									if (column.id === 'budget_million') {
-										value = Number(value).toFixed(2)
-									}
-
-									return (
-										<TableCell key={column.id} align={column.align}>
-											{value}
-										</TableCell>
-									)
-								})}
+									})}
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={columns.length} align='center'>
+									Нет данных
+								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>

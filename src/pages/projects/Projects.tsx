@@ -1,87 +1,73 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { Button, MenuItem, TextField, useTheme } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ThemeText from '../../components/ThemeText'
 import ProjectStatusCards from '../../components/ui/projectsStatusCards/ProjectStatusCards'
 import ProjectsTable from '../../components/ui/projectsTable/ProjectsTable'
-import { statusDetails } from '../../const/statuses'
-interface Project {
-	id: number
-	region_id: number
-	initiator: string
-	name: string
-	budget_million: number
-	jobs_created: number
-	completion_date: string
-	authority_id: number
-	status_id: number
-	general_status: string
-}
+import { getAuthorities } from '../../services/queries/authorities'
+import {
+	getFilterProjects,
+	getLastUpdate,
+	getProjects,
+} from '../../services/queries/projects'
+import { getRegions } from '../../services/queries/regions'
+import { getStatuses } from '../../services/queries/statuses'
 
-interface Region {
-	id: number
-	name: string
-}
-
-interface Authority {
-	id: number
-	name: string
-}
-
-interface Status {
-	id: number
-	name: string
-}
-
-export interface Data {
-	Regions: Region[]
-	Authorities: Authority[]
-	Statuses: Status[]
-	Projects: Project[]
-}
-
-const cities = ['Нукус', 'Ташкент', 'Самарканд', 'Бухара', 'Хива', 'Шахрисабз']
 interface FormData {
-	city?: string
-	projectName?: string
-	costTo: number
-	costFor: number
-	status?: string
+	region_id?: string
+	budget_min: number
+	budget_max: number
+	status_id?: string
 }
+
 function Projects() {
 	const [filter, setFilter] = useState(false)
-	const { register, handleSubmit } = useForm<FormData>()
+	const { register, handleSubmit, reset, control } = useForm<FormData>({
+		defaultValues: {
+			region_id: '',
+			budget_min: 0,
+			budget_max: 0,
+			status_id: '',
+		},
+	})
+	const [filterValues, setFilterValues] = useState<FormData | undefined>(
+		undefined
+	)
+
+	const { data: projects } = getProjects()
+	const { data: regions } = getRegions()
+	const { data: statuses } = getStatuses()
+	const { data: authorities } = getAuthorities()
+	const { data: last_update } = getLastUpdate()
+	const { data: filter_data } = getFilterProjects(filterValues)
+	const displayedProjects = filterValues ? filter_data || [] : projects || []
 
 	const onSubmit: SubmitHandler<FormData> = data => {
-		console.log(data)
+		setFilterValues(data)
+	}
+
+	const handleResetForm = () => {
+		reset()
+		setFilterValues(undefined)
 	}
 
 	const theme = useTheme()
-	const { data } = useQuery<Data>({
-		queryKey: ['projects'],
-		queryFn: async () => {
-			const res = await fetch('/db/projects/converted_data.json')
-
-			return await res.json()
-		},
-	})
 
 	return (
 		<div className='space-y-10'>
 			<header>
 				<ThemeText variant='h4' text='Проекты' />
 				<p className='text-gray-400'>
-					Последний обновления
+					Последний обновления{' '}
 					<span
 						className='font-bold '
 						style={{
 							color: theme.palette.mode === 'light' ? 'black' : 'white',
 						}}
 					>
-						10.03.2025
+						{last_update ? last_update.last_update : '01.01.2025'}
 					</span>
 				</p>
 			</header>
@@ -91,7 +77,10 @@ function Projects() {
 					<ThemeText variant='h4' text='Краткая информация' />
 					<p className='text-gray-400'>сравнее прошлым годом</p>
 				</header>
-				<ProjectStatusCards data={data as Data} />
+				<ProjectStatusCards
+					projects={projects ? projects : []}
+					statuses={statuses ? statuses : []}
+				/>
 			</section>
 
 			<section>
@@ -112,26 +101,33 @@ function Projects() {
 							className='flex justify-between items-center gap-5 mt-5'
 						>
 							{/* Город */}
-							<TextField
-								select
-								label='Город'
-								{...register('city')}
-								variant='outlined'
-								size='small'
-								fullWidth
-							>
-								{cities.map(city => (
-									<MenuItem key={city} value={city}>
-										{city}
-									</MenuItem>
-								))}
-							</TextField>
-
+							<Controller
+								name='region_id'
+								control={control}
+								defaultValue=''
+								render={({ field }) => (
+									<TextField
+										select
+										label='Регионы'
+										variant='outlined'
+										size='small'
+										fullWidth
+										{...field}
+									>
+										{regions &&
+											regions.map(region => (
+												<MenuItem key={region.id} value={region.id}>
+													{region.name}
+												</MenuItem>
+											))}
+									</TextField>
+								)}
+							/>
 							{/* Стоимость (от - до) */}
 							<div className='flex items-center gap-2 w-full'>
 								<TextField
 									label='от'
-									{...register('costFor')}
+									{...register('budget_min')}
 									variant='outlined'
 									size='small'
 									fullWidth
@@ -139,7 +135,7 @@ function Projects() {
 								<span> | </span>
 								<TextField
 									label='до'
-									{...register('costTo')}
+									{...register('budget_max')}
 									variant='outlined'
 									size='small'
 									fullWidth
@@ -147,24 +143,37 @@ function Projects() {
 							</div>
 
 							{/* Статус */}
-							<TextField
-								select
-								label='Статус'
-								{...register('status')}
-								variant='outlined'
-								size='small'
-								fullWidth
-							>
-								{Object.entries(statusDetails).map(([key]) => (
-									<MenuItem key={key} value={key}>
-										{key}
-									</MenuItem>
-								))}
-							</TextField>
+							<Controller
+								name='status_id'
+								control={control}
+								defaultValue=''
+								render={({ field }) => (
+									<TextField
+										select
+										label='Статус'
+										variant='outlined'
+										size='small'
+										fullWidth
+										{...field}
+									>
+										{statuses &&
+											statuses.map(status => (
+												<MenuItem key={status.id} value={status.id}>
+													{status.name}
+												</MenuItem>
+											))}
+									</TextField>
+								)}
+							/>
 
 							{/* Buttons */}
 							<div className='flex gap-2'>
-								<Button variant='outlined' type='reset' sx={{ height: '40px' }}>
+								<Button
+									variant='outlined'
+									type='reset'
+									sx={{ height: '40px' }}
+									onClick={handleResetForm}
+								>
 									Отмена
 								</Button>
 								<Button
@@ -179,7 +188,12 @@ function Projects() {
 						</form>
 					)}
 				</header>
-				<ProjectsTable data={data as Data} />
+				<ProjectsTable
+					projects={displayedProjects}
+					statuses={statuses ? statuses : []}
+					authorities={authorities ? authorities : []}
+					regions={regions ? regions : []}
+				/>
 			</section>
 		</div>
 	)
