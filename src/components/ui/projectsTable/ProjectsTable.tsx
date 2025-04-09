@@ -116,6 +116,7 @@ export default function ProjectsTable({
 									align={column.align}
 									style={{ minWidth: column.minWidth }}
 									sx={{
+										fontWeight: 'bold',
 										bgcolor: 'background.paper',
 									}}
 								>

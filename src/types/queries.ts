@@ -78,7 +78,7 @@ export type LastUpdateErrorType = AxiosError<{
 
 export interface GetFiltersProjectsData {
 	region_id?: string
-	budget_min: number
-	budget_max: number
+	budget_min?: string | number
+	budget_max?: string | number
 	status_id?: string
 }

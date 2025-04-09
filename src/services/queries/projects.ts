@@ -38,6 +38,6 @@ export const getFilterProjects = (filters?: GetFiltersProjectsData) => {
 			})
 			return res.data
 		},
-		enabled: !!filters, // не запрашивать, пока фильтры не заданы
+		enabled: !!filters,
 	})
 }

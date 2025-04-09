@@ -17,8 +17,8 @@ import { getStatuses } from '../../services/queries/statuses'
 
 interface FormData {
 	region_id?: string
-	budget_min: number
-	budget_max: number
+	budget_min: string
+	budget_max: string
 	status_id?: string
 }
 
@@ -27,8 +27,8 @@ function Projects() {
 	const { register, handleSubmit, reset, control } = useForm<FormData>({
 		defaultValues: {
 			region_id: '',
-			budget_min: 0,
-			budget_max: 0,
+			budget_min: '',
+			budget_max: '',
 			status_id: '',
 		},
 	})
@@ -45,9 +45,15 @@ function Projects() {
 	const displayedProjects = filterValues ? filter_data || [] : projects || []
 
 	const onSubmit: SubmitHandler<FormData> = data => {
-		setFilterValues(data)
-	}
+		// Очистка от пустых строк
+		const cleaned = Object.fromEntries(
+			Object.entries(data).filter(([_, value]) => value !== '')
+		)
 
+		setFilterValues(
+			Object.keys(cleaned).length === 0 ? undefined : (cleaned as FormData)
+		)
+	}
 	const handleResetForm = () => {
 		reset()
 		setFilterValues(undefined)
