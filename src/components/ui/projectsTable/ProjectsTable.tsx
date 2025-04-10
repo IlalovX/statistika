@@ -21,6 +21,7 @@ import {
 
 interface Column {
 	id:
+		| 'id'
 		| 'region_id'
 		| 'initiator'
 		| 'name'
@@ -37,6 +38,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
+	{ id: 'id', label: 'ID', minWidth: 50 },
 	{ id: 'region_id', label: 'Город', minWidth: 120 },
 	{ id: 'initiator', label: 'Инициатор проекта', minWidth: 200 },
 	{ id: 'name', label: 'Название проекта', minWidth: 200 },
@@ -127,11 +129,17 @@ export default function ProjectsTable({
 					</TableHead>
 					<TableBody>
 						{projects && projects.length > 0 ? (
-							projects.map(row => (
+							projects.map((row, index) => (
 								<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
 									{columns.map(column => {
 										let value = row[column.id as keyof ProjectSuccessType]
-
+										if (column.id === 'id') {
+											return (
+												<TableCell key={column.id} align={column.align}>
+													{index + 1}
+												</TableCell>
+											)
+										}
 										if (column.id === 'region_id') {
 											value =
 												regions?.find(r => r.id === row?.region_id)?.name ||

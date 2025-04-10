@@ -1,8 +1,10 @@
+'use client'
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { Button, MenuItem, TextField, useTheme } from '@mui/material'
 import { useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import ThemeText from '../../components/ThemeText'
 import ProjectStatusCards from '../../components/ui/projectsStatusCards/ProjectStatusCards'
 import ProjectsTable from '../../components/ui/projectsTable/ProjectsTable'
@@ -69,6 +71,35 @@ function Projects() {
 		return `${year}-${month}-${day}`
 	}
 
+	// Common MenuProps configuration for consistent dropdown behavior
+	const menuProps = {
+		anchorOrigin: {
+			vertical: 'bottom' as const,
+			horizontal: 'left' as const,
+		},
+		transformOrigin: {
+			vertical: 'top' as const,
+			horizontal: 'left' as const,
+		},
+		PaperProps: {
+			sx: {
+				backgroundColor:
+					theme.palette.mode === 'light'
+						? theme.palette.common.white
+						: theme.palette.grey[900],
+				boxShadow: theme.shadows[4],
+				'& .MuiMenuItem-root': {
+					'&:hover': {
+						backgroundColor:
+							theme.palette.mode === 'light'
+								? theme.palette.action.hover
+								: theme.palette.action.selected,
+					},
+				},
+			},
+		},
+	}
+
 	return (
 		<div className='space-y-10'>
 			<header>
@@ -114,73 +145,89 @@ function Projects() {
 					{filter && (
 						<form
 							onSubmit={handleSubmit(onSubmit)}
-							className='flex justify-between items-center gap-5 mt-5'
+							className='flex justify-between items-end gap-5 mt-5'
 						>
-							{/* Город */}
-							<Controller
-								name='region_id'
-								control={control}
-								defaultValue=''
-								render={({ field }) => (
-									<TextField
-										select
-										label='Регионы'
-										variant='outlined'
-										size='small'
-										fullWidth
-										{...field}
-									>
-										{regions &&
-											regions.map(region => (
-												<MenuItem key={region.id} value={region.id}>
-													{region.name}
-												</MenuItem>
-											))}
-									</TextField>
-								)}
-							/>
-							{/* Стоимость (от - до) */}
-							<div className='flex items-center gap-2 w-full'>
-								<TextField
-									label='от'
-									{...register('budget_min')}
-									variant='outlined'
-									size='small'
-									fullWidth
-								/>
-								<span> | </span>
-								<TextField
-									label='до'
-									{...register('budget_max')}
-									variant='outlined'
-									size='small'
-									fullWidth
+							<div className='w-full'>
+								{/* Город */}
+								<label>Регионы</label>
+								<Controller
+									name='region_id'
+									control={control}
+									defaultValue=''
+									render={({ field }) => (
+										<TextField
+											select
+											placeholder='Регионы'
+											variant='outlined'
+											size='small'
+											fullWidth
+											SelectProps={{
+												MenuProps: menuProps,
+											}}
+											{...field}
+										>
+											{regions &&
+												regions.map(region => (
+													<MenuItem key={region.id} value={region.id}>
+														{region.name}
+													</MenuItem>
+												))}
+										</TextField>
+									)}
 								/>
 							</div>
 
-							{/* Статус */}
-							<Controller
-								name='status_id'
-								control={control}
-								defaultValue=''
-								render={({ field }) => (
+							<div className='w-full'>
+								<label>Стоимость</label>
+								{/* Стоимость (от - до) */}
+								<div className='flex items-center gap-2 w-full'>
 									<TextField
-										select
-										label='Статус'
+										placeholder='от'
+										{...register('budget_min')}
 										variant='outlined'
 										size='small'
 										fullWidth
-										{...field}
-									>
-										{statuses &&
-											statuses.map(status => (
-												<MenuItem key={status.id} value={status.id}>
-													{status.name}
-												</MenuItem>
-											))}
-									</TextField>
-								)}
-							/>
+									/>
+									<span> | </span>
+									<TextField
+										placeholder='до'
+										{...register('budget_max')}
+										variant='outlined'
+										size='small'
+										fullWidth
+									/>
+								</div>
+							</div>
+
+							<div className='w-full'>
+								{/* Статус */}
+								<label>Статус</label>
+								<Controller
+									name='status_id'
+									control={control}
+									defaultValue=''
+									render={({ field }) => (
+										<TextField
+											select
+											placeholder='Статус'
+											variant='outlined'
+											size='small'
+											fullWidth
+											SelectProps={{
+												MenuProps: menuProps,
+											}}
+											{...field}
+										>
+											{statuses &&
+												statuses.map(status => (
+													<MenuItem key={status.id} value={status.id}>
+														{status.name}
+													</MenuItem>
+												))}
+										</TextField>
+									)}
+								/>
+							</div>
 
 							{/* Buttons */}
 							<div className='flex gap-2'>
