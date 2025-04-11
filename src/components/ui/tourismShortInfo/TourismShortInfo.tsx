@@ -1,39 +1,72 @@
 import { Box, Typography, useTheme } from '@mui/material'
+
 import ThemeText from '../../ThemeText'
-const infoData = [
-	{
-		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
-		value: `0`,
-		label: 'Количество туристов',
-		amt: '0%',
-	},
-	{
-		icon: '/svg/xojalik/XojalikShortInfo/Background.svg',
-		value: '0',
-		label: 'Внешний туризм',
-		amt: '0%',
-	},
-	{
-		icon: '/svg/xojalik/XojalikShortInfo/Background (2).svg',
-		value: '0',
-		label: 'Внутренний туризм',
-		amt: '0%',
-	},
-	{
-		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
-		value: '0',
-		label: 'Экспорт туриста',
-		amt: '0%',
-	},
-	{
-		icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
-		value: '0',
-		label: 'Средний длительность поездки',
-		amt: '0%',
-	},
-]
-function TourismShortInfo() {
+import { GetTouristData } from '../../../types/queries'
+
+function TourismShortInfo({
+	ishki,
+	sirtqi,
+}: {
+	ishki: GetTouristData
+	sirtqi: GetTouristData
+}) {
 	const theme = useTheme()
+
+	let lastValueIshki = '0'
+	if (ishki && ishki['2025']) {
+		const months = Object.entries(ishki['2025'])
+		if (months.length > 0) {
+			const [_, value] = months[months.length - 2]
+			lastValueIshki = String(value)
+		}
+	}
+
+	let lastValueSirtqi = '0'
+	if (sirtqi) {
+		const years = Object.keys(sirtqi).sort((a, b) => Number(b) - Number(a))
+		if (years.length > 0) {
+			const latestYear = years[0]
+			const months = Object.entries(sirtqi[latestYear])
+			if (months.length > 0) {
+				const [_, value] = months[months.length - 2]
+				lastValueSirtqi = String(value)
+			}
+		}
+	}
+
+	const infoData = [
+		{
+			icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
+			value: +lastValueIshki + +lastValueSirtqi,
+			label: 'Количество туристов',
+			amt: '0%',
+		},
+		{
+			icon: '/svg/xojalik/XojalikShortInfo/Background.svg',
+			value: lastValueSirtqi,
+			label: 'Внешний туризм',
+			amt: '0%',
+		},
+		{
+			icon: '/svg/xojalik/XojalikShortInfo/Background (2).svg',
+			value: lastValueIshki,
+			label: 'Внутренний туризм',
+			amt: '0%',
+		},
+		{
+			icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
+			value: '0',
+			label: 'Экспорт туриста',
+			amt: '0%',
+		},
+		{
+			icon: '/svg/xojalik/XojalikShortInfo/Background (3).svg',
+			value: '0',
+			label: 'Средний длительность поездки',
+			amt: '0%',
+		},
+	]
+
 	return (
 		<div className='my-5'>
 			<ThemeText variant='h4' text='Краткая информация' />

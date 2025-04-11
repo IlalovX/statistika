@@ -82,3 +82,9 @@ export interface GetFiltersProjectsData {
 	budget_max?: string | number
 	status_id?: string
 }
+
+export interface GetTouristData {
+	[year: string]: {
+		[month: string]: number
+	}
+}

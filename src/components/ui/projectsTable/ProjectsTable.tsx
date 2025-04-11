@@ -183,8 +183,10 @@ export default function ProjectsTable({
 											value = new Date(value).toLocaleDateString('ru-RU')
 										}
 
-										if (column.id === 'updated_at' && value) {
-											value = new Date(value).toLocaleDateString('ru-RU')
+										if (column.id === 'updated_at') {
+											value
+												? (value = new Date(value).toLocaleDateString('ru-RU'))
+												: (value = 'Нет изменении')
 										}
 
 										return (

@@ -2,7 +2,7 @@
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { Button, MenuItem, TextField, useTheme } from '@mui/material'
+import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import ThemeText from '../../components/ThemeText'
@@ -154,25 +154,48 @@ function Projects() {
 									name='region_id'
 									control={control}
 									defaultValue=''
-									render={({ field }) => (
-										<TextField
-											select
-											placeholder='Регионы'
-											variant='outlined'
-											size='small'
-											fullWidth
-											SelectProps={{
-												MenuProps: menuProps,
-											}}
+									render={({ field: { onChange, value, ...field } }) => (
+										<Autocomplete
 											{...field}
-										>
-											{regions &&
-												regions.map(region => (
-													<MenuItem key={region.id} value={region.id}>
-														{region.name}
-													</MenuItem>
-												))}
-										</TextField>
+											options={regions || []}
+											getOptionLabel={option =>
+												typeof option === 'object' ? option.name : ''
+											}
+											isOptionEqualToValue={(option, value) => {
+												if (value === null || value === undefined) return false
+												return typeof value === 'object' && 'id' in value
+													? option.id === value.id
+													: option.id === value
+											}}
+											onChange={(_, newValue) => {
+												onChange(newValue ? newValue.id : '')
+											}}
+											value={
+												regions?.find(
+													region => String(region.id) === String(value)
+												) || null
+											}
+											renderInput={params => (
+												<TextField
+													{...params}
+													placeholder='Регионы'
+													size='small'
+													fullWidth
+													variant='outlined'
+												/>
+											)}
+											openOnFocus={false}
+											noOptionsText='Нет совпадений'
+											ListboxProps={{
+												style: {
+													backgroundColor:
+														theme.palette.mode === 'light'
+															? theme.palette.common.white
+															: theme.palette.grey[900],
+													boxShadow: theme.shadows[4],
+												},
+											}}
+										/>
 									)}
 								/>
 							</div>
@@ -206,25 +229,48 @@ function Projects() {
 									name='status_id'
 									control={control}
 									defaultValue=''
-									render={({ field }) => (
-										<TextField
-											select
-											placeholder='Статус'
-											variant='outlined'
-											size='small'
-											fullWidth
-											SelectProps={{
-												MenuProps: menuProps,
-											}}
+									render={({ field: { onChange, value, ...field } }) => (
+										<Autocomplete
 											{...field}
-										>
-											{statuses &&
-												statuses.map(status => (
-													<MenuItem key={status.id} value={status.id}>
-														{status.name}
-													</MenuItem>
-												))}
-										</TextField>
+											options={statuses || []}
+											getOptionLabel={option =>
+												typeof option === 'object' ? option.name : ''
+											}
+											isOptionEqualToValue={(option, value) => {
+												if (value === null || value === undefined) return false
+												return typeof value === 'object' && 'id' in value
+													? option.id === value.id
+													: option.id === value
+											}}
+											onChange={(_, newValue) => {
+												onChange(newValue ? newValue.id : '')
+											}}
+											value={
+												statuses?.find(
+													status => String(status.id) === String(value)
+												) || null
+											}
+											renderInput={params => (
+												<TextField
+													{...params}
+													placeholder='Статус'
+													size='small'
+													fullWidth
+													variant='outlined'
+												/>
+											)}
+											openOnFocus={false}
+											noOptionsText='Нет совпадений'
+											ListboxProps={{
+												style: {
+													backgroundColor:
+														theme.palette.mode === 'light'
+															? theme.palette.common.white
+															: theme.palette.grey[900],
+													boxShadow: theme.shadows[4],
+												},
+											}}
+										/>
 									)}
 								/>
 							</div>

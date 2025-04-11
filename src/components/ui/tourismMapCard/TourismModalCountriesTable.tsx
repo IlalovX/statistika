@@ -1,72 +1,59 @@
-import { Typography, useTheme } from '@mui/material'
-import Backdrop from '@mui/material/Backdrop'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Fade from '@mui/material/Fade'
-import Modal from '@mui/material/Modal'
-import Pagination from '@mui/material/Pagination'
+import {
+	Backdrop,
+	Box,
+	Button,
+	Fade,
+	Modal,
+	Pagination,
+	Typography,
+	useTheme,
+} from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
-interface CountryData {
-	country: string
-	count: number
-}
-
-interface CountriesTableProps {
-	data: CountryData[]
-}
 
 interface TourismModalCountriesTableProps {
-	data: CountryData[]
+	countries: string[]
+	torists: number[]
 }
-const CountriesTable: React.FC<CountriesTableProps> = ({ data }) => {
-	const [page, setPage] = useState(0)
-	const pageSize = 10
-	const rows = useMemo(() => data, [])
 
-	const columns = useMemo<GridColDef[]>(
-		() => [
-			{
-				field: 'country',
-				headerName: 'страны',
-				flex: 2,
-			},
-			{
-				field: 'count',
-				headerName: 'Количество',
-				flex: 2,
-			},
-		],
-		[]
-	)
-
-	return (
-		<div>
-			<DataGrid
-				getRowId={row => row.country}
-				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
-				columns={columns}
-				hideFooter
-				sx={{ border: 0, height: 600 }}
-			/>
-			<Pagination
-				count={Math.ceil(rows.length / pageSize)}
-				page={page + 1}
-				onChange={(_, newPage) => setPage(newPage - 1)}
-				siblingCount={1}
-				boundaryCount={1}
-				showFirstButton
-				showLastButton
-				sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}
-			/>
-		</div>
-	)
-}
 const TourismModalCountriesTable: React.FC<TourismModalCountriesTableProps> = ({
-	data,
+	countries,
+	torists,
 }) => {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
+	const [page, setPage] = useState(0)
+	const pageSize = 10
+
+	const rows = useMemo(
+		() =>
+			countries.map((country, index) => ({
+				id: country,
+				country,
+				count: torists[index] ?? 0,
+			})),
+		[countries, torists]
+	)
+
+	const columns: GridColDef[] = [
+		{
+			field: 'country',
+			headerName: 'Страны',
+			flex: 2,
+			renderHeader: () => (
+				<Typography sx={{ fontWeight: 'bold' }}>Страны</Typography>
+			),
+		},
+		{
+			field: 'count',
+			headerName: 'Количество',
+			flex: 2,
+			renderHeader: () => (
+				<Typography sx={{ fontWeight: 'bold' }}>Количество</Typography>
+			),
+		},
+	]
+
 	return (
 		<div>
 			<Button onClick={() => setOpen(true)}>Посмотреть все →</Button>
@@ -103,11 +90,31 @@ const TourismModalCountriesTable: React.FC<TourismModalCountriesTableProps> = ({
 						>
 							Прибывшие туристы
 						</Typography>
-						<CountriesTable data={data} />
+						<DataGrid
+							rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
+							columns={columns}
+							getRowId={row => row.id}
+							hideFooter
+							sx={{
+								border: 0,
+								height: 600,
+							}}
+						/>
+						<Pagination
+							count={Math.ceil(rows.length / pageSize)}
+							page={page + 1}
+							onChange={(_, newPage) => setPage(newPage - 1)}
+							siblingCount={1}
+							boundaryCount={1}
+							showFirstButton
+							showLastButton
+							sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}
+						/>
 					</Box>
 				</Fade>
 			</Modal>
 		</div>
 	)
 }
+
 export default TourismModalCountriesTable

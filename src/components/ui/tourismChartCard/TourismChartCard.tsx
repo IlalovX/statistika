@@ -8,53 +8,85 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
+import { GetTouristData } from '../../../types/queries'
 import { CustomizedAxisTick } from '../../ChartComponents'
 
-interface CustomizedLabelProps extends LabelProps {
-	data: { year: string; guests: number; profit: number }[]
+interface ChartDataType {
+	month: string
+	total: number
+	ishkiValue: number
+	sirtqiValue: number
 }
 
-const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
-	// const { x, y, value, index, data } = props
-	const { x, y } = props
+interface CustomizedLabelProps extends LabelProps {
+	data: ChartDataType[]
+	index: number
+}
 
-	// const profit = index !== undefined && data[index] ? data[index].profit : 0
+const CustomizedLabel: React.FC<CustomizedLabelProps> = ({
+	x,
+	y,
+	index,
+	data,
+}) => {
+	const item = data[index]
+	const isLast = index === data.length - 1
 
 	return (
 		<text
 			x={x}
 			y={y}
 			dy={-15}
-			textAnchor='middle'
+			textAnchor={isLast ? 'end' : 'start'}
 			fill='#00BAD1'
 			fontSize={14}
 			fontWeight='bold'
 		>
-			<tspan x={x} dy='-40'>
-				{/* Туристы: {value} */}
-				Туристы: 0
+			<tspan x={x} dy={isLast ? '-50' : '-40'}>
+				Внешний: {item.sirtqiValue}
 			</tspan>
-			<tspan x={x} dy='15'>
-				{/* Прибыль: {profit}$ */}
-				Прибыль: 0$
+			<tspan x={x} dy={isLast ? '20' : '15'}>
+				Внутренний: {item.ishkiValue}
 			</tspan>
 		</text>
 	)
 }
-function TourismChartCard() {
-	const data = [
-		{ year: '2020', guests: 700, profit: 100 },
-		{ year: '2021', guests: 2000, profit: 150 },
-		{ year: '2022', guests: 1000, profit: 200 },
-		{ year: '2023', guests: 2000, profit: 250 },
-		{ year: '2024', guests: 2500, profit: 300 },
-		{ year: '2025', guests: 1800, profit: 180 },
-	]
 
+function TourismChartCard({
+	ishki,
+	sirtqi,
+}: {
+	ishki: GetTouristData
+	sirtqi: GetTouristData
+}) {
 	const theme = useTheme()
+
+	const years = [
+		...new Set([...Object.keys(ishki || {}), ...Object.keys(sirtqi || {})]),
+	].sort()
+
+	const latestYear = years[years.length - 1]
+
+	const months = Object.keys({
+		...(ishki?.[latestYear] || {}),
+		...(sirtqi?.[latestYear] || {}),
+	})
+
+	const data: ChartDataType[] = months.map(month => {
+		const ishkiValue = ishki?.[latestYear]?.[month] ?? 0
+		const sirtqiValue = sirtqi?.[latestYear]?.[month] ?? 0
+
+		return {
+			month,
+			total: ishkiValue + sirtqiValue,
+			ishkiValue,
+			sirtqiValue,
+		}
+	})
+
 	return (
 		<Box
-			className='shadow-xl rounded-2xl  my-5'
+			className='shadow-xl rounded-2xl my-5'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -64,10 +96,12 @@ function TourismChartCard() {
 				<Box className='flex gap-10'>
 					<Box>
 						<p className='text-gray-400'>Общее количество Туристов</p>
-						<Typography variant='h6'>0</Typography>
+						<Typography variant='h6'>
+							{data.reduce((sum, d) => sum + d.total, 0)}
+						</Typography>
 						<p className='text-gray-400'>
 							<span className='text-green-500 text-xl'>0%</span> за последний
-							месяц
+							год
 						</p>
 					</Box>
 					<Box>
@@ -82,7 +116,7 @@ function TourismChartCard() {
 					</Box>
 				</Box>
 			</header>
-			<ResponsiveContainer width='100%' height={300}>
+			<ResponsiveContainer width='100%' height={400}>
 				<ComposedChart
 					data={data}
 					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
@@ -95,16 +129,22 @@ function TourismChartCard() {
 					</defs>
 
 					<XAxis
-						dataKey='year'
+						dataKey='month'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						padding={{ left: 55, right: 20 }}
 					/>
-					<YAxis type='number' domain={[0, 'dataMax+500']} />
+					<YAxis
+						type='number'
+						domain={[
+							0,
+							(dataMax: number) =>
+								Math.round((dataMax + dataMax / 4) / 1000) * 1000,
+						]}
+					/>
 
 					<Area
 						type='linear'
-						dataKey='guests'
+						dataKey='total'
 						stroke='#8884d8'
 						fill='url(#colorguests)'
 					/>
@@ -112,10 +152,12 @@ function TourismChartCard() {
 					<Line
 						strokeWidth={3}
 						type='linear'
-						dataKey='guests'
+						dataKey='total'
 						stroke='#00BAD1'
 						dot={{ r: 5 }}
-						label={<CustomizedLabel data={data} />}
+						label={({ x, y, index }) => (
+							<CustomizedLabel x={x!} y={y!} index={index!} data={data} />
+						)}
 					/>
 				</ComposedChart>
 			</ResponsiveContainer>
