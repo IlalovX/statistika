@@ -71,35 +71,6 @@ function Projects() {
 		return `${year}-${month}-${day}`
 	}
 
-	// Common MenuProps configuration for consistent dropdown behavior
-	const menuProps = {
-		anchorOrigin: {
-			vertical: 'bottom' as const,
-			horizontal: 'left' as const,
-		},
-		transformOrigin: {
-			vertical: 'top' as const,
-			horizontal: 'left' as const,
-		},
-		PaperProps: {
-			sx: {
-				backgroundColor:
-					theme.palette.mode === 'light'
-						? theme.palette.common.white
-						: theme.palette.grey[900],
-				boxShadow: theme.shadows[4],
-				'& .MuiMenuItem-root': {
-					'&:hover': {
-						backgroundColor:
-							theme.palette.mode === 'light'
-								? theme.palette.action.hover
-								: theme.palette.action.selected,
-					},
-				},
-			},
-		},
-	}
-
 	return (
 		<div className='space-y-10'>
 			<header>
