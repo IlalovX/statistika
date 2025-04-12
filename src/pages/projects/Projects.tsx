@@ -5,6 +5,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
+import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
 import ThemeText from '../../components/ThemeText'
 import ProjectStatusCards from '../../components/ui/projectsStatusCards/ProjectStatusCards'
 import ProjectsTable from '../../components/ui/projectsTable/ProjectsTable'
@@ -104,7 +105,7 @@ function Projects() {
 			<section>
 				<header>
 					<ThemeText variant='h4' text='Информация' />
-					<div className='flex items-center justify-end'>
+					<div className='flex items-center justify-end gap-5'>
 						<Button
 							className='text-black !capitalize !text-2xl'
 							onClick={() => setFilter(!filter)}
@@ -112,6 +113,7 @@ function Projects() {
 							Фильтр
 							{filter ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 						</Button>
+						<DownloadProjectsExcelButton />
 					</div>
 					{filter && (
 						<form
@@ -172,7 +174,7 @@ function Projects() {
 							</div>
 
 							<div className='w-full'>
-								<label>Стоимость</label>
+								<label>Стоимость ($млн)</label>
 								{/* Стоимость (от - до) */}
 								<div className='flex items-center gap-2 w-full'>
 									<TextField

@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Box,
 	Button,
@@ -12,7 +14,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
-import {
+import type {
 	AuthoritiesSuccessType,
 	ProjectSuccessType,
 	RegionsSuccessType,
@@ -103,132 +105,181 @@ export default function ProjectsTable({
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
-				mt: 5,
 				borderRadius: 5,
 				p: 2,
+				mt: 5,
+				width: '100%',
+				position: 'relative',
 			}}
 		>
-			<TableContainer sx={{ maxWidth: '100%' }}>
-				<Table stickyHeader>
-					<TableHead>
-						<TableRow>
-							{columns.map(column => (
-								<TableCell
-									key={column.id}
-									align={column.align}
-									style={{ minWidth: column.minWidth }}
-									sx={{
-										fontWeight: 'bold',
-										bgcolor: 'background.paper',
-									}}
-								>
-									{column.label}
-								</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{projects && projects.length > 0 ? (
-							projects.map((row, index) => (
-								<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
-									{columns.map(column => {
-										let value = row[column.id as keyof ProjectSuccessType]
-										if (column.id === 'id') {
-											return (
-												<TableCell key={column.id} align={column.align}>
-													{index + 1}
-												</TableCell>
-											)
-										}
-										if (column.id === 'region_id') {
-											value =
-												regions?.find(r => r.id === row?.region_id)?.name ||
-												'Неизвестный регион'
-										}
-										if (column.id === 'authority_id') {
-											value =
-												authorities?.find(a => a.id === row?.authority_id)
-													?.name || 'Неизвестный ответственный'
-										}
-
-										if (column.id === 'status_id') {
-											value =
-												statuses?.find(s => s.id === row?.status_id)?.name ||
-												'Неизвестный статус'
-										}
-
-										if (column.id === 'general_status') {
-											return (
-												<TableCell key={column.id} align={column.align}>
-													<Button
-														variant='contained'
-														color='primary'
-														onClick={() => {
-															handleOpenModal({ project: row })
-														}}
-													>
-														Подробнее
-													</Button>
-												</TableCell>
-											)
-										}
-
-										if (column.id === 'budget_million') {
-											value = new Intl.NumberFormat('ru-RU', {
-												minimumFractionDigits: 2,
-											}).format(Number(value))
-										}
-
-										if (column.id === 'completion_date' && value) {
-											value = new Date(value).toLocaleDateString('ru-RU')
-										}
-
-										if (column.id === 'updated_at') {
-											value
-												? (value = new Date(value).toLocaleDateString('ru-RU'))
-												: (value = 'Нет изменении')
-										}
-
-										return (
-											<TableCell key={column.id} align={column.align}>
-												{value}
-											</TableCell>
-										)
-									})}
-								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell colSpan={columns.length} align='center'>
-									Нет данных
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			<Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-				<Box
+			<div
+				style={{
+					width: '100%',
+					position: 'relative',
+					maxHeight: '600px',
+					display: 'flex',
+					flexDirection: 'column',
+				}}
+			>
+				<TableContainer
 					sx={{
-						position: 'absolute',
-						top: '50%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
-						width: 600,
-						bgcolor:
-							theme.palette.mode === 'dark'
-								? theme.palette.background.default
-								: theme.palette.background.paper,
-						boxShadow: 24,
-						p: 4,
+						maxWidth: '100%',
+						maxHeight: '100%',
+						overflow: 'auto',
+						'&::-webkit-scrollbar': {
+							height: '10px',
+							width: '10px',
+						},
+						'&::-webkit-scrollbar-thumb': {
+							backgroundColor:
+								theme.palette.mode === 'light' ? '#bdbdbd' : '#424242',
+							borderRadius: '5px',
+						},
+						'&::-webkit-scrollbar-track': {
+							backgroundColor:
+								theme.palette.mode === 'light' ? '#f5f5f5' : '#212121',
+						},
 					}}
 				>
-					<Typography variant='body1' sx={{ whiteSpace: 'pre-line' }}>
-						{selectedProject?.general_status &&
-							formatText(selectedProject.general_status)}
-					</Typography>
-				</Box>
-			</Modal>
+					<Table stickyHeader>
+						<TableHead>
+							<TableRow>
+								{columns.map(column => (
+									<TableCell
+										key={column.id}
+										align={column.align}
+										style={{ minWidth: column.minWidth }}
+										sx={{
+											fontWeight: 'bold',
+											position: 'sticky',
+											top: 0,
+											zIndex: 100,
+										}}
+									>
+										{column.label}
+									</TableCell>
+								))}
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{projects && projects.length > 0 ? (
+								projects.map((row, index) => (
+									<TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+										{columns.map(column => {
+											let value = row[column.id as keyof ProjectSuccessType]
+											if (column.id === 'id') {
+												return (
+													<TableCell key={column.id} align={column.align}>
+														{index + 1}
+													</TableCell>
+												)
+											}
+											if (column.id === 'region_id') {
+												value =
+													regions?.find(r => r.id === row?.region_id)?.name ||
+													'Неизвестный регион'
+											}
+											if (column.id === 'authority_id') {
+												value =
+													authorities?.find(a => a.id === row?.authority_id)
+														?.name || 'Неизвестный ответственный'
+											}
+
+											if (column.id === 'status_id') {
+												value =
+													statuses?.find(s => s.id === row?.status_id)?.name ||
+													'Неизвестный статус'
+											}
+
+											if (column.id === 'general_status') {
+												return (
+													<TableCell key={column.id} align={column.align}>
+														<Button
+															variant='contained'
+															color='primary'
+															onClick={() => {
+																handleOpenModal({ project: row })
+															}}
+														>
+															Подробнее
+														</Button>
+													</TableCell>
+												)
+											}
+
+											if (column.id === 'budget_million') {
+												value = new Intl.NumberFormat('ru-RU', {
+													minimumFractionDigits: 2,
+												}).format(Number(value))
+											}
+
+											if (column.id === 'completion_date' && value) {
+												value = new Date(value).toLocaleDateString('ru-RU')
+											}
+
+											if (column.id === 'updated_at') {
+												value
+													? (value = new Date(value).toLocaleDateString(
+															'ru-RU'
+														))
+													: (value = 'Нет изменении')
+											}
+
+											return (
+												<TableCell key={column.id} align={column.align}>
+													{value}
+												</TableCell>
+											)
+										})}
+									</TableRow>
+								))
+							) : (
+								<TableRow>
+									<TableCell colSpan={columns.length} align='center'>
+										Нет данных
+									</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</TableContainer>
+				<Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+					<Box
+						sx={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							width: 600,
+							bgcolor:
+								theme.palette.mode === 'dark'
+									? theme.palette.background.default
+									: theme.palette.background.paper,
+							boxShadow: 24,
+							p: 4,
+							borderRadius: 2,
+							maxHeight: '80vh',
+							overflow: 'auto',
+						}}
+					>
+						<Typography variant='body1' sx={{ whiteSpace: 'pre-line' }}>
+							{selectedProject?.general_status &&
+								formatText(selectedProject.general_status)}
+						</Typography>
+					</Box>
+				</Modal>
+				<div
+					style={{
+						position: 'sticky',
+						bottom: 0,
+						width: '100%',
+						height: '10px',
+						backgroundColor: theme.palette.background.paper,
+						zIndex: 2,
+						boxShadow: '0px -2px 4px rgba(0,0,0,0.1)',
+					}}
+				/>
+			</div>
 		</Box>
 	)
 }
