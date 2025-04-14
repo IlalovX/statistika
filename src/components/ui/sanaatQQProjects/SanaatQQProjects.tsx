@@ -6,7 +6,6 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Typography,
 	useTheme,
 } from '@mui/material'
 import SanaatQQModal from './SanaatQQModal'
@@ -33,17 +32,7 @@ function SanaatQQProjects() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Box>
-				<header className='flex gap-5 mb-10'>
-					<Typography
-						variant='h6'
-						className='cursor-pointer'
-						fontWeight='bold'
-						color='blue'
-					>
-						Посадено 0т
-					</Typography>
-				</header>
+			<Box className='flex items-center justify-center'>
 				<img src={QQ} alt='' className='h-[300px] w-[300px] m-auto ' />
 			</Box>
 

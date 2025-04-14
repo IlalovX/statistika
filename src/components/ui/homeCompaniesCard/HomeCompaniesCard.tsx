@@ -47,7 +47,7 @@ function HomeCompaniesCard() {
 						</Typography>
 						<YearDropdown />
 					</div>
-					<div>
+					<div className='ml-5'>
 						<Typography variant='h6'>0</Typography>
 						<p className='flex gap-1 items-center'>
 							<img src={arrowup} alt='' />

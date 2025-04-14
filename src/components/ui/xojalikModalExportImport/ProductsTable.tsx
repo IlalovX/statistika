@@ -1,17 +1,39 @@
+'use client'
+
 import { Pagination } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, type GridColDef } from '@mui/x-data-grid'
 import { useMemo, useState } from 'react'
 
 function Table() {
 	const columns: GridColDef[] = useMemo(
 		() => [
-			{ field: 'product', headerName: 'Продукты', flex: 1 },
-			{ field: 'russia', headerName: 'Россия', flex: 1 },
-			{ field: 'kazakhstan', headerName: 'Казахстан', flex: 1 },
-			{ field: 'kyrgyzstan1', headerName: 'Кыргызстан 1', flex: 1 },
-			{ field: 'kyrgyzstan2', headerName: 'Кыргызстан 2', flex: 1 },
-			{ field: 'kyrgyzstan3', headerName: 'Кыргызстан 3', flex: 1 },
-			{ field: 'kyrgyzstan4', headerName: 'Кыргызстан 4', flex: 1 },
+			{
+				field: 'product',
+				headerName: 'Продукты',
+				flex: 1,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
+			{
+				field: 'russia',
+				headerName: 'Россия',
+				flex: 1,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
+			{
+				field: 'kazakhstan',
+				headerName: 'Казахстан',
+				flex: 1,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
 		],
 		[]
 	)
@@ -23,70 +45,42 @@ function Table() {
 				product: 'Картошка',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 2,
 				product: 'Капуста',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 3,
 				product: 'Рис',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 4,
 				product: 'Хлопок',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 5,
 				product: 'Морковь',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 6,
 				product: 'Пшеница',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 			{
 				id: 7,
 				product: 'Полынь',
 				russia: 0,
 				kazakhstan: 0,
-				kyrgyzstan1: 0,
-				kyrgyzstan2: 0,
-				kyrgyzstan3: 0,
-				kyrgyzstan4: 0,
 			},
 		],
 		[]
@@ -100,7 +94,41 @@ function Table() {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				sx={{ border: 0, height: 600 }}
+				disableColumnFilter
+				disableColumnSelector
+				disableColumnMenu
+				disableColumnResize
+				disableRowSelectionOnClick
+				sx={{
+					border: 0,
+					height: 600,
+					'& .MuiDataGrid-columnHeaders': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+						cursor: 'default', // Remove pointer cursor
+					},
+					'& .bold-header': {
+						fontWeight: 900, // Extra bold
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+					},
+					// Remove hover effects
+					'& .MuiDataGrid-columnHeader:hover': {
+						backgroundColor: 'inherit',
+					},
+					'& .MuiDataGrid-columnHeader:focus': {
+						outline: 'none',
+					},
+					// Remove sort icons
+					'& .MuiDataGrid-sortIcon': {
+						display: 'none',
+					},
+					'& .MuiDataGrid-iconButtonContainer': {
+						display: 'none',
+					},
+				}}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}
@@ -115,6 +143,7 @@ function Table() {
 		</div>
 	)
 }
+
 function ProductsTable() {
 	return <Table />
 }

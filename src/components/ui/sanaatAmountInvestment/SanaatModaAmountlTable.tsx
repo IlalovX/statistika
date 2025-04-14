@@ -72,12 +72,28 @@ function ModalTable() {
 						{params.value}
 					</div>
 				),
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
 			},
-			{ field: 'amount', headerName: 'Сумма', flex: 2 },
+			{
+				field: 'amount',
+				headerName: 'Сумма',
+				flex: 2,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
 			{
 				field: 'percentage',
 				headerName: 'Процент',
 				flex: 1,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
 			},
 		],
 		[]
@@ -89,7 +105,41 @@ function ModalTable() {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				sx={{ border: 0, height: 600 }}
+				disableColumnFilter
+				disableColumnSelector
+				disableColumnMenu
+				disableColumnResize
+				disableRowSelectionOnClick
+				sx={{
+					border: 0,
+					height: 600,
+					'& .MuiDataGrid-columnHeaders': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+						cursor: 'default', // Remove pointer cursor
+					},
+					'& .bold-header': {
+						fontWeight: 900, // Extra bold
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+					},
+					// Remove hover effects
+					'& .MuiDataGrid-columnHeader:hover': {
+						backgroundColor: 'inherit',
+					},
+					'& .MuiDataGrid-columnHeader:focus': {
+						outline: 'none',
+					},
+					// Remove sort icons
+					'& .MuiDataGrid-sortIcon': {
+						display: 'none',
+					},
+					'& .MuiDataGrid-iconButtonContainer': {
+						display: 'none',
+					},
+				}}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}

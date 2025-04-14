@@ -28,9 +28,33 @@ function RegionTable() {
 
 	const columns = useMemo<GridColDef[]>(
 		() => [
-			{ field: 'region', headerName: 'Районы', flex: 2 },
-			{ field: 'quantity', headerName: 'Количество', flex: 2 },
-			{ field: 'percent', headerName: 'Процент', flex: 2 },
+			{
+				field: 'region',
+				headerName: 'Районы',
+				flex: 2,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
+			{
+				field: 'quantity',
+				headerName: 'Количество',
+				flex: 2,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
+			{
+				field: 'percent',
+				headerName: 'Процент',
+				flex: 2,
+				headerClassName: 'bold-header',
+				sortable: false,
+				filterable: false,
+				disableColumnMenu: true,
+			},
 		],
 		[]
 	)
@@ -41,7 +65,41 @@ function RegionTable() {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				sx={{ border: 0, height: 600 }}
+				disableColumnFilter
+				disableColumnSelector
+				disableColumnMenu
+				disableColumnResize
+				disableRowSelectionOnClick
+				sx={{
+					border: 0,
+					height: 600,
+					'& .MuiDataGrid-columnHeaders': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+						cursor: 'default', // Remove pointer cursor
+					},
+					'& .bold-header': {
+						fontWeight: 900, // Extra bold
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+					},
+					// Remove hover effects
+					'& .MuiDataGrid-columnHeader:hover': {
+						backgroundColor: 'inherit',
+					},
+					'& .MuiDataGrid-columnHeader:focus': {
+						outline: 'none',
+					},
+					// Remove sort icons
+					'& .MuiDataGrid-sortIcon': {
+						display: 'none',
+					},
+					'& .MuiDataGrid-iconButtonContainer': {
+						display: 'none',
+					},
+				}}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}
