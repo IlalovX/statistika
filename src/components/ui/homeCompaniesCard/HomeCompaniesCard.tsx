@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 
 import { useQuery } from '@tanstack/react-query'
-import YearDropdown from '../../YearDropdown'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
 import ModalCompaniesTable from '../modalCompaniesTable/ModalCompaniesTable'
 import arrowup from '/svg/Polygon 2 (1).svg'
@@ -45,7 +44,7 @@ function HomeCompaniesCard() {
 						<Typography variant='h6' fontWeight='bold'>
 							Открытые фирмы
 						</Typography>
-						<YearDropdown />
+						{/* <YearDropdown /> */}
 					</div>
 					<div className='ml-5'>
 						<Typography variant='h6'>0</Typography>

@@ -1,8 +1,16 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import {
+	Box,
+	Button,
+	Menu,
+	MenuItem,
+	Typography,
+	useTheme,
+} from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
-import YearDropdown from '../../YearDropdown'
 
 interface AgeDataItem {
 	name: string
@@ -10,9 +18,21 @@ interface AgeDataItem {
 }
 
 function HomeAgesCard() {
-	const theme = useTheme()
 	const [chartData, setChartData] = useState<AgeDataItem[]>([])
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	const [selectedYear, setSelectedYear] = useState<string | null>(null)
+	const open = Boolean(anchorEl)
 
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget)
+	}
+
+	const handleClose = (year?: string) => {
+		if (year) setSelectedYear(year)
+		setAnchorEl(null)
+	}
+
+	const theme = useTheme()
 	const { data: ages } = useQuery({
 		queryKey: ['ages'],
 		queryFn: async () => {
@@ -26,13 +46,27 @@ function HomeAgesCard() {
 		},
 	})
 
-	useEffect(() => {
-		if (ages) {
-			const ageStats = ages['Qaraqalpaqstan Respublikası']['2024']
-			if (!ageStats) return
+	// Получаем список годов из данных
+	const years = useMemo(() => {
+		if (!ages) return []
+		return Object.keys(ages['Qaraqalpaqstan Respublikası']).sort().reverse()
+	}, [ages])
 
-			const formattedData = Object.entries(ageStats)
-				.filter(([key]) => key !== 'total') // Убираем "total"
+	// Обновляем selectedYear на самый свежий при первом получении данных
+	useEffect(() => {
+		if (years.length > 0 && !selectedYear) {
+			setSelectedYear(years[0])
+		}
+	}, [years, selectedYear])
+
+	// Формируем chartData при изменении selectedYear
+	useEffect(() => {
+		if (ages && selectedYear) {
+			const yearData = ages['Qaraqalpaqstan Respublikası'][selectedYear]
+			if (!yearData) return
+
+			const formattedData = Object.entries(yearData)
+				.filter(([key]) => key !== 'total')
 				.map(([key, value]) => ({
 					name: key === 'up to 80' ? 'за 80' : `до ${key}`,
 					uv: Number(value),
@@ -40,9 +74,9 @@ function HomeAgesCard() {
 
 			setChartData(formattedData)
 		}
-	}, [ages])
+	}, [ages, selectedYear])
 
-	if (chartData.length === 0) return <p>Загрузка...</p>
+	if (!selectedYear || chartData.length === 0) return <p>Загрузка...</p>
 
 	return (
 		<Box
@@ -55,7 +89,42 @@ function HomeAgesCard() {
 			<Typography variant='h6' fontWeight='bold'>
 				Население
 			</Typography>
-			<YearDropdown />
+			<div>
+				<Button
+					disableFocusRipple
+					disableRipple
+					variant='outlined'
+					onClick={handleClick}
+					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					sx={{
+						border: 'none',
+						color: '#8D8A94',
+						padding: '0',
+					}}
+				>
+					<span className='lowercase mr-1'>за</span> {selectedYear}
+				</Button>
+				<Menu
+					anchorEl={anchorEl}
+					open={open}
+					onClose={() => handleClose()}
+					sx={{
+						'& .MuiPaper-root': {
+							bgcolor: theme.palette.background.paper,
+						},
+					}}
+				>
+					{years.slice(0, 4).map(year => (
+						<MenuItem
+							key={year}
+							selected={selectedYear === year}
+							onClick={() => handleClose(year)}
+						>
+							{year}
+						</MenuItem>
+					))}
+				</Menu>
+			</div>
 			<ResponsiveContainer height={135}>
 				<BarChart
 					data={chartData}
@@ -70,7 +139,7 @@ function HomeAgesCard() {
 					<Bar dataKey='uv' label={{ position: 'top' }}>
 						{chartData.map((entry, index) => (
 							<Cell
-								key={`cell-${index}-${entry}`}
+								key={`cell-${index}-${entry.name}`}
 								fill='#7367F0'
 								radius={20}
 								width={10}

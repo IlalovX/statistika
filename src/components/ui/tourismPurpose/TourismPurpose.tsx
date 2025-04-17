@@ -37,7 +37,7 @@ function TourismPurpose() {
 	const theme = useTheme()
 	return (
 		<div className='my-5'>
-			<ThemeText variant='h4' text='Цели поездки' />
+			<ThemeText variant='h4' text='Цели туризма' />
 			<Typography variant='h6' color='gray'>
 				с начало месяца
 			</Typography>

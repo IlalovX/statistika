@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import ThemeText from '../../components/ThemeText'
@@ -24,10 +25,22 @@ function Tourism() {
 			return res.data
 		},
 	})
+	const theme = useTheme()
 	return (
-		<div className='space-y-10'>
+		<div className='space-y-15'>
 			<section>
 				<ThemeText variant='h4' text='Туризм' />
+				<p className='text-gray-400'>
+					Последний обновления{' '}
+					<span
+						className='font-bold '
+						style={{
+							color: theme.palette.mode === 'light' ? 'black' : 'white',
+						}}
+					>
+						01.01.2025
+					</span>
+				</p>
 				<TourismChartCard
 					sirtqi={sirtqi ? sirtqi : {}}
 					ishki={ishki ? ishki : {}}

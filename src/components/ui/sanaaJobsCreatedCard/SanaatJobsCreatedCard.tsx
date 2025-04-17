@@ -62,7 +62,7 @@ function SanaatJobsCreatedCard() {
 			<header className='flex justify-between items-center px-4'>
 				<div>
 					<Typography variant='h6' fontWeight='bold'>
-						Сумма инвестиции
+						Созданные рабочие места
 					</Typography>
 					<YearDropdown />
 				</div>

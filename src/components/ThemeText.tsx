@@ -14,6 +14,7 @@ export default function ThemeText({
 			variant={variant}
 			sx={{
 				color: theme.palette.mode === 'light' ? '#355CBF' : 'white',
+				fontWeight: 'bold',
 			}}
 		>
 			{text}

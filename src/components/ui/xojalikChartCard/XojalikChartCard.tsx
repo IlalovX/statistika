@@ -14,6 +14,7 @@ import { CustomizedAxisTick } from '../../ChartComponents'
 interface CustomizedLabelProps extends LabelProps {
 	data: { year: string; harvest?: number; profit?: number }[]
 }
+
 const formatNumber = (num?: number): string => {
 	const safeNum = num ?? 0
 	return (
@@ -32,6 +33,13 @@ const formatCurrency = (num?: number): string => {
 		}) + ' млрд сум'
 	)
 }
+
+const calculatePercentage = (current?: number, previous?: number): string => {
+	if (!previous || previous === 0) return '0%'
+	const diff = ((current! - previous) / previous) * 100
+	return `${diff.toFixed(1)}%`
+}
+
 const CustomizedLabel: React.FC<CustomizedLabelProps> = props => {
 	const { x, y, value, index, data } = props
 
@@ -73,7 +81,6 @@ function XojalikChartCard() {
 		},
 		select: data => {
 			const harvest = data?.['total'] || {}
-
 			return Object.entries(harvest).map(([year, value]) => ({
 				year,
 				harvest: typeof value === 'number' ? value : Number(value) || 0,
@@ -124,6 +131,13 @@ function XojalikChartCard() {
 	const finalChartData = Object.values(combinedData)
 		.sort((a, b) => Number(a.year) - Number(b.year))
 		.slice(-6)
+
+	const last = finalChartData[finalChartData.length - 1]
+	const prev = finalChartData[finalChartData.length - 2]
+
+	const harvestPercent = calculatePercentage(last?.harvest, prev?.harvest)
+	const profitPercent = calculatePercentage(last?.profit, prev?.profit)
+
 	return (
 		<Box
 			className='shadow-xl rounded-2xl my-5'
@@ -136,32 +150,38 @@ function XojalikChartCard() {
 				<Box>
 					<p className='text-gray-400'>Общее количество собранных урожаев</p>
 					<Typography variant='h6'>
-						{finalChartData.length > 0 &&
-						finalChartData[finalChartData.length - 1].profit !== undefined
-							? formatNumber(
-									finalChartData[finalChartData.length - 1].harvest ?? 0
-								)
-							: '0'}
-						т
+						{last?.harvest ? formatNumber(last.harvest) : '0'}т
 					</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-xl'>0%</span> за последний
-						месяц
+						<span
+							className={`text-xl ${
+								harvestPercent.startsWith('-')
+									? 'text-red-500'
+									: 'text-green-500'
+							}`}
+						>
+							{harvestPercent}
+						</span>{' '}
+						за последний год
 					</p>
 				</Box>
 
 				<Box>
 					<p className='text-gray-400'>Общий доход от собранных урожаев</p>
 					<Typography variant='h6' className='text-[#355CBF]'>
-						{finalChartData?.length
-							? formatCurrency(
-									finalChartData[finalChartData.length - 1].profit ?? 0
-								)
-							: '0'}
+						{last?.profit ? formatCurrency(last.profit) : '0'}
 					</Typography>
 					<p className='text-gray-400'>
-						<span className='text-green-500 text-xl'>0%</span> за последний
-						месяц
+						<span
+							className={`text-xl ${
+								profitPercent.startsWith('-')
+									? 'text-red-500'
+									: 'text-green-500'
+							}`}
+						>
+							{profitPercent}
+						</span>{' '}
+						за последний год
 					</p>
 				</Box>
 			</Box>
@@ -187,7 +207,7 @@ function XojalikChartCard() {
 						type='number'
 						fontSize={11}
 						domain={[0, (dataMax: number) => dataMax * 1.5]}
-						tickFormatter={value => `${Math.round(value / 1000)}тыс.`}
+						tickFormatter={value => `${Math.round(value / 1000)} тыс.`}
 					/>
 
 					<Area

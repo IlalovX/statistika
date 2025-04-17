@@ -50,7 +50,17 @@ const CompaniesTable: React.FC<CountriesTableProps> = ({ data }) => {
 				rows={rows.slice(page * pageSize, (page + 1) * pageSize)}
 				columns={columns}
 				hideFooter
-				sx={{ border: 0, height: 600 }}
+				sx={{
+					border: 0,
+					height: 600,
+					'& .MuiDataGrid-columnHeaders': {
+						fontWeight: 'bold',
+						fontSize: '16px',
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+					},
+				}}
 			/>
 			<Pagination
 				count={Math.ceil(rows.length / pageSize)}

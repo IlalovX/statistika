@@ -117,8 +117,7 @@ function TourismMapCard({ start, end }: { start: string; end: string }) {
 						</TableBody>
 					</Table>
 				</TableContainer>
-
-				<TourismModalCountriesTable countries={countries} torists={torists} />
+				<TourismModalCountriesTable data={data?.['2025'] ?? {}} />
 			</Box>
 		</Box>
 	)

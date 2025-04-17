@@ -9,24 +9,30 @@ import {
 	useTheme,
 } from '@mui/material'
 
+import { useQuery } from '@tanstack/react-query'
 import HomeDoughnut from '../homeDoughnut/HomeDoughnut'
+import ModalCompaniesTable from '../modalCompaniesTable/ModalCompaniesTable'
 import arrowup from '/svg/Polygon 2 (1).svg'
 import { default as icon } from '/svg/туризм.svg'
 
 function XojalikCompaniesCard() {
 	const theme = useTheme()
-	const companies = {
-		Животноводство: { 2024: 0 },
-		Земельные: { 2024: 0 },
-		Бизнес: { 2024: 0 },
-		Бизнес1: { 2024: 0 },
-		Бизнес2: { 2024: 0 },
-		Бизнес3: { 2024: 0 },
-	}
+	const { data: companies } = useQuery({
+		queryKey: ['economic'],
+		queryFn: async () => {
+			const res = await fetch(
+				'/db/economic/ekonomikalıq_túrleri_boyınsha_jańada_ashılǵan_kárxana_sanları.json'
+			)
+			if (!res.ok) {
+				throw new Error('Ошибка загрузки данных')
+			}
+			return res.json()
+		},
+	})
 
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-1.5'
+			className='shadow-xl rounded-2xl p-1.5 relative'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -35,27 +41,28 @@ function XojalikCompaniesCard() {
 			<div className='flex justify-between items-center'>
 				<div className='flex flex-col gap-5'>
 					<div>
-						<Typography variant='body1' fontWeight='bold'>
+						<Typography variant='h6' fontWeight='bold'>
 							Сельско-хозяйственный фирмы
 						</Typography>
-						<Typography variant='body2' fontWeight='bold' color='grey'>
-							за последний год
-						</Typography>
 					</div>
-					<div>
-						<Typography variant='body2'>0</Typography>
+					<div className='ml-5 flex gap-2'>
+						<Typography variant='h6'>0</Typography>
 						<p className='flex gap-1 items-center'>
-							<img src={arrowup} alt='' />0
+							<img src={arrowup} alt='' />
+							0%
 						</p>
 					</div>
 				</div>
 				<div className='mt-5'>
-					<HomeDoughnut total={'0'} />
+					<HomeDoughnut total={companies?.total['2025']} />
 				</div>
 			</div>
-			<List sx={{ width: '100%', bgcolor: 'background.paper', padding: 2 }}>
+			<List
+				sx={{ width: '100%', padding: '0 20px', bgcolor: 'background.paper' }}
+			>
 				{Object.entries(companies ?? {})
 					.filter(([key]) => key !== 'total')
+					.slice(-6)
 					.map(([key, values]) => {
 						const yearData = values as Record<string, number>
 						return (
@@ -90,12 +97,15 @@ function XojalikCompaniesCard() {
 									color='green'
 									className='text-[11px]'
 								>
-									0%
+									20%
 								</Typography>
 							</ListItem>
 						)
 					})}
 			</List>
+			<div className='flex justify-end items-center absolute bottom-5 right-5'>
+				<ModalCompaniesTable data={companies} />
+			</div>
 		</Box>
 	)
 }

@@ -10,18 +10,26 @@ import {
 	YAxis,
 } from 'recharts'
 import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
-import YearDropdown from '../../YearDropdown'
 
 function HomePopulationCard() {
+	// const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	// const years = [2025, 2024, 2023]
+	// const [selectedYear, setSelectedYear] = useState(years[0])
+	// const open = Boolean(anchorEl)
+
+	// const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	// 	setAnchorEl(event.currentTarget)
+	// }
+
+	// const handleClose = (year?: number) => {
+	// 	if (year) setSelectedYear(year)
+	// 	setAnchorEl(null)
+	// }
+
 	const theme = useTheme()
 	const [chartData, setChartData] = useState<number[]>([])
 
-	const [xLabels, setXLabels] = useState<string[]>([
-		'2022',
-		'2023',
-		'2024',
-		'2025',
-	])
+	const [xLabels, setXLabels] = useState<string[]>([])
 
 	const { data } = useQuery({
 		queryKey: ['population'],
@@ -63,7 +71,38 @@ function HomePopulationCard() {
 			<Typography variant='h6' fontWeight='bold'>
 				Население
 			</Typography>
-			<YearDropdown />
+			{/* <div>
+				<Button
+					disableFocusRipple
+					disableRipple
+					variant='outlined'
+					onClick={handleClick}
+					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					sx={{
+						border: 'none',
+						color: '#8D8A94',
+						padding: '0',
+					}}
+				>
+					<span className='lowercase mr-1'>за</span> {selectedYear}
+				</Button>
+				<Menu
+					anchorEl={anchorEl}
+					open={open}
+					onClose={() => handleClose()}
+					sx={{
+						'& .MuiPaper-root': {
+							bgcolor: theme.palette.background.paper,
+						},
+					}}
+				>
+					{years.map(year => (
+						<MenuItem key={year} onClick={() => handleClose(year)}>
+							{year}
+						</MenuItem>
+					))}
+				</Menu>
+			</div> */}
 			<ResponsiveContainer width='100%' height={130}>
 				<LineChart
 					data={xLabels.map((label, index) => ({
