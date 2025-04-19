@@ -51,7 +51,7 @@ function XojalikShortInfoCard({ harvest }: { harvest: string }) {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За 2024</span>
+								0% <span className='text-gray-400'>за 2024</span>
 							</Typography>
 						</div>
 					</Box>

@@ -46,7 +46,7 @@ function XojalikFieldCard() {
 						<div>
 							<Typography className='text-gray-500'>{item.label}</Typography>
 							<Typography className='text-green-500 text-sm mt-1'>
-								+18.2% <span className='text-gray-400'>За последний месяц</span>
+								0% <span className='text-gray-400'>за последний месяц</span>
 							</Typography>
 						</div>
 					</Box>

@@ -20,9 +20,9 @@ import {
 	Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import ModalPlantedTable from '../modalPlantedTable/ModalPlantedTable'
-import { useQuery } from '@tanstack/react-query'
 
 export default function XojalikPlantedTable() {
 	const theme = useTheme()
@@ -48,7 +48,7 @@ export default function XojalikPlantedTable() {
 		return Object.keys(accommodation[sampleKey])
 			.filter(year => /^\d{4}$/.test(year))
 			.map(Number)
-			.sort((a, b) => b - a) // Сортировка по убыванию
+			.sort((a, b) => b - a)
 	}, [accommodation])
 
 	const [selectedYear, setSelectedYear] = useState<number | null>(null)
@@ -77,7 +77,6 @@ export default function XojalikPlantedTable() {
 		setAnchorEl(null)
 	}
 
-	// Устанавливаем самый свежий год по умолчанию
 	if (!selectedYear && years.length) {
 		setSelectedYear(years[0])
 	}

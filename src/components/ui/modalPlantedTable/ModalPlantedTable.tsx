@@ -44,7 +44,7 @@ const ModalTable: React.FC<ModalTableProps> = ({ data, selectedYear }) => {
 			area: 0,
 			planted: 0,
 			yieldForecast: 0,
-			yieldCollected: values[selectedYear] || 0, // Use the selected year instead of hardcoded 2024
+			yieldCollected: values[selectedYear] || 0,
 			percentage: 0,
 		}))
 	}, [data, selectedYear])

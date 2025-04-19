@@ -11,6 +11,7 @@ import XojalikPlantedTable from '../../components/ui/xojalikPlantedTable/Xojalik
 import XojalikShortInfoCard from '../../components/ui/xojalikShortInfoCard/XojalikShortInfoCard'
 
 function Xojalik() {
+	
 	const { data: xojalik } = useQuery({
 		queryKey: ['xojalik'],
 		queryFn: async () => {

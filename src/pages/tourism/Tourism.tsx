@@ -25,7 +25,9 @@ function Tourism() {
 			return res.data
 		},
 	})
+
 	const theme = useTheme()
+
 	return (
 		<div className='space-y-15'>
 			<section>
