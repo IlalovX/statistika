@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
 import { updateUserMe } from '../features/slices/UserMeSlices'
 import { saveTokens } from '../services/auth-token.service'
