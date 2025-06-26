@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
+import { ProtectedRoute } from '../components/common/ProtectRoute/ProtectRoute'
 import { RoutesConsts } from '../const/routes'
 import { RoutesEnums } from '../enums/routes'
 
@@ -33,7 +34,9 @@ function PathRoutes() {
 					path={RoutesConsts[RoutesEnums.HOME]}
 					element={
 						<Suspense>
-							<Home />
+							<ProtectedRoute>
+								<Home />
+							</ProtectedRoute>
 						</Suspense>
 					}
 				/>
@@ -41,7 +44,9 @@ function PathRoutes() {
 					path={RoutesConsts[RoutesEnums.TOURISM]}
 					element={
 						<Suspense>
-							<Tourism />
+							<ProtectedRoute>
+								<Tourism />
+							</ProtectedRoute>
 						</Suspense>
 					}
 				/>
@@ -49,7 +54,9 @@ function PathRoutes() {
 					path={RoutesConsts[RoutesEnums.SANAAT]}
 					element={
 						<Suspense>
-							<Sanaat />
+							<ProtectedRoute>
+								<Sanaat />
+							</ProtectedRoute>
 						</Suspense>
 					}
 				/>
@@ -57,7 +64,9 @@ function PathRoutes() {
 					path={RoutesConsts[RoutesEnums.XOJALIK]}
 					element={
 						<Suspense>
-							<Xojalik />
+							<ProtectedRoute>
+								<Xojalik />
+							</ProtectedRoute>
 						</Suspense>
 					}
 				/>
@@ -65,7 +74,9 @@ function PathRoutes() {
 					path={RoutesConsts[RoutesEnums.PROJECTS]}
 					element={
 						<Suspense>
-							<Projects />
+							<ProtectedRoute>
+								<Projects />
+							</ProtectedRoute>
 						</Suspense>
 					}
 				/>
