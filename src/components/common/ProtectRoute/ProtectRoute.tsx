@@ -20,13 +20,5 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 		return <Navigate to='/auth' replace />
 	}
 
-	if (location.pathname === '/') {
-		if (user.is_superadmin) {
-			return <Navigate to='/users' replace />
-		} else {
-			return <Navigate to={`/${user.category}`} replace />
-		}
-	}
-
 	return children
 }
