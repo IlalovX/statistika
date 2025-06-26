@@ -1,5 +1,5 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -92,6 +92,8 @@ export default function HomeExportImport() {
 		setAnchorEl(null)
 	}
 
+	const theme = useTheme()
+
 	return (
 		<Box className='flex flex-col justify-between h-full w-full p-4'>
 			<header className='flex justify-between'>
@@ -136,6 +138,11 @@ export default function HomeExportImport() {
 							onClose={() => handleClose()}
 							MenuListProps={{
 								'aria-labelledby': 'basic-button',
+							}}
+							sx={{
+								'& .MuiPaper-root': {
+									bgcolor: theme.palette.background.default,
+								},
 							}}
 						>
 							{['2025', '2024', '2023'].map(y => (

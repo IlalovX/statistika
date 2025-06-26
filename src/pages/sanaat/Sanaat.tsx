@@ -1,71 +1,65 @@
 import { Typography, useTheme } from '@mui/material'
 import ThemeText from '../../components/ThemeText'
-import SanaatJobsCreatedCard from '../../components/ui/sanaaJobsCreatedCard/SanaatJobsCreatedCard'
-import SanaatAmountInvestment from '../../components/ui/sanaatAmountInvestment/SanaatAmountInvestment'
-import SanaatChartCard from '../../components/ui/sanaatChartCard/SanaatChartCard'
-import SanaatIndicators from '../../components/ui/sanaatIndicators/SanaatIndicators'
-import SanaatInvestMap from '../../components/ui/sanaatInvestMap/SanaatInvestMap'
-import SanaatInvestmentProjects from '../../components/ui/sanaatInvestmentProjects/SanaatInvestmentProjects'
-import SanaatQQProjects from '../../components/ui/sanaatQQProjects/SanaatQQProjects'
-import SanaatVolumeProducts from '../../components/ui/sanaatVolumeProducts/SanaatVolumeProducts'
+import {
+	useGetInvestmentByRegion,
+	useGetInvestmentLastUpdate,
+} from '../../hooks/useInvestment'
+import Amount from './components/amount/Amount'
+import ChartCard from './components/ChartCard'
+import CreatedJobs from './components/created-jobs/CreatedJobs'
+import Indicators from './components/indicators/Indicators'
+import InvestmentProjectsRegion from './components/investmentProjectsRegion/InvestmentProjectsRegion'
+import InvestorsMap from './components/investorsMap/InvestorsMap'
+import OutputPieChart from './components/output/OutputPieChart'
+import Projects from './components/projects/Projects'
 
 function Sanaat() {
 	const theme = useTheme()
+	const { data: last_update } = useGetInvestmentLastUpdate()
+	const { data: query } = useGetInvestmentByRegion(2025, 0)
+	console.log('query', query)
 	return (
 		<div className='space-y-10'>
 			<section>
 				<ThemeText variant='h4' text='Промышленность' />
 				<p className='text-gray-400'>
-					Последний обновления
+					Последний обновления{' '}
 					<span
 						className='font-bold '
 						style={{
 							color: theme.palette.mode === 'light' ? 'black' : 'white',
 						}}
 					>
-						10.03.2025
+						{last_update}
 					</span>
 				</p>
-				<SanaatChartCard />
+				<ChartCard />
 			</section>
 			<section>
-				<ThemeText variant='h4' text='Показатели по районам' />
-				<Typography variant='h6' color='gray'>
-					с начало года
-				</Typography>
-				<SanaatIndicators />
+				<Indicators />
 			</section>
 			<br />
 			<br />
 			<section>
-				<ThemeText variant='h4' text='Объем промышленной продукции' />
-				<SanaatVolumeProducts />
+				<OutputPieChart />
 			</section>
 			<section>
 				<ThemeText variant='h4' text='Инвестиция' />
 				<Typography variant='h6' color='gray'>
 					с начало года
 				</Typography>
-				<div className='grid grid-cols-[1fr_3fr] gap-2 my-6'>
-					<SanaatInvestmentProjects />
-					<SanaatAmountInvestment />
+				<div className=' grid grid-cols-[35%_65%] gap-2 my-6 '>
+					<Projects />
+					<Amount />
 				</div>
-				<SanaatJobsCreatedCard />
+				<CreatedJobs />
 			</section>
 
 			<section>
-				<ThemeText variant='h4' text='Инвестиционные проекты по районам' />
-				<Typography variant='h6' color='gray'>
-					с начало года
-				</Typography>
-				<SanaatQQProjects />
+				<InvestmentProjectsRegion />
 			</section>
 			<section>
-				<ThemeText variant='h4' text='Инвесторы из зарубежа' />
-				<Typography variant='h6' color='gray'>
-					с начало года
-				</Typography>
-				<SanaatInvestMap />
+				<InvestorsMap />
 			</section>
 		</div>
 	)

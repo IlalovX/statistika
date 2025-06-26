@@ -1,16 +1,13 @@
 import DownloadIcon from '@mui/icons-material/Download'
 import { Button } from '@mui/material'
-import axios from 'axios'
+import { axiosWithAuth } from '../../../api/interceptors'
 
 const DownloadProjectsExcelButton = () => {
 	const handleDownload = async () => {
 		try {
-			const response = await axios.get(
-				'https://alpamis.space/projects/export',
-				{
-					responseType: 'blob',
-				}
-			)
+			const response = await axiosWithAuth.get('/projects/download', {
+				responseType: 'blob',
+			})
 
 			const blob = new Blob([response.data], {
 				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

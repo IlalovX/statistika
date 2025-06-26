@@ -1,4 +1,5 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -17,7 +18,7 @@ export default function HomeExportImportButton() {
 		if (selectedYear) setYear(selectedYear)
 		setAnchorEl(null)
 	}
-
+	const theme = useTheme()
 	return (
 		<div>
 			<Button
@@ -35,6 +36,11 @@ export default function HomeExportImportButton() {
 				onClose={() => handleClose()}
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
+				}}
+				sx={{
+					'& .MuiPaper-root': {
+						bgcolor: theme.palette.background.default,
+					},
 				}}
 			>
 				{['2025', '2024', '2023'].map(y => (

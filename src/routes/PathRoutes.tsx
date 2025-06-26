@@ -4,6 +4,7 @@ import { RoutesConsts } from '../const/routes'
 import { RoutesEnums } from '../enums/routes'
 
 const Layout = lazy(() => import('../layout/Layout'))
+const Auth = lazy(() => import('../pages/auth/Auth'))
 const Home = lazy(() => import('../pages/home/Home'))
 const Tourism = lazy(() => import('../pages/tourism/Tourism'))
 const Sanaat = lazy(() => import('../pages/sanaat/Sanaat'))
@@ -13,6 +14,14 @@ const Projects = lazy(() => import('../pages/projects/Projects'))
 function PathRoutes() {
 	return (
 		<Routes>
+			<Route
+				path={RoutesConsts[RoutesEnums.AUTH]}
+				element={
+					<Suspense>
+						<Auth />
+					</Suspense>
+				}
+			/>
 			<Route
 				element={
 					<Suspense>

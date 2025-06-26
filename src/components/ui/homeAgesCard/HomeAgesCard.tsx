@@ -110,7 +110,7 @@ function HomeAgesCard() {
 					onClose={() => handleClose()}
 					sx={{
 						'& .MuiPaper-root': {
-							bgcolor: theme.palette.background.paper,
+							bgcolor: theme.palette.background.default,
 						},
 					}}
 				>

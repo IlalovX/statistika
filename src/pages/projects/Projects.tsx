@@ -1,22 +1,20 @@
-'use client'
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+
 import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
 import ThemeText from '../../components/ThemeText'
-import ProjectStatusCards from '../../components/ui/projectsStatusCards/ProjectStatusCards'
-import ProjectsTable from '../../components/ui/projectsTable/ProjectsTable'
-import { getAuthorities } from '../../services/queries/authorities'
 import {
-	getFilterProjects,
-	getLastUpdate,
-	getProjects,
-} from '../../services/queries/projects'
-import { getRegions } from '../../services/queries/regions'
-import { getStatuses } from '../../services/queries/statuses'
+	useGetProjectsLastUpdate,
+	useGetProjectsList,
+	useProjectsSearch,
+} from '../../hooks/useProjects'
+import { useGetProjectsStatusesList } from '../../hooks/useProjectsStatuses'
+import { useGetRegionsList } from '../../hooks/useRegions'
+import ProjectStatusesCards from './ProjectsStatusesCards'
+import ProjectsTable from './ProjectsTable'
 
 interface FormData {
 	region_id?: string
@@ -26,7 +24,10 @@ interface FormData {
 }
 
 function Projects() {
-	const [filter, setFilter] = useState(false)
+	const [filterVisible, setFilterVisible] = useState(false)
+	const theme = useTheme()
+	const [filterParams, setFilterParams] = useState<FormData | null>(null)
+
 	const { register, handleSubmit, reset, control } = useForm<FormData>({
 		defaultValues: {
 			region_id: '',
@@ -35,41 +36,37 @@ function Projects() {
 			status_id: '',
 		},
 	})
-	const [filterValues, setFilterValues] = useState<FormData | undefined>(
-		undefined
-	)
 
-	const { data: projects } = getProjects()
-	const { data: regions } = getRegions()
-	const { data: statuses } = getStatuses()
-	const { data: authorities } = getAuthorities()
-	const { data: last_update } = getLastUpdate()
-	const { data: filter_data } = getFilterProjects(filterValues)
-	const displayedProjects = filterValues ? filter_data || [] : projects || []
+	const { data: lastUpdate } = useGetProjectsLastUpdate()
+	const { data: allProjects = [] } = useGetProjectsList()
+	const { data: regions = [] } = useGetRegionsList()
+	const { data: statuses = [] } = useGetProjectsStatusesList()
+
+	const { data: searchedProjects = [] } = useProjectsSearch({
+		region_id: filterParams?.region_id ? Number(filterParams.region_id) : null,
+		project_initiator: null,
+		budget_from: filterParams?.budget_min || null,
+		budget_to: filterParams?.budget_max || null,
+		responsible_party: null,
+		project_status_id: filterParams?.status_id
+			? Number(filterParams.status_id)
+			: null,
+	})
+
+	const projectsToDisplay =
+		filterParams && Object.values(filterParams).some(val => val)
+			? searchedProjects
+			: allProjects
 
 	const onSubmit: SubmitHandler<FormData> = data => {
-		// Очистка от пустых строк
 		const cleaned = Object.fromEntries(
-			Object.entries(data).filter(([_, value]) => value !== '')
+			Object.entries(data).filter(([_, val]) => val !== '')
 		)
-
-		setFilterValues(
-			Object.keys(cleaned).length === 0 ? undefined : (cleaned as FormData)
-		)
+		setFilterParams(Object.keys(cleaned).length ? (cleaned as FormData) : null)
 	}
-	const handleResetForm = () => {
+	const handleReset = () => {
 		reset()
-		setFilterValues(undefined)
-	}
-
-	const theme = useTheme()
-
-	const formatDate = (dateString: string) => {
-		const date = new Date(dateString)
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const day = String(date.getDate()).padStart(2, '0')
-		return `${year}-${month}-${day}`
+		setFilterParams(null)
 	}
 
 	return (
@@ -84,9 +81,7 @@ function Projects() {
 							color: theme.palette.mode === 'light' ? 'black' : 'white',
 						}}
 					>
-						{last_update
-							? formatDate(last_update.last_update as string)
-							: '01.01.2025'}
+						{lastUpdate}
 					</span>
 				</p>
 			</header>
@@ -96,8 +91,8 @@ function Projects() {
 					<ThemeText variant='h4' text='Краткая информация' />
 					<p className='text-gray-400'>сравнее прошлым годом</p>
 				</header>
-				<ProjectStatusCards
-					projects={projects ? projects : []}
+				<ProjectStatusesCards
+					projects={allProjects ? allProjects : []}
 					statuses={statuses ? statuses : []}
 				/>
 			</section>
@@ -108,14 +103,19 @@ function Projects() {
 					<div className='flex items-center justify-end gap-5'>
 						<Button
 							className='text-black !capitalize !text-2xl'
-							onClick={() => setFilter(!filter)}
+							onClick={() => setFilterVisible(!filterVisible)}
 						>
 							Фильтр
-							{filter ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+							{filterVisible ? (
+								<KeyboardArrowUpIcon />
+							) : (
+								<KeyboardArrowDownIcon />
+							)}
 						</Button>
 						<DownloadProjectsExcelButton />
 					</div>
-					{filter && (
+
+					{filterVisible && (
 						<form
 							onSubmit={handleSubmit(onSubmit)}
 							className='flex justify-between items-end gap-5 mt-5'
@@ -132,7 +132,7 @@ function Projects() {
 											{...field}
 											options={regions || []}
 											getOptionLabel={option =>
-												typeof option === 'object' ? option.name : ''
+												typeof option === 'object' ? option.region_name : ''
 											}
 											isOptionEqualToValue={(option, value) => {
 												if (value === null || value === undefined) return false
@@ -207,13 +207,13 @@ function Projects() {
 											{...field}
 											options={statuses || []}
 											getOptionLabel={option =>
-												typeof option === 'object' ? option.name : ''
+												typeof option === 'object' ? option.value : ''
 											}
 											isOptionEqualToValue={(option, value) => {
 												if (value === null || value === undefined) return false
 												return typeof value === 'object' && 'id' in value
 													? option.id === value.id
-													: option.id === value
+													: option.id === +value
 											}}
 											onChange={(_, newValue) => {
 												onChange(newValue ? newValue.id : '')
@@ -254,7 +254,7 @@ function Projects() {
 									variant='outlined'
 									type='reset'
 									sx={{ height: '40px' }}
-									onClick={handleResetForm}
+									onClick={handleReset}
 								>
 									Отмена
 								</Button>
@@ -270,12 +270,7 @@ function Projects() {
 						</form>
 					)}
 				</header>
-				<ProjectsTable
-					projects={displayedProjects}
-					statuses={statuses ? statuses : []}
-					authorities={authorities ? authorities : []}
-					regions={regions ? regions : []}
-				/>
+				<ProjectsTable projects={projectsToDisplay} />
 			</section>
 		</div>
 	)
