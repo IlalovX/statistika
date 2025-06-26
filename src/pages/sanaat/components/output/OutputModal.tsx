@@ -9,6 +9,7 @@ import {
 	ListItem,
 	ListItemText,
 	Typography,
+	useTheme,
 } from '@mui/material'
 import { useState, type FC } from 'react'
 import { InvestmentOutputItem } from '../../../../types/investment.interface'
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const OutputModal: FC<Props> = ({ data }) => {
+	const theme = useTheme()
 	const [open, setModalOpen] = useState(false)
 	const onClose = () => setModalOpen(false)
 	const total = data.reduce((acc, item) => acc + item.amount, 0)
@@ -36,7 +38,17 @@ const OutputModal: FC<Props> = ({ data }) => {
 			>
 				Показать все →
 			</Button>
-			<Dialog open={open} onClose={onClose} fullWidth maxWidth='sm'>
+			<Dialog
+				open={open}
+				onClose={onClose}
+				fullWidth
+				maxWidth='sm'
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle>
 					Общий список отраслей
 					<IconButton

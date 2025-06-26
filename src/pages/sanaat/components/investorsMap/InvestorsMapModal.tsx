@@ -14,6 +14,7 @@ import {
 	TableHead,
 	TableRow,
 	Typography,
+	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import { InvestmentInvestors } from '../../../../types/investment.interface'
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const InvestorsMapModal = ({ investors }: Props) => {
+	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 	const handleOpen = () => setOpen(true)
 	const handleClose = () => setOpen(false)
@@ -41,7 +43,17 @@ const InvestorsMapModal = ({ investors }: Props) => {
 				Показать все →
 			</Button>
 
-			<Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				maxWidth='sm'
+				fullWidth
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle>
 					Инвесторы из зарубежа
 					<IconButton

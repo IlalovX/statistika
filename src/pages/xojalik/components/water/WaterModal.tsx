@@ -41,7 +41,17 @@ function WaterModal({ data }: Props) {
 			>
 				Показать все →
 			</Button>
-			<Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				fullWidth
+				maxWidth='md'
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle className='flex justify-between items-center'>
 					<Typography variant='h6'>Статистика воды</Typography>
 					<IconButton

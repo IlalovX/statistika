@@ -43,7 +43,17 @@ function PlantedAreaModal({ placement }: Props) {
 			>
 				Показать все →
 			</Button>
-			<Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				maxWidth='sm'
+				fullWidth
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle>
 					Показатели
 					<IconButton

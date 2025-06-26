@@ -36,7 +36,17 @@ const CreatedJobsModal = ({ data }: Props) => {
 			>
 				Показать все →
 			</Button>
-			<Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				maxWidth='sm'
+				fullWidth
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle>
 					<IconButton
 						aria-label='close'

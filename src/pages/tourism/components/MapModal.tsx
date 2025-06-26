@@ -9,6 +9,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import { MapCountries } from '../../../types/tourism.interface'
@@ -19,6 +20,7 @@ interface Props {
 }
 
 function MapModal({ isInternal, sorted }: Props) {
+	const theme = useTheme()
 	const [dialogOpen, setDialogOpen] = useState(false)
 	return (
 		<>
@@ -39,6 +41,11 @@ function MapModal({ isInternal, sorted }: Props) {
 				onClose={() => setDialogOpen(false)}
 				fullWidth
 				maxWidth='lg'
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
 			>
 				<DialogTitle>
 					{isInternal === 'inbound'

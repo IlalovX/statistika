@@ -28,11 +28,12 @@ type ProjectItem = {
 }
 
 const colums: string[] = [
+	'№',
 	'Регион',
-	'Инициатор',
+	'Инициатор проекта',
 	'Название проекта',
-	'Бюджет ($млн)',
-	'Рабочие места',
+	'Стоимость проекта (млн долл)',
+	'Созданное рабочее место',
 	'Срок запуска',
 	'Ответственный',
 	'Статус',
@@ -72,8 +73,9 @@ export default function ProjectsTable({
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{projects.map(project => (
+						{projects.map((project, index) => (
 							<TableRow key={project.id}>
+								<TableCell>{index + 1}</TableCell>
 								<TableCell>{project.region}</TableCell>
 								<TableCell>{project.initiator}</TableCell>
 								<TableCell>{project.project_name}</TableCell>

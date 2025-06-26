@@ -41,7 +41,17 @@ function IndicatorsModal({ indicators }: Props) {
 				Показать все →
 			</Button>
 
-			<Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				maxWidth='md'
+				fullWidth
+				PaperProps={{
+					sx: {
+						backgroundColor: theme.palette.common.black,
+					},
+				}}
+			>
 				<DialogTitle sx={{ m: 0, p: 2 }}>
 					Полный список регионов
 					<IconButton

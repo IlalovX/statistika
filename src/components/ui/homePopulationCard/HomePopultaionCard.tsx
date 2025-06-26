@@ -12,20 +12,6 @@ import {
 import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
 
 function HomePopulationCard() {
-	// const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-	// const years = [2025, 2024, 2023]
-	// const [selectedYear, setSelectedYear] = useState(years[0])
-	// const open = Boolean(anchorEl)
-
-	// const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-	// 	setAnchorEl(event.currentTarget)
-	// }
-
-	// const handleClose = (year?: number) => {
-	// 	if (year) setSelectedYear(year)
-	// 	setAnchorEl(null)
-	// }
-
 	const theme = useTheme()
 	const [chartData, setChartData] = useState<number[]>([])
 
