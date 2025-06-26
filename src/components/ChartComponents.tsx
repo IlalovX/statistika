@@ -5,7 +5,6 @@ export const CustomizedLabel: FunctionComponent<any> = (props: any) => {
 	const { x, y, value } = props
 	const theme = useTheme()
 
-	debugger
 	const color = theme.palette.primary.main
 
 	return (
