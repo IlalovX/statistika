@@ -22,7 +22,10 @@ type ProjectItem = {
 	jobs_created: string
 	planned_date: string
 	responsible_party: string
-	project_status: string
+	project_status: {
+		value: string
+		color: string
+	}
 	last_update: string
 	overall_status: string
 }
@@ -87,7 +90,9 @@ export default function ProjectsTable({
 									).toLocaleDateString('ru-RU')}
 								</TableCell>
 								<TableCell>{project.responsible_party}</TableCell>
-								<TableCell>{project.project_status}</TableCell>
+								<TableCell sx={{ color: project.project_status.color }}>
+									{project.project_status.value}
+								</TableCell>
 								<TableCell>{project.last_update}</TableCell>
 								<TableCell>
 									<Button
