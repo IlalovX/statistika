@@ -15,8 +15,6 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 	const refreshToken = getRefreshToken()
 	const dispatch = useAppDispatch()
 
-	console.log(user, accessToken, refreshToken)
-
 	if (!user || !accessToken || !refreshToken) {
 		removeTokens()
 		dispatch(logout())
