@@ -12,23 +12,7 @@ import {
 	Typography,
 } from '@mui/material'
 import { useState } from 'react'
-
-type ProjectItem = {
-	id: number
-	region: string
-	initiator: string
-	project_name: string
-	budget: number
-	jobs_created: string
-	planned_date: string
-	responsible_party: string
-	project_status: {
-		value: string
-		color: string
-	}
-	last_update: string
-	overall_status: string
-}
+import { GetProjects } from '../../types/projects.interface'
 
 const colums: string[] = [
 	'№',
@@ -47,7 +31,7 @@ const colums: string[] = [
 export default function ProjectsTable({
 	projects,
 }: {
-	projects: ProjectItem[]
+	projects: GetProjects[]
 }) {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [modalContent, setModalContent] = useState<string>('')
@@ -79,7 +63,7 @@ export default function ProjectsTable({
 						{projects.map((project, index) => (
 							<TableRow key={project.id}>
 								<TableCell>{index + 1}</TableCell>
-								<TableCell>{project.region}</TableCell>
+								<TableCell>{project.region.name}</TableCell>
 								<TableCell>{project.initiator}</TableCell>
 								<TableCell>{project.project_name}</TableCell>
 								<TableCell>{project.budget.toFixed(2)}</TableCell>

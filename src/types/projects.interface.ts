@@ -8,14 +8,20 @@ export interface ProjectSearchParams {
 }
 export interface GetProjects {
 	id: number
-	region: string
-	initiator: string
 	project_name: string
+	initiator: string
 	budget: number
 	jobs_created: string
-	planned_date: string // ISO формат, можно заменить на Date если будет парситься
-	responsible_party: string
-	project_status: string // название статуса (а не ID)
+	planned_date: string
 	last_update: string
+	responsible_party: string
+	project_status: {
+		value: string
+		color: string
+	}
+	region: {
+		id: number
+		name: string
+	}
 	overall_status: string
 }

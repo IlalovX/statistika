@@ -23,10 +23,8 @@ export function useLogin() {
 			saveTokens(data.access_token, data.refresh_token)
 
 			const user = await queryClient.fetchQuery({
-				queryKey: ['user'],
-				queryFn: async () => {
-					return await userMeService.getMe()
-				},
+				queryKey: ['user_me'],
+				queryFn: userMeService.getMe,
 			})
 			dispatch(updateUserMe(user))
 			queryClient.setQueryData(['user'], user)
