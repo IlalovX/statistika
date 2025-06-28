@@ -48,7 +48,7 @@ function ProjectStatusCards({
 	// Подсчёт по названию статуса
 	const projectStatusCounts = projects.reduce(
 		(acc, project) => {
-			const key = project.project_status
+			const key = project.project_status.value
 			acc[key] = (acc[key] || 0) + 1
 			return acc
 		},
