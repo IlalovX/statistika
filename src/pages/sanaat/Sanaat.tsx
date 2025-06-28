@@ -1,9 +1,6 @@
 import { Typography, useTheme } from '@mui/material'
 import ThemeText from '../../components/ThemeText'
-import {
-	useGetInvestmentByRegion,
-	useGetInvestmentLastUpdate,
-} from '../../hooks/useInvestment'
+import { useGetInvestmentLastUpdate } from '../../hooks/useInvestment'
 import Amount from './components/amount/Amount'
 import ChartCard from './components/ChartCard'
 import CreatedJobs from './components/created-jobs/CreatedJobs'
@@ -16,8 +13,6 @@ import Projects from './components/projects/Projects'
 function Sanaat() {
 	const theme = useTheme()
 	const { data: last_update } = useGetInvestmentLastUpdate()
-	const { data: query } = useGetInvestmentByRegion(2025, 0)
-	console.log('query', query)
 	return (
 		<div className='space-y-10'>
 			<section>

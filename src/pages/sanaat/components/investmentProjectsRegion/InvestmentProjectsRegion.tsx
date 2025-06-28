@@ -23,7 +23,6 @@ function InvestmentProjectsRegion() {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data = [] } = useGetInvestmentProjectRegion(year)
-	console.log(data)
 
 	return (
 		<>
