@@ -14,6 +14,13 @@ import {
 import { useState } from 'react'
 import { GetProjects } from '../../types/projects.interface'
 
+function isOlderThanMonth(date: string | Date): boolean {
+	const updated = new Date(date)
+	const now = new Date()
+	const diffInDays = (now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24)
+	return diffInDays > 30
+}
+
 const colums: string[] = [
 	'№',
 	'Регион',
@@ -77,7 +84,19 @@ export default function ProjectsTable({
 								<TableCell sx={{ color: project.project_status.color }}>
 									{project.project_status.value}
 								</TableCell>
-								<TableCell>{project.last_update}</TableCell>
+								<TableCell
+									sx={{
+										color: isOlderThanMonth(project.last_update)
+											? 'error.main'
+											: 'inherit',
+										fontWeight: isOlderThanMonth(project.last_update)
+											? 'bold'
+											: 'normal',
+									}}
+								>
+									{new Date(project.last_update).toLocaleDateString('ru-RU')}
+								</TableCell>
+
 								<TableCell>
 									<Button
 										variant='outlined'

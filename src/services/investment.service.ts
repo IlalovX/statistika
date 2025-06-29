@@ -1,6 +1,10 @@
 import { axiosWithAuth } from '../api/interceptors'
 
 export const InvestmentService = {
+	async getYears() {
+		const res = await axiosWithAuth.get('/investment/years')
+		return res.data.data
+	},
 	async getLastUpdate() {
 		const res = await axiosWithAuth.get('/investment/last-update')
 		return res.data.data

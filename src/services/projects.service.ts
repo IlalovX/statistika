@@ -22,4 +22,12 @@ export const ProjectsService = {
 		const res = await axiosWithAuth.get('/projects/search', { params })
 		return res.data.data
 	},
+	async getProjectsRegionList() {
+		const res = await axiosWithAuth.get('/projects/get_region_list')
+		return res.data.data
+	},
+	async getProjectsStatusList() {
+		const res = await axiosWithAuth.get('/projects/get_status_list')
+		return res.data.data
+	},
 }

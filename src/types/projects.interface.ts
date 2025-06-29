@@ -13,7 +13,7 @@ export interface GetProjects {
 	budget: number
 	jobs_created: string
 	planned_date: string
-	last_update: string
+	last_update: Date
 	responsible_party: string
 	project_status: {
 		value: string

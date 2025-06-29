@@ -11,6 +11,13 @@ import {
 	InvestmentWorkplace,
 } from '../types/investment.interface'
 
+export function useGetInvestmentYears() {
+	return useQuery({
+		queryKey: ['investment_years'],
+		queryFn: () => InvestmentService.getYears(),
+	})
+}
+
 export function useGetInvestmentLastUpdate() {
 	return useQuery<string>({
 		queryKey: ['investment_last_update'],

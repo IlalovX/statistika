@@ -14,7 +14,10 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
 import { PIE_COLORS } from '../../../../const/colors'
 import { currentYear } from '../../../../const/monthsOfYear'
-import { useGetInvestmentAmount } from '../../../../hooks/useInvestment'
+import {
+	useGetInvestmentAmount,
+	useGetInvestmentYears,
+} from '../../../../hooks/useInvestment'
 import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 import {
 	getPercentColor,
@@ -26,6 +29,8 @@ import dollar from '/svg/dollar.svg'
 function Amount() {
 	const [year, setYear] = useState(currentYear)
 	const { data: amount } = useGetInvestmentAmount(year)
+	const { data: years } = useGetInvestmentYears()
+	console.log(years)
 
 	const pieData =
 		amount?.by_project?.map((item, index) => ({

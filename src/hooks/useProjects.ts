@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { ProjectsService } from '../services/projects.service'
+import { ProjectsStatusesForm } from '../types/projects-statuses.interface'
 import { GetProjects, ProjectSearchParams } from '../types/projects.interface'
+import { Region } from '../types/region.interface'
 
 export function useGetProjectsList() {
 	return useQuery<GetProjects[]>({
@@ -39,5 +41,19 @@ export function useProjectsSearch(params: ProjectSearchParams) {
 		enabled: Object.keys(params).some(
 			key => params[key as keyof ProjectSearchParams] !== null
 		),
+	})
+}
+
+export function useGetProjectsRegionList() {
+	return useQuery<Region[]>({
+		queryKey: ['projects_region_list'],
+		queryFn: () => ProjectsService.getProjectsRegionList(),
+	})
+}
+
+export function useGetProjectsStatusList() {
+	return useQuery<ProjectsStatusesForm[]>({
+		queryKey: ['projects_status_list'],
+		queryFn: () => ProjectsService.getProjectsStatusList(),
 	})
 }

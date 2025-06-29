@@ -2,17 +2,19 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
 import ThemeText from '../../components/ThemeText'
+import { updateProjectCount } from '../../features/slices/Projects'
 import {
 	useGetProjectsLastUpdate,
 	useGetProjectsList,
+	useGetProjectsRegionList,
+	useGetProjectsStatusList,
 	useProjectsSearch,
 } from '../../hooks/useProjects'
-import { useGetProjectsStatusesList } from '../../hooks/useProjectsStatuses'
-import { useGetRegionsList } from '../../hooks/useRegions'
+import { useAppDispatch } from '../../utils/helpers'
 import ProjectStatusesCards from './ProjectsStatusesCards'
 import ProjectsTable from './ProjectsTable'
 
@@ -24,10 +26,10 @@ interface FormData {
 }
 
 function Projects() {
-	const [filterVisible, setFilterVisible] = useState(false)
 	const theme = useTheme()
+	const [filterVisible, setFilterVisible] = useState(false)
 	const [filterParams, setFilterParams] = useState<FormData | null>(null)
-
+	const dispatch = useAppDispatch()
 	const { register, handleSubmit, reset, control } = useForm<FormData>({
 		defaultValues: {
 			region_id: '',
@@ -39,8 +41,14 @@ function Projects() {
 
 	const { data: lastUpdate } = useGetProjectsLastUpdate()
 	const { data: allProjects = [] } = useGetProjectsList()
-	const { data: regions = [] } = useGetRegionsList()
-	const { data: statuses = [] } = useGetProjectsStatusesList()
+	const { data: regions = [] } = useGetProjectsRegionList()
+	const { data: statuses = [] } = useGetProjectsStatusList()
+
+	useEffect(() => {
+		if (allProjects) {
+			dispatch(updateProjectCount(allProjects.length))
+		}
+	}, [allProjects, dispatch])
 
 	const { data: searchedProjects = [] } = useProjectsSearch({
 		region_id: filterParams?.region_id ? Number(filterParams.region_id) : null,
@@ -132,7 +140,9 @@ function Projects() {
 											{...field}
 											options={regions || []}
 											getOptionLabel={option =>
-												typeof option === 'object' ? option.region_name : ''
+												typeof option === 'object'
+													? (option.name as string)
+													: ''
 											}
 											isOptionEqualToValue={(option, value) => {
 												if (value === null || value === undefined) return false
@@ -202,49 +212,57 @@ function Projects() {
 									name='status_id'
 									control={control}
 									defaultValue=''
-									render={({ field: { onChange, value, ...field } }) => (
-										<Autocomplete
-											{...field}
-											options={statuses || []}
-											getOptionLabel={option =>
-												typeof option === 'object' ? option.value : ''
-											}
-											isOptionEqualToValue={(option, value) => {
-												if (value === null || value === undefined) return false
-												return typeof value === 'object' && 'id' in value
-													? option.id === value.id
-													: option.id === +value
-											}}
-											onChange={(_, newValue) => {
-												onChange(newValue ? newValue.id : '')
-											}}
-											value={
-												statuses?.find(
-													status => String(status.id) === String(value)
-												) || null
-											}
-											renderInput={params => (
-												<TextField
-													{...params}
-													placeholder='Статус'
-													size='small'
-													fullWidth
-													variant='outlined'
-												/>
-											)}
-											openOnFocus={false}
-											noOptionsText='Нет совпадений'
-											ListboxProps={{
-												style: {
-													backgroundColor:
-														theme.palette.mode === 'light'
-															? theme.palette.common.white
-															: theme.palette.grey[900],
-													boxShadow: theme.shadows[4],
-												},
-											}}
-										/>
-									)}
+									render={({ field: { onChange, value, ...field } }) => {
+										const selectedStatus = statuses.find(
+											status => String(status.id) === value
+										)
+
+										return (
+											<Autocomplete
+												{...field}
+												options={statuses}
+												getOptionLabel={option => option.name || option.value}
+												isOptionEqualToValue={(option, value) =>
+													option.id === value.id
+												}
+												onChange={(_, newValue) => {
+													onChange(newValue ? newValue.id : '')
+												}}
+												value={selectedStatus || null}
+												renderOption={(props, option) => (
+													<li {...props} style={{ color: option.color }}>
+														{option.name || option.value}
+													</li>
+												)}
+												renderInput={params => (
+													<TextField
+														{...params}
+														placeholder='Статус'
+														size='small'
+														fullWidth
+														variant='outlined'
+														InputProps={{
+															...params.InputProps,
+															style: {
+																color: selectedStatus?.color ?? 'inherit',
+															},
+														}}
+													/>
+												)}
+												openOnFocus={false}
+												noOptionsText='Нет совпадений'
+												ListboxProps={{
+													style: {
+														backgroundColor:
+															theme.palette.mode === 'light'
+																? theme.palette.common.white
+																: theme.palette.grey[900],
+														boxShadow: theme.shadows[4],
+													},
+												}}
+											/>
+										)
+									}}
 								/>
 							</div>
 

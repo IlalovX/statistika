@@ -1,5 +1,6 @@
 export interface ProjectsStatusesForm {
-	id:  number
+	id: number
 	value: string
-	color :string
+	name?: string
+	color: string
 }

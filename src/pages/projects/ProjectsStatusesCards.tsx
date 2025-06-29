@@ -48,7 +48,7 @@ function ProjectStatusCards({
 	const theme = useTheme()
 
 	const statusCounts = statuses.map(status => {
-		const name = status.value
+		const name = status.name ? status.name : status.value
 		const count = projectStatusCounts[name] || 0
 
 		const details = statusDetails[name] || statusDetails[defaultStatus]
