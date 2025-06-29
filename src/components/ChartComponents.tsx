@@ -1,6 +1,5 @@
 import { useTheme } from '@mui/material'
 import { FunctionComponent } from 'react'
-import { getMonthLabel } from '../utils/getMontsLabel'
 
 export const CustomizedLabel: FunctionComponent<any> = (props: any) => {
 	const { x, y, value } = props
@@ -28,7 +27,7 @@ export const CustomizedAxisTick: FunctionComponent<any> = (props: any) => {
 				fill='#666'
 				className='text-[15px]'
 			>
-				{getMonthLabel(payload.value)}
+				{payload.value}
 			</text>
 		</g>
 	)

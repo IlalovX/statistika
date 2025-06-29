@@ -55,18 +55,17 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = ({
 	)
 }
 
-
-interface Props { 
-	years : number[]
+interface Props {
+	years: number[]
 }
-function ChartCard({years}:Props) {
+function ChartCard({ years }: Props) {
 	const theme = useTheme()
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
 
 	const { data: chart = [] } = useGetInvestmentGraph(selectedYear)
 
 	const data = chart.map((item: InvestmentIndustryItem) => ({
-		month: MONTHS.find(m => m.value === item.month)?.label ?? 'Неизвестно',
+		month: MONTHS.find((m) => m.value === item.month)?.label ?? 'Неизвестно',
 		products: item.product_weight.value,
 		profit: item.product_profit?.value ?? 0,
 	}))
@@ -103,7 +102,11 @@ function ChartCard({years}:Props) {
 						</p>
 					</Box>
 				</Box>
-				<YearSelect onChange={setSelectedYear} value={selectedYear} years={years}/>
+				<YearSelect
+					onChange={setSelectedYear}
+					value={selectedYear}
+					years={years}
+				/>
 			</header>
 
 			<ResponsiveContainer width='100%' height={400}>
@@ -124,6 +127,7 @@ function ChartCard({years}:Props) {
 						type='category'
 						padding={{ left: 55, right: 50 }}
 					/>
+
 					<YAxis
 						type='number'
 						domain={[0, (dataMax: number) => Math.ceil(dataMax * 1.25)]}
