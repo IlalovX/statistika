@@ -7,24 +7,25 @@ import { NAVIGATION } from '../const/layoutNav'
 import { demoTheme } from '../const/layoutTheme'
 import { RoutesConsts } from '../const/routes'
 import { RoutesEnums } from '../enums/routes'
-import { useAppSelector } from '../utils/helpers'
+import { useGetProjectsAmount } from '../hooks/useProjects'
 
 export default function DashboardLayoutAccount() {
 	const location = useLocation()
 	const navigate = useNavigate()
-	const projectCount = useAppSelector(state => state.projects.count)
+	const { data: amount } = useGetProjectsAmount()
 
-	const enhancedNav = NAVIGATION.map(item =>
-		item.kind === 'page'
-			? {
-					...item,
-					action: <Chip label={projectCount} color='primary' size='small' />,
-				}
-			: item
-	)
+	const enhancedNav = NAVIGATION.map((item) => {
+		if ('segment' in item && item.segment === 'projects') {
+			return {
+				...item,
+				action: <Chip label={amount ?? 0} color='primary' size='small' />,
+			}
+		}
+		return item
+	})
 
 	const router: Router = {
-		navigate: url => navigate(typeof url === 'string' ? url : url.toString()),
+		navigate: (url) => navigate(typeof url === 'string' ? url : url.toString()),
 		pathname: location.pathname,
 		searchParams: new URLSearchParams(location.search),
 	}

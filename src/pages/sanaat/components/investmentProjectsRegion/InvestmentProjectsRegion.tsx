@@ -19,7 +19,11 @@ import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 6.svg'
 
-function InvestmentProjectsRegion() {
+interface Props { 
+	years:number[]
+}
+
+function InvestmentProjectsRegion({years}:Props) {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data = [] } = useGetInvestmentProjectRegion(year)
@@ -33,7 +37,7 @@ function InvestmentProjectsRegion() {
 						с начало года
 					</Typography>
 				</div>
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</header>
 			<Box
 				className={`mt-5 shadow-2xl w-full rounded-2xl p-2.5  grid grid-cols-2 `}

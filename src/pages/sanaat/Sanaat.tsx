@@ -1,6 +1,9 @@
 import { Typography, useTheme } from '@mui/material'
 import ThemeText from '../../components/ThemeText'
-import { useGetInvestmentLastUpdate } from '../../hooks/useInvestment'
+import {
+	useGetInvestmentLastUpdate,
+	useGetInvestmentYears,
+} from '../../hooks/useInvestment'
 import Amount from './components/amount/Amount'
 import ChartCard from './components/ChartCard'
 import CreatedJobs from './components/created-jobs/CreatedJobs'
@@ -13,6 +16,8 @@ import Projects from './components/projects/Projects'
 function Sanaat() {
 	const theme = useTheme()
 	const { data: last_update } = useGetInvestmentLastUpdate()
+	const { data: years } = useGetInvestmentYears()
+
 	return (
 		<div className='space-y-10'>
 			<section>
@@ -28,10 +33,10 @@ function Sanaat() {
 						{last_update}
 					</span>
 				</p>
-				<ChartCard />
+				<ChartCard years={years} />
 			</section>
 			<section>
-				<Indicators />
+				<Indicators years={years} />
 			</section>
 			<br />
 			<br />
@@ -44,17 +49,17 @@ function Sanaat() {
 					с начало года
 				</Typography>
 				<div className=' grid grid-cols-[35%_65%] gap-2 my-6 '>
-					<Projects />
-					<Amount />
+					<Projects years={years} />
+					<Amount years={years} />
 				</div>
-				<CreatedJobs />
+				<CreatedJobs years={years} />
 			</section>
 
 			<section>
-				<InvestmentProjectsRegion />
+				<InvestmentProjectsRegion years={years} />
 			</section>
 			<section>
-				<InvestorsMap />
+				<InvestorsMap years={years}/>
 			</section>
 		</div>
 	)

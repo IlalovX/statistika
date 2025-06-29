@@ -39,7 +39,7 @@ export function useProjectsSearch(params: ProjectSearchParams) {
 		queryKey: ['projects_search', params],
 		queryFn: () => ProjectsService.getProjectsSearch(params),
 		enabled: Object.keys(params).some(
-			key => params[key as keyof ProjectSearchParams] !== null
+			(key) => params[key as keyof ProjectSearchParams] !== null
 		),
 	})
 }
@@ -55,5 +55,12 @@ export function useGetProjectsStatusList() {
 	return useQuery<ProjectsStatusesForm[]>({
 		queryKey: ['projects_status_list'],
 		queryFn: () => ProjectsService.getProjectsStatusList(),
+	})
+}
+
+export function useGetProjectsAmount() {
+	return useQuery({
+		queryKey: ['projects_amount'],
+		queryFn: () => ProjectsService.getProjectsAmount(),
 	})
 }

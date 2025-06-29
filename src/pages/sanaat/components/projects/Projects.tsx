@@ -20,7 +20,11 @@ import {
 import ProjectsModal from './ProjectsModal'
 import arrowup from '/svg/Polygon 2 (1).svg'
 
-function Projects() {
+interface Props {
+	years: number[]
+}
+
+function Projects({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: projects } = useGetInvestmentProjects(year)
 
@@ -39,7 +43,7 @@ function Projects() {
 						<Typography variant='h6' fontWeight='bold'>
 							Проекты
 						</Typography>
-						<YearSelect onChange={setYear} value={year} />
+						<YearSelect onChange={setYear} value={year} years={years} />
 					</div>
 					<div>
 						<p

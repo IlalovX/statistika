@@ -6,7 +6,11 @@ import CreatedJobsModal from './CreatedJobsModal'
 
 const currentYear = new Date().getFullYear()
 
-function CreatedJobs() {
+interface Props {
+	years: number[]
+}
+
+function CreatedJobs({ years }: Props) {
 	const theme = useTheme()
 	const [selectedYear, setSelectedYear] = useState(currentYear)
 	const { data: workplaces = [] } = useGetInvestmentWorkplaces(selectedYear)
@@ -31,7 +35,11 @@ function CreatedJobs() {
 				<Typography variant='h6' fontWeight='bold'>
 					Созданные рабочие места
 				</Typography>
-				<YearSelect onChange={setSelectedYear} value={selectedYear} />
+				<YearSelect
+					onChange={setSelectedYear}
+					value={selectedYear}
+					years={years}
+				/>
 			</header>
 
 			<div className='grid grid-cols-[30%_70%] grid-rows-[400px]'>

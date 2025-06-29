@@ -83,8 +83,8 @@ const AmountModal = ({ data }: Props) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{data.map(item => (
-									<TableRow>
+								{data.map((item, index) => (
+									<TableRow key={index}>
 										<TableCell>{item.project_name}</TableCell>
 										<TableCell>{formatCompactNumber(item.value)}</TableCell>
 										<TableCell>

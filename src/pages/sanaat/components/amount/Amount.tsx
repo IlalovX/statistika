@@ -14,10 +14,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
 import { PIE_COLORS } from '../../../../const/colors'
 import { currentYear } from '../../../../const/monthsOfYear'
-import {
-	useGetInvestmentAmount,
-	useGetInvestmentYears,
-} from '../../../../hooks/useInvestment'
+import { useGetInvestmentAmount } from '../../../../hooks/useInvestment'
 import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 import {
 	getPercentColor,
@@ -26,11 +23,13 @@ import {
 import AmountModal from './AmountModal'
 import dollar from '/svg/dollar.svg'
 
-function Amount() {
+interface Props {
+	years: number[]
+}
+
+function Amount({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: amount } = useGetInvestmentAmount(year)
-	const { data: years } = useGetInvestmentYears()
-	console.log(years)
 
 	const pieData =
 		amount?.by_project?.map((item, index) => ({
@@ -52,7 +51,7 @@ function Amount() {
 				<Typography variant='h6' fontWeight='bold'>
 					Сумма инвестиции
 				</Typography>
-				<YearSelect value={year} onChange={setYear} />
+				<YearSelect value={year} onChange={setYear} years={years} />
 			</div>
 			<div className='grid grid-cols-2 gap-5'>
 				<Box position='relative' width={200} height={200} className='m-auto'>

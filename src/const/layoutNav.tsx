@@ -2,6 +2,7 @@ import { Construction, CreditCard, Domain, Home } from '@mui/icons-material'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import { type Navigation } from '@toolpad/core/AppProvider'
+
 export const NAVIGATION: Navigation = [
 	{
 		segment: '',

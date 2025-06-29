@@ -30,4 +30,8 @@ export const ProjectsService = {
 		const res = await axiosWithAuth.get('/projects/get_status_list')
 		return res.data.data
 	},
+	async getProjectsAmount() {
+		const res = await axiosWithAuth.get('/projects/count')
+		return res.data.data
+	},
 }

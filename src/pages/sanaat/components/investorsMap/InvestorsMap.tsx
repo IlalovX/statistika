@@ -21,7 +21,11 @@ import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 
-function InvestorsMap() {
+interface Props {
+	years: number[]
+}
+
+function InvestorsMap({ years }: Props) {
 	const [selectedYear, setSelectedYear] = useState(currentYear)
 	const [selectedMonth, setSelectedMonth] = useState(currentMonth)
 	const { data: investors = [] } = useGetInvestmentInvestors(
@@ -40,7 +44,11 @@ function InvestorsMap() {
 					</Typography>
 				</header>
 				<div className='flex gap-4 my-5'>
-					<YearSelect value={selectedYear} onChange={setSelectedYear} />
+					<YearSelect
+						value={selectedYear}
+						onChange={setSelectedYear}
+						years={years}
+					/>
 
 					<MonthSelect value={selectedMonth} onChange={setSelectedMonth} />
 				</div>

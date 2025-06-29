@@ -55,7 +55,11 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = ({
 	)
 }
 
-function ChartCard() {
+
+interface Props { 
+	years : number[]
+}
+function ChartCard({years}:Props) {
 	const theme = useTheme()
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
 
@@ -99,7 +103,7 @@ function ChartCard() {
 						</p>
 					</Box>
 				</Box>
-				<YearSelect onChange={setSelectedYear} value={selectedYear} />
+				<YearSelect onChange={setSelectedYear} value={selectedYear} years={years}/>
 			</header>
 
 			<ResponsiveContainer width='100%' height={400}>
