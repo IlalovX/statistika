@@ -1,7 +1,7 @@
 // Projects.tsx
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
+import { Autocomplete, Badge, Button, TextField, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
@@ -86,6 +86,11 @@ function Projects() {
 		reset(initialFormValues)
 		setFilterParams(null)
 	}
+
+	const expiredCount = baseProjects.filter((project: GetProjects) =>
+		isDateExpired(project.planned_date)
+	).length
+
 	return (
 		<div className='space-y-10'>
 			<header>
@@ -125,13 +130,30 @@ function Projects() {
 							)}
 						</Button>
 						<DownloadProjectsExcelButton />
-						<Button
-							variant='contained'
-							color='primary'
-							onClick={() => setIsExpiredFilter((prev) => !prev)}
+						<Badge
+							badgeContent={expiredCount}
+							color='error'
+							anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+							sx={{
+								'& .MuiBadge-badge': {
+									fontSize: '0.8rem',
+									height: 24,
+									minWidth: 24,
+									padding: '0 6px',
+									top: 4,
+									right: 4,
+								},
+							}}
 						>
-							Мүддети өткен
-						</Button>
+							<Button
+								variant='contained'
+								color='primary'
+								onClick={() => setIsExpiredFilter((prev) => !prev)}
+								sx={{ position: 'relative' }}
+							>
+								Мүддети өткен
+							</Button>
+						</Badge>
 					</div>
 
 					{filterVisible && (
