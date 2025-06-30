@@ -21,14 +21,20 @@ function isOlderThanMonth(date: string | Date): boolean {
 	return diffInDays > 30
 }
 
-const colums: { label: string; width?: number }[] = [
+function isDateExpired(date: string): boolean {
+	const now = new Date()
+	const planned = new Date(date)
+	return planned.getTime() < now.getTime()
+}
+
+const columns: { label: string; width?: number }[] = [
 	{ label: '№', width: 40 },
 	{ label: 'Регион', width: 120 },
 	{ label: 'Инициатор проекта', width: 200 },
 	{ label: 'Название проекта', width: 300 },
 	{ label: 'Стоимость проекта (млн долл)', width: 150 },
 	{ label: 'Созданное рабочее место', width: 130 },
-	{ label: 'Срок запуска', width: 120 },
+	{ label: 'Срок запуска', width: 160 },
 	{ label: 'Ответственный', width: 160 },
 	{ label: 'Статус', width: 120 },
 	{ label: 'Последнее обновление', width: 160 },
@@ -37,8 +43,10 @@ const colums: { label: string; width?: number }[] = [
 
 export default function ProjectsTable({
 	projects,
+	isExpiredFilter,
 }: {
 	projects: GetProjects[]
+	isExpiredFilter: boolean
 }) {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [modalContent, setModalContent] = useState<string>('')
@@ -59,14 +67,10 @@ export default function ProjectsTable({
 				<Table sx={{ tableLayout: 'fixed' }}>
 					<TableHead>
 						<TableRow>
-							{colums.map((col, index) => (
+							{columns.map((col, index) => (
 								<TableCell
 									key={index}
-									sx={{
-										fontWeight: 'bold',
-										width: col.width,
-										minWidth: col.width,
-									}}
+									sx={{ fontWeight: 'bold', width: col.width }}
 								>
 									{col.label}
 								</TableCell>
@@ -80,7 +84,7 @@ export default function ProjectsTable({
 								<TableCell>{index + 1}</TableCell>
 								<TableCell>{project.region.name}</TableCell>
 								<TableCell>{project.initiator}</TableCell>
-								<TableCell sx={{ width: '300px', whiteSpace: 'normal' }}>
+								<TableCell sx={{ whiteSpace: 'normal' }}>
 									{project.project_name}
 								</TableCell>
 								<TableCell>{project.budget.toFixed(2)}</TableCell>
@@ -89,13 +93,12 @@ export default function ProjectsTable({
 									{new Date(
 										project.planned_date.replace(' ', 'T')
 									).toLocaleDateString('ru-RU')}
+									{isExpiredFilter && isDateExpired(project.planned_date) && (
+										<span style={{ color: 'red', marginLeft: 4 }}>(Истек)</span>
+									)}
 								</TableCell>
 								<TableCell
-									sx={{
-										width: 160,
-										whiteSpace: 'normal',
-										overflowWrap: 'break-word',
-									}}
+									sx={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
 								>
 									{project.responsible_party}
 								</TableCell>
@@ -114,7 +117,6 @@ export default function ProjectsTable({
 								>
 									{new Date(project.last_update).toLocaleDateString('ru-RU')}
 								</TableCell>
-
 								<TableCell>
 									<Button
 										variant='outlined'

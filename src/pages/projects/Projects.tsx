@@ -1,11 +1,11 @@
+// Projects.tsx
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
 import ThemeText from '../../components/ThemeText'
-import { updateProjectCount } from '../../features/slices/Projects'
 import {
 	useGetProjectsLastUpdate,
 	useGetProjectsList,
@@ -13,7 +13,7 @@ import {
 	useGetProjectsStatusList,
 	useProjectsSearch,
 } from '../../hooks/useProjects'
-import { useAppDispatch } from '../../utils/helpers'
+import { GetProjects } from '../../types/projects.interface'
 import ProjectStatusesCards from './ProjectsStatusesCards'
 import ProjectsTable from './ProjectsTable'
 
@@ -31,11 +31,17 @@ const initialFormValues: FormData = {
 	status_id: '',
 }
 
+function isDateExpired(date: string): boolean {
+	const now = new Date()
+	const planned = new Date(date)
+	return planned.getTime() < now.getTime()
+}
+
 function Projects() {
 	const theme = useTheme()
 	const [filterVisible, setFilterVisible] = useState(false)
+	const [isExpiredFilter, setIsExpiredFilter] = useState(false)
 	const [filterParams, setFilterParams] = useState<FormData | null>(null)
-	const dispatch = useAppDispatch()
 
 	const { register, handleSubmit, reset, control } = useForm<FormData>({
 		defaultValues: initialFormValues,
@@ -45,12 +51,6 @@ function Projects() {
 	const { data: allProjects = [] } = useGetProjectsList()
 	const { data: regions = [] } = useGetProjectsRegionList()
 	const { data: statuses = [] } = useGetProjectsStatusList()
-
-	useEffect(() => {
-		if (allProjects) {
-			dispatch(updateProjectCount(allProjects.length))
-		}
-	}, [allProjects, dispatch])
 
 	const { data: searchedProjects = [] } = useProjectsSearch({
 		region_id: filterParams?.region_id ? Number(filterParams.region_id) : null,
@@ -63,24 +63,29 @@ function Projects() {
 			: null,
 	})
 
-	const projectsToDisplay =
+	const baseProjects =
 		filterParams && Object.values(filterParams).some((val) => val)
 			? searchedProjects
 			: allProjects
+
+	const projectsToDisplay = isExpiredFilter
+		? (baseProjects as GetProjects[]).filter((project) =>
+				isDateExpired(project.planned_date)
+			)
+		: baseProjects
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		const cleaned = Object.fromEntries(
 			Object.entries(data).filter(([_, val]) => val !== '')
 		)
 		setFilterParams(Object.keys(cleaned).length ? (cleaned as FormData) : null)
-		reset(data) // сохраняем значения в форме после сабмита
+		reset(data)
 	}
 
 	const handleReset = () => {
 		reset(initialFormValues)
 		setFilterParams(null)
 	}
-
 	return (
 		<div className='space-y-10'>
 			<header>
@@ -99,10 +104,8 @@ function Projects() {
 			</header>
 
 			<section>
-				<header>
-					<ThemeText variant='h4' text='Краткая информация' />
-					<p className='text-gray-400'>сравнее прошлым годом</p>
-				</header>
+				<ThemeText variant='h4' text='Краткая информация' />
+				<p className='text-gray-400'>сравнение с прошлым годом</p>
 				<ProjectStatusesCards projects={allProjects} statuses={statuses} />
 			</section>
 
@@ -122,6 +125,13 @@ function Projects() {
 							)}
 						</Button>
 						<DownloadProjectsExcelButton />
+						<Button
+							variant='contained'
+							color='primary'
+							onClick={() => setIsExpiredFilter((prev) => !prev)}
+						>
+							Мүддети өткен
+						</Button>
 					</div>
 
 					{filterVisible && (
@@ -129,7 +139,7 @@ function Projects() {
 							onSubmit={handleSubmit(onSubmit)}
 							className='flex justify-between items-end gap-5 mt-5'
 						>
-							{/* Регионы */}
+							{/* Region */}
 							<div className='w-full'>
 								<label>Регионы</label>
 								<Controller
@@ -162,26 +172,14 @@ function Projects() {
 													placeholder='Регионы'
 													size='small'
 													fullWidth
-													variant='outlined'
 												/>
 											)}
-											openOnFocus={false}
-											noOptionsText='Нет совпадений'
-											ListboxProps={{
-												style: {
-													backgroundColor:
-														theme.palette.mode === 'light'
-															? theme.palette.common.white
-															: theme.palette.grey[900],
-													boxShadow: theme.shadows[4],
-												},
-											}}
 										/>
 									)}
 								/>
 							</div>
 
-							{/* Стоимость */}
+							{/* Budget */}
 							<div className='w-full'>
 								<label>Стоимость ($млн)</label>
 								<div className='flex items-center gap-2 w-full'>
@@ -203,7 +201,7 @@ function Projects() {
 								</div>
 							</div>
 
-							{/* Статус */}
+							{/* Status */}
 							<div className='w-full'>
 								<label>Статус</label>
 								<Controller
@@ -213,7 +211,6 @@ function Projects() {
 										const selectedStatus = statuses.find(
 											(status) => status.id === +(value as string)
 										)
-
 										return (
 											<Autocomplete
 												{...field}
@@ -226,59 +223,26 @@ function Projects() {
 													onChange(newValue ? newValue.id : undefined)
 												}}
 												value={selectedStatus || null}
-												renderOption={(props, option) => (
-													<li {...props} style={{ color: option.color }}>
-														{option.name}
-													</li>
-												)}
 												renderInput={(params) => (
 													<TextField
 														{...params}
 														placeholder='Статус'
 														size='small'
 														fullWidth
-														variant='outlined'
-														InputProps={{
-															...params.InputProps,
-															style: {
-																color: selectedStatus?.color ?? 'inherit',
-															},
-														}}
 													/>
 												)}
-												openOnFocus={false}
-												noOptionsText='Нет совпадений'
-												ListboxProps={{
-													style: {
-														backgroundColor:
-															theme.palette.mode === 'light'
-																? theme.palette.common.white
-																: theme.palette.grey[900],
-														boxShadow: theme.shadows[4],
-													},
-												}}
 											/>
 										)
 									}}
 								/>
 							</div>
 
-							{/* Кнопки */}
+							{/* Buttons */}
 							<div className='flex gap-2'>
-								<Button
-									variant='outlined'
-									type='reset'
-									sx={{ height: '40px' }}
-									onClick={handleReset}
-								>
+								<Button variant='outlined' type='reset' onClick={handleReset}>
 									Отмена
 								</Button>
-								<Button
-									variant='contained'
-									type='submit'
-									color='primary'
-									sx={{ height: '40px' }}
-								>
+								<Button variant='contained' type='submit' color='primary'>
 									Фильтр
 								</Button>
 							</div>
@@ -286,7 +250,10 @@ function Projects() {
 					)}
 				</header>
 
-				<ProjectsTable projects={projectsToDisplay} />
+				<ProjectsTable
+					projects={projectsToDisplay}
+					isExpiredFilter={isExpiredFilter}
+				/>
 			</section>
 		</div>
 	)
