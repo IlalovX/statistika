@@ -21,18 +21,18 @@ function isOlderThanMonth(date: string | Date): boolean {
 	return diffInDays > 30
 }
 
-const colums: string[] = [
-	'№',
-	'Регион',
-	'Инициатор проекта',
-	'Название проекта',
-	'Стоимость проекта (млн долл)',
-	'Созданное рабочее место',
-	'Срок запуска',
-	'Ответственный',
-	'Статус',
-	'Последнее обновление',
-	'Общее состояние',
+const colums: { label: string; width?: number }[] = [
+	{ label: '№', width: 40 },
+	{ label: 'Регион', width: 120 },
+	{ label: 'Инициатор проекта', width: 200 },
+	{ label: 'Название проекта', width: 300 },
+	{ label: 'Стоимость проекта (млн долл)', width: 150 },
+	{ label: 'Созданное рабочее место', width: 130 },
+	{ label: 'Срок запуска', width: 120 },
+	{ label: 'Ответственный', width: 160 },
+	{ label: 'Статус', width: 120 },
+	{ label: 'Последнее обновление', width: 160 },
+	{ label: 'Общее состояние', width: 160 },
 ]
 
 export default function ProjectsTable({
@@ -56,23 +56,33 @@ export default function ProjectsTable({
 	return (
 		<Box mt={5}>
 			<TableContainer component={Paper}>
-				<Table>
+				<Table sx={{ tableLayout: 'fixed' }}>
 					<TableHead>
 						<TableRow>
-							{colums.map((header, index) => (
-								<TableCell key={index} sx={{ fontWeight: 'bold' }}>
-									{header}
+							{colums.map((col, index) => (
+								<TableCell
+									key={index}
+									sx={{
+										fontWeight: 'bold',
+										width: col.width,
+										minWidth: col.width,
+									}}
+								>
+									{col.label}
 								</TableCell>
 							))}
 						</TableRow>
 					</TableHead>
+
 					<TableBody>
 						{projects.map((project, index) => (
 							<TableRow key={project.id}>
 								<TableCell>{index + 1}</TableCell>
 								<TableCell>{project.region.name}</TableCell>
 								<TableCell>{project.initiator}</TableCell>
-								<TableCell>{project.project_name}</TableCell>
+								<TableCell sx={{ width: '300px', whiteSpace: 'normal' }}>
+									{project.project_name}
+								</TableCell>
 								<TableCell>{project.budget.toFixed(2)}</TableCell>
 								<TableCell>{project.jobs_created}</TableCell>
 								<TableCell>
@@ -80,7 +90,15 @@ export default function ProjectsTable({
 										project.planned_date.replace(' ', 'T')
 									).toLocaleDateString('ru-RU')}
 								</TableCell>
-								<TableCell>{project.responsible_party}</TableCell>
+								<TableCell
+									sx={{
+										width: 160,
+										whiteSpace: 'normal',
+										overflowWrap: 'break-word',
+									}}
+								>
+									{project.responsible_party}
+								</TableCell>
 								<TableCell sx={{ color: project.project_status.color }}>
 									{project.project_status.value}
 								</TableCell>
