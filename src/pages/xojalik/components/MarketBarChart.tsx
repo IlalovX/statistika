@@ -5,14 +5,18 @@ import { YearSelect } from '../../../components/common/YearSelect/YearSelect'
 import { currentYear, MONTHS } from '../../../const/monthsOfYear'
 import { useMarket } from '../../../hooks/useAgriculture'
 
-function MarketBarChart() {
+interface Props {
+	years: number[]
+}
+
+function MarketBarChart({ years }: Props) {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data: market = [] } = useMarket(year)
 
 	const chartData = useMemo(() => {
-		return MONTHS.map(month => {
-			const match = market.find(item => item.month === month.value)
+		return MONTHS.map((month) => {
+			const match = market.find((item) => item.month === month.value)
 			const exportValue = match?.export ?? 0
 			const localValue = match?.local_market ?? 0
 
@@ -45,7 +49,7 @@ function MarketBarChart() {
 						Внутренний рынок
 					</Typography>
 				</div>
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</div>
 
 			<ResponsiveContainer width='100%' height={300}>

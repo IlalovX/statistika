@@ -19,7 +19,11 @@ import { currentYear } from '../../../../const/monthsOfYear'
 import { useClientPlacement } from '../../../../hooks/useAgriculture'
 import PlantedAreaModal from './PlantedAreaModal'
 
-export default function PlantedArea() {
+interface Props {
+	years: number[]
+}
+
+export default function PlantedArea({ years }: Props) {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data: placement = [] } = useClientPlacement(year)
@@ -37,7 +41,7 @@ export default function PlantedArea() {
 					Показатели
 				</Typography>
 				<div>
-					<YearSelect value={year} onChange={setYear} />
+					<YearSelect value={year} onChange={setYear} years={years} />
 				</div>
 			</div>
 			<div className='flex flex-col justify-between h-full'>

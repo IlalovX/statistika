@@ -15,7 +15,9 @@ function Groups({ group }: Props) {
 				с начало месяца
 			</Typography>
 			<div className='grid grid-cols-5 gap-4 my-5'>
-				{group.group_items?.map(subgroup => <SubGroups subgroup={subgroup} key={subgroup.subgroup_name}/>)}
+				{group.group_items?.map((subgroup) => (
+					<SubGroups subgroup={subgroup} key={subgroup.subgroup_name} />
+				))}
 			</div>
 		</div>
 	)

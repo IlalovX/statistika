@@ -46,3 +46,10 @@ export function useGetTourismGroupSummary(year: number, month: number) {
 		enabled: !!year && !!month,
 	})
 }
+
+export function useGetTourismYears() {
+	return useQuery({
+		queryKey: ['tourism_years'],
+		queryFn: () => TourismService.getTourismYears(),
+	})
+}

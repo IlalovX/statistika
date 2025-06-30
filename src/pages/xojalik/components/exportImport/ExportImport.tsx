@@ -19,7 +19,11 @@ import EARTH from '/svg/Earth.svg'
 import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 
-function ExportImport() {
+interface Props {
+	years: number[]
+}
+
+function ExportImport({ years }: Props) {
 	const [type, setType] = useState<'export' | 'import'>('export')
 	const [year, setYear] = useState(currentYear)
 	const { data: export_import = [] } = useTradeSummary(2025, type)
@@ -29,7 +33,7 @@ function ExportImport() {
 		<>
 			<header className='flex justify-between items-center'>
 				<ThemeText variant='h4' text='Экспорт Импорт' />
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</header>
 			<Box
 				className={`shadow-2xl w-full rounded-2xl p-2.5 my-5 grid grid-cols-2 `}

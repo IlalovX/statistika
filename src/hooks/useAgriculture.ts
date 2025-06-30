@@ -130,3 +130,10 @@ export function useClientWaterLimit(year: number) {
 		enabled: !!year,
 	})
 }
+
+export function useGetAgricultureYears() {
+	return useQuery({
+		queryKey: ['agriculture_years'],
+		queryFn: () => AgricultureService.getYears(),
+	})
+}

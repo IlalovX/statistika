@@ -7,6 +7,7 @@ import { currentMonth, currentYear } from '../../const/monthsOfYear'
 import {
 	useGetTourismGroupSummary,
 	useGetTourismLastUpdate,
+	useGetTourismYears,
 } from '../../hooks/useTourism'
 import ChartCard from './components/ChartCard'
 import Groups from './components/Groups'
@@ -14,6 +15,7 @@ import MapCard from './components/MapCard'
 
 function Tourism() {
 	const { data: last_update } = useGetTourismLastUpdate()
+	const { data: years } = useGetTourismYears()
 	const [selectedYear, setSelectedYear] = useState(currentYear)
 	const [selectedMonth, setSelectedMonth] = useState(currentMonth)
 
@@ -39,7 +41,7 @@ function Tourism() {
 						{last_update}
 					</span>
 				</p>
-				<ChartCard />
+				<ChartCard years={years}/>
 			</section>
 			<section>
 				<ThemeText variant='h4' text='Источники/страны' />
@@ -47,7 +49,11 @@ function Tourism() {
 			</section>
 			<section>
 				<div className='flex gap-4 my-5 justify-end items-center'>
-					<YearSelect value={selectedYear} onChange={setSelectedYear} />
+					<YearSelect
+						value={selectedYear}
+						onChange={setSelectedYear}
+						years={years}
+					/>
 					<MonthSelect value={selectedMonth} onChange={setSelectedMonth} />
 				</div>
 
@@ -70,7 +76,7 @@ function Tourism() {
 						))}
 					</div>
 				) : (
-					group_summary.map(group => (
+					group_summary.map((group) => (
 						<Groups group={group} key={group.group_name} />
 					))
 				)}

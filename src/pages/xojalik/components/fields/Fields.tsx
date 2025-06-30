@@ -10,7 +10,11 @@ import {
 } from '../../../../hooks/useAgriculture'
 import FieldCard from './FieldCard'
 
-function Fields() {
+interface Props {
+	years: number[]
+}
+
+function Fields({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: area } = usePlacementArea(year)
 	const { data: planted } = usePlacementPlanted(year)
@@ -25,7 +29,7 @@ function Fields() {
 						Сравнение с предыдущим годом
 					</Typography>
 				</div>
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years}/>
 			</header>
 
 			<div className='grid grid-cols-2 gap-5 mt-4'>

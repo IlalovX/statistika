@@ -19,7 +19,11 @@ import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 6.svg'
 
-function District() {
+interface Props {
+	years: number[]
+}
+
+function District({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: district = [] } = useDistrictGeneral(year)
 
@@ -42,7 +46,7 @@ function District() {
 				>
 					Посажено всего
 				</Typography>
-				<YearSelect value={year} onChange={setYear} />
+				<YearSelect value={year} onChange={setYear} years={years} />
 			</header>
 			<Box className='grid grid-cols-2'>
 				<Box>

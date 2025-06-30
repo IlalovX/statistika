@@ -1,6 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import ThemeText from '../../components/ThemeText'
-import { useAgricultureLastUpdate } from '../../hooks/useAgriculture'
+import {
+	useAgricultureLastUpdate,
+	useGetAgricultureYears,
+} from '../../hooks/useAgriculture'
 import ChartCard from './components/ChartCard'
 import Companies from './components/companies/Companies'
 import District from './components/district/District'
@@ -13,7 +16,7 @@ import Water from './components/water/Water'
 
 function Xojalik() {
 	const { data: last_update } = useAgricultureLastUpdate()
-
+	const { data: years } = useGetAgricultureYears()
 	return (
 		<div className='space-y-10'>
 			<section>
@@ -22,30 +25,30 @@ function Xojalik() {
 					Последний обновления {last_update}
 				</Typography>
 
-				<ChartCard />
+				<ChartCard years={years} />
 			</section>
 			<section>
-				<ExportImport />
+				<ExportImport years={years} />
 			</section>
 			<section className='grid grid-cols-2 grid-rows-1 gap-10 mb-5'>
-				<Summary />
-				<Fields />
+				<Summary years={years} />
+				<Fields years={years} />
 			</section>
 			<section>
 				<ThemeText variant='h4' text='Размещение' />
 				<Box className='grid grid-cols-2 grid-rows-1 gap-5 mt-5'>
-					<PlantedArea />
+					<PlantedArea years={years} />
 					<div className='flex flex-col justify-between gap-5'>
 						<Companies />
-						<Water />
+						<Water years={years} />
 					</div>
 				</Box>
 			</section>
 			<section>
-				<MarketBarChart />
+				<MarketBarChart years={years} />
 			</section>
 			<section>
-				<District />
+				<District years={years}/>
 			</section>
 		</div>
 	)

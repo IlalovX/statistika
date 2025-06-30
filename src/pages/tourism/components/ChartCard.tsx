@@ -11,8 +11,8 @@ import {
 } from 'recharts'
 import { CustomizedAxisTick } from '../../../components/ChartComponents'
 import { YearSelect } from '../../../components/common/YearSelect/YearSelect'
-import { useGetTourismOverview } from '../../../hooks/useTourism'
 import { currentYear } from '../../../const/monthsOfYear'
+import { useGetTourismOverview } from '../../../hooks/useTourism'
 
 interface ChartDataType {
 	month: number
@@ -53,7 +53,12 @@ const CustomizedLabel: React.FC<CustomizedLabelProps> = ({
 		</text>
 	)
 }
-function ChartCard() {
+
+interface Props {
+	years: number[]
+}
+
+function ChartCard({ years }: Props) {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data = [] } = useGetTourismOverview(Number(year))
@@ -90,7 +95,7 @@ function ChartCard() {
 						</p>
 					</Box>
 				</Box>
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</header>
 			<ResponsiveContainer width='100%' height={400}>
 				<ComposedChart
@@ -108,7 +113,7 @@ function ChartCard() {
 						dataKey='month'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						tickFormatter={month => `${month} мес.`}
+						tickFormatter={(month) => `${month} мес.`}
 					/>
 					<YAxis
 						type='number'

@@ -13,7 +13,11 @@ const LABELS_MAP: Record<keyof AgricultureSummary, string> = {
 	export: 'Экспорт',
 }
 
-function Summary() {
+interface Props {
+	years: number[]
+}
+
+function Summary({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: summary, isLoading } = useSummary(year)
 	const theme = useTheme()
@@ -48,7 +52,7 @@ function Summary() {
 						Краткая информация по показателям за {year}
 					</Typography>
 				</div>
-				<YearSelect onChange={setYear} value={year} />
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</header>
 
 			<div className='grid grid-cols-2 gap-5 mt-4'>

@@ -17,7 +17,11 @@ import { useClientWaterLimit } from '../../../../hooks/useAgriculture'
 import { getPercentColor } from '../../../../utils/getPercentDisplay'
 import WaterModal from './WaterModal'
 
-function Water() {
+interface Props {
+	years: number[]
+}
+
+function Water({ years }: Props) {
 	const [year, setYear] = useState(currentYear)
 	const { data: water } = useClientWaterLimit(year)
 
@@ -43,7 +47,7 @@ function Water() {
 									за последний год
 								</Typography>
 							</div>
-							<YearSelect onChange={setYear} value={year} />
+							<YearSelect onChange={setYear} value={year} years={years} />
 						</div>
 
 						<div className='flex items-center gap-2 mt-2'>

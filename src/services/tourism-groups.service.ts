@@ -1,6 +1,7 @@
 import { axiosWithAuth } from '../api/interceptors'
 
 export const TourismGroupsService = {
+
 	async getTourismGroupList() {
 		const res = await axiosWithAuth.get('/tourism/group/list')
 		return res.data.data

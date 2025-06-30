@@ -1,6 +1,10 @@
 import { axiosWithAuth } from '../api/interceptors'
 
 export const TourismService = {
+	async getTourismYears() {
+		const res = await axiosWithAuth.get('/tourism/years')
+		return res.data.data
+	},
 	async getTourismLastUpdate() {
 		const res = await axiosWithAuth.get('/tourism/last_update')
 		return res.data.data
