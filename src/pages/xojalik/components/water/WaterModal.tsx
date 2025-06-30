@@ -48,7 +48,7 @@ function WaterModal({ data }: Props) {
 				maxWidth='md'
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -78,7 +78,7 @@ function WaterModal({ data }: Props) {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{data.map(item => (
+								{data.map((item) => (
 									<TableRow>
 										<TableCell>{item.product}</TableCell>
 										<TableCell>{item.value}</TableCell>

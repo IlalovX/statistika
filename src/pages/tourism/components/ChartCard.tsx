@@ -15,7 +15,7 @@ import { currentYear } from '../../../const/monthsOfYear'
 import { useGetTourismOverview } from '../../../hooks/useTourism'
 
 interface ChartDataType {
-	month: number
+	month: string | number
 	tourists: number
 	profit: number
 }
@@ -110,11 +110,11 @@ function ChartCard({ years }: Props) {
 					</defs>
 
 					<XAxis
-						dataKey='month'
+						dataKey='monthLabel'
 						tick={<CustomizedAxisTick />}
 						type='category'
-						tickFormatter={(month) => `${month} мес.`}
 					/>
+
 					<YAxis
 						type='number'
 						domain={[0, (dataMax: number) => Math.ceil(dataMax * 1.25)]}

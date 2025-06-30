@@ -53,7 +53,7 @@ function DistrictModal({ data, isLoading }: Props) {
 				maxWidth='md'
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>

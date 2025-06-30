@@ -79,7 +79,7 @@ function MapCard() {
 								}}
 							>
 								<TableCell>
-									<strong>Страна (код)</strong>
+									<strong>Страна</strong>
 								</TableCell>
 								<TableCell>
 									<strong>Количество</strong>
@@ -92,7 +92,7 @@ function MapCard() {
 									key={index}
 									sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
 								>
-									<TableCell>{country.country.official}</TableCell>
+									<TableCell>{country.country.data.official}</TableCell>
 									<TableCell>{country[isInternal]}</TableCell>
 								</TableRow>
 							))}

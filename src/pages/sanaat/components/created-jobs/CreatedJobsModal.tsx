@@ -43,7 +43,7 @@ const CreatedJobsModal = ({ data }: Props) => {
 				fullWidth
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>

@@ -51,7 +51,7 @@ const ProjectsModal = ({ data }: Props) => {
 				fullWidth
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -82,7 +82,7 @@ const ProjectsModal = ({ data }: Props) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{data.map(item => (
+								{data.map((item) => (
 									<TableRow key={item.project_name}>
 										<TableCell>{item.project_name}</TableCell>
 										<TableCell>{item.value}</TableCell>

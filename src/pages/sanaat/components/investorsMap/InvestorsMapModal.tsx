@@ -50,7 +50,7 @@ const InvestorsMapModal = ({ investors }: Props) => {
 				fullWidth
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -63,7 +63,7 @@ const InvestorsMapModal = ({ investors }: Props) => {
 							position: 'absolute',
 							right: 8,
 							top: 8,
-							color: theme => theme.palette.grey[500],
+							color: (theme) => theme.palette.grey[500],
 						}}
 					>
 						<CloseIcon />
@@ -81,7 +81,7 @@ const InvestorsMapModal = ({ investors }: Props) => {
 							<TableBody>
 								{investors.map((item, index) => (
 									<TableRow key={index}>
-										<TableCell>{item.country.common}</TableCell>
+										<TableCell>{item.country.data.common}</TableCell>
 										<TableCell>{item.amount}</TableCell>
 									</TableRow>
 								))}

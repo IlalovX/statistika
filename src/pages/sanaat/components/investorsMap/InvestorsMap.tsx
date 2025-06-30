@@ -81,7 +81,7 @@ function InvestorsMap({ years }: Props) {
 										key={index}
 										sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}
 									>
-										<TableCell>{item.country.common}</TableCell>
+										<TableCell>{item.country.data.official}</TableCell>
 										<TableCell
 											align='right'
 											sx={{

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { MONTHS } from '../const/monthsOfYear'
 import { TourismService } from '../services/tourism.service'
 import {
 	GroupData,
@@ -22,6 +23,11 @@ export function useGetTourismOverview(year: number) {
 		queryKey: ['tourism_overview', year],
 		queryFn: () => TourismService.getToursimOverview(year),
 		enabled: !!year,
+		select: (data) =>
+			data.map((item) => ({
+				...item,
+				monthLabel: MONTHS.find((m) => m.value === item.month)?.label ?? 'N/A',
+			})),
 	})
 }
 

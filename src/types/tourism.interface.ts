@@ -17,9 +17,9 @@ export interface GroupData {
 }
 
 export interface TourismOverviewItem {
-	month: number // Номер месяца (1 - 12)
-	tourists: number // Количество туристов
-	profit: number // Прибыль от туристов ($)
+	month: number | string
+	tourists: number
+	profit: number
 }
 
 export interface MapCountries {

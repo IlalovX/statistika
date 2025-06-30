@@ -45,7 +45,7 @@ const ExportImportModal = ({ data, type, year }: Props) => {
 				fullWidth
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>

@@ -45,7 +45,7 @@ const OutputModal: FC<Props> = ({ data }) => {
 				maxWidth='sm'
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -58,7 +58,7 @@ const OutputModal: FC<Props> = ({ data }) => {
 							position: 'absolute',
 							right: 8,
 							top: 8,
-							color: theme => theme.palette.grey[500],
+							color: (theme) => theme.palette.grey[500],
 						}}
 					>
 						<CloseIcon />

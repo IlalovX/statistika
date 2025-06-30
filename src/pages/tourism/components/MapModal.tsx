@@ -43,7 +43,7 @@ function MapModal({ isInternal, sorted }: Props) {
 				maxWidth='lg'
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -58,7 +58,7 @@ function MapModal({ isInternal, sorted }: Props) {
 							<TableHead>
 								<TableRow>
 									<TableCell>
-										<strong>Страна (код)</strong>
+										<strong>Страна</strong>
 									</TableCell>
 									<TableCell>
 										<strong>Количество</strong>
@@ -68,7 +68,7 @@ function MapModal({ isInternal, sorted }: Props) {
 							<TableBody>
 								{sorted.map((country, index) => (
 									<TableRow key={index}>
-										<TableCell>{country.country.official}</TableCell>
+										<TableCell>{country.country.data.official}</TableCell>
 										<TableCell>{country[isInternal]}</TableCell>
 									</TableRow>
 								))}

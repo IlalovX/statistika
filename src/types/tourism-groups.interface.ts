@@ -9,8 +9,12 @@ export interface GetTourismSubGroupList {
 }
 
 export interface CountryCode {
-	official: string
-	common: string
+	cca2: string
+	cioc: string
+	data: {
+		official: string
+		common: string
+	}
 }
 
 export interface GetTourismGroupData {

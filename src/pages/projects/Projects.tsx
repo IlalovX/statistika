@@ -110,7 +110,6 @@ function Projects() {
 
 			<section>
 				<ThemeText variant='h4' text='Краткая информация' />
-				<p className='text-gray-400'>сравнение с прошлым годом</p>
 				<ProjectStatusesCards projects={allProjects} statuses={statuses} />
 			</section>
 

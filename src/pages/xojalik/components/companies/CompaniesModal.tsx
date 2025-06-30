@@ -48,7 +48,7 @@ function CompaniesModal({ data }: Props) {
 				maxWidth='md'
 				PaperProps={{
 					sx: {
-						backgroundColor: theme.palette.common.black,
+						backgroundColor: theme.palette.background.default,
 					},
 				}}
 			>
@@ -78,7 +78,7 @@ function CompaniesModal({ data }: Props) {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{data.map(item => (
+								{data.map((item) => (
 									<TableRow>
 										<TableCell>{item.year}</TableCell>
 										<TableCell>{item.count}</TableCell>
