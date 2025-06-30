@@ -1,6 +1,5 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-
 import { Autocomplete, Button, TextField, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
@@ -25,18 +24,21 @@ interface FormData {
 	status_id?: string
 }
 
+const initialFormValues: FormData = {
+	region_id: '',
+	budget_min: '',
+	budget_max: '',
+	status_id: '',
+}
+
 function Projects() {
 	const theme = useTheme()
 	const [filterVisible, setFilterVisible] = useState(false)
 	const [filterParams, setFilterParams] = useState<FormData | null>(null)
 	const dispatch = useAppDispatch()
+
 	const { register, handleSubmit, reset, control } = useForm<FormData>({
-		defaultValues: {
-			region_id: '',
-			budget_min: '',
-			budget_max: '',
-			status_id: '',
-		},
+		defaultValues: initialFormValues,
 	})
 
 	const { data: lastUpdate } = useGetProjectsLastUpdate()
@@ -62,18 +64,20 @@ function Projects() {
 	})
 
 	const projectsToDisplay =
-		filterParams && Object.values(filterParams).some(val => val)
+		filterParams && Object.values(filterParams).some((val) => val)
 			? searchedProjects
 			: allProjects
 
-	const onSubmit: SubmitHandler<FormData> = data => {
+	const onSubmit: SubmitHandler<FormData> = (data) => {
 		const cleaned = Object.fromEntries(
 			Object.entries(data).filter(([_, val]) => val !== '')
 		)
 		setFilterParams(Object.keys(cleaned).length ? (cleaned as FormData) : null)
+		reset(data) // сохраняем значения в форме после сабмита
 	}
+
 	const handleReset = () => {
-		reset()
+		reset(initialFormValues)
 		setFilterParams(null)
 	}
 
@@ -84,7 +88,7 @@ function Projects() {
 				<p className='text-gray-400'>
 					Последний обновления{' '}
 					<span
-						className='font-bold '
+						className='font-bold'
 						style={{
 							color: theme.palette.mode === 'light' ? 'black' : 'white',
 						}}
@@ -99,10 +103,7 @@ function Projects() {
 					<ThemeText variant='h4' text='Краткая информация' />
 					<p className='text-gray-400'>сравнее прошлым годом</p>
 				</header>
-				<ProjectStatusesCards
-					projects={allProjects ? allProjects : []}
-					statuses={statuses ? statuses : []}
-				/>
+				<ProjectStatusesCards projects={allProjects} statuses={statuses} />
 			</section>
 
 			<section>
@@ -128,37 +129,34 @@ function Projects() {
 							onSubmit={handleSubmit(onSubmit)}
 							className='flex justify-between items-end gap-5 mt-5'
 						>
+							{/* Регионы */}
 							<div className='w-full'>
-								{/* Город */}
 								<label>Регионы</label>
 								<Controller
 									name='region_id'
 									control={control}
-									defaultValue=''
 									render={({ field: { onChange, value, ...field } }) => (
 										<Autocomplete
 											{...field}
-											options={regions || []}
-											getOptionLabel={option =>
+											options={regions}
+											getOptionLabel={(option) =>
 												typeof option === 'object'
 													? (option.name as string)
 													: ''
 											}
 											isOptionEqualToValue={(option, value) => {
-												if (value === null || value === undefined) return false
-												return typeof value === 'object' && 'id' in value
-													? option.id === value.id
-													: option.id === value
+												if (!value) return false
+												return option.id === +value
 											}}
 											onChange={(_, newValue) => {
 												onChange(newValue ? newValue.id : '')
 											}}
 											value={
-												regions?.find(
-													region => String(region.id) === String(value)
+												regions.find(
+													(region) => String(region.id) === String(value)
 												) || null
 											}
-											renderInput={params => (
+											renderInput={(params) => (
 												<TextField
 													{...params}
 													placeholder='Регионы'
@@ -183,9 +181,9 @@ function Projects() {
 								/>
 							</div>
 
+							{/* Стоимость */}
 							<div className='w-full'>
 								<label>Стоимость ($млн)</label>
-								{/* Стоимость (от - до) */}
 								<div className='flex items-center gap-2 w-full'>
 									<TextField
 										placeholder='от'
@@ -205,36 +203,35 @@ function Projects() {
 								</div>
 							</div>
 
+							{/* Статус */}
 							<div className='w-full'>
-								{/* Статус */}
 								<label>Статус</label>
 								<Controller
 									name='status_id'
 									control={control}
-									defaultValue=''
 									render={({ field: { onChange, value, ...field } }) => {
 										const selectedStatus = statuses.find(
-											status => String(status.id) === value
+											(status) => status.id === +(value as string)
 										)
 
 										return (
 											<Autocomplete
 												{...field}
 												options={statuses}
-												getOptionLabel={option => option.name || option.value}
+												getOptionLabel={(option) => option.name as string}
 												isOptionEqualToValue={(option, value) =>
 													option.id === value.id
 												}
 												onChange={(_, newValue) => {
-													onChange(newValue ? newValue.id : '')
+													onChange(newValue ? newValue.id : undefined)
 												}}
 												value={selectedStatus || null}
 												renderOption={(props, option) => (
 													<li {...props} style={{ color: option.color }}>
-														{option.name || option.value}
+														{option.name}
 													</li>
 												)}
-												renderInput={params => (
+												renderInput={(params) => (
 													<TextField
 														{...params}
 														placeholder='Статус'
@@ -266,7 +263,7 @@ function Projects() {
 								/>
 							</div>
 
-							{/* Buttons */}
+							{/* Кнопки */}
 							<div className='flex gap-2'>
 								<Button
 									variant='outlined'
@@ -288,6 +285,7 @@ function Projects() {
 						</form>
 					)}
 				</header>
+
 				<ProjectsTable projects={projectsToDisplay} />
 			</section>
 		</div>
