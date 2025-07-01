@@ -132,7 +132,7 @@ function Projects() {
 									Лойиҳалар:
 								</Typography>
 								<Typography variant='h6' fontWeight='bold'>
-									125
+									{allProjects.length}
 								</Typography>
 							</div>
 							<div className='flex items-center gap-2'>
