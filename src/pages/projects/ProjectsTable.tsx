@@ -63,14 +63,27 @@ export default function ProjectsTable({
 
 	return (
 		<Box mt={5}>
-			<TableContainer component={Paper}>
+			<TableContainer
+				component={Paper}
+				sx={{
+					maxHeight: 700,
+					overflowY: 'auto',
+				}}
+			>
 				<Table sx={{ tableLayout: 'fixed' }}>
 					<TableHead>
 						<TableRow>
 							{columns.map((col, index) => (
 								<TableCell
+									sx={{
+										fontWeight: 'bold',
+										width: col.width,
+										position: 'sticky',
+										top: 0,
+										zIndex: 1,
+										backgroundColor: 'background.paper',
+									}}
 									key={index}
-									sx={{ fontWeight: 'bold', width: col.width }}
 								>
 									{col.label}
 								</TableCell>

@@ -47,7 +47,7 @@ function ProjectStatusCards({
 
 	const theme = useTheme()
 
-	const statusCounts = statuses.map(status => {
+	const statusCounts = statuses.map((status) => {
 		const name = status.name ? status.name : status.value
 		const count = projectStatusCounts[name] || 0
 
@@ -66,7 +66,7 @@ function ProjectStatusCards({
 			{statusCounts.map((item, index) => (
 				<Box
 					key={index}
-					className='shadow-md rounded-xl p-2 space-y-2'
+					className='shadow-md rounded-xl p-2 space-y-2 w-[180px]'
 					sx={{
 						backgroundColor: 'background.paper',
 						border: `1px solid ${theme.palette.divider}`,
@@ -79,7 +79,7 @@ function ProjectStatusCards({
 						</Typography>
 					</div>
 					<Typography
-						variant='h6'
+						variant='body2'
 						sx={{ color: item.color, fontWeight: 'bold' }}
 					>
 						{item.name}
