@@ -10,6 +10,7 @@ import {
 	TableHead,
 	TableRow,
 	Typography,
+	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import { GetProjects } from '../../types/projects.interface'
@@ -61,6 +62,8 @@ export default function ProjectsTable({
 		setModalContent('')
 	}
 
+	const theme = useTheme()
+
 	return (
 		<Box mt={5}>
 			<TableContainer
@@ -81,7 +84,7 @@ export default function ProjectsTable({
 										position: 'sticky',
 										top: 0,
 										zIndex: 1,
-										backgroundColor: 'background.paper',
+										backgroundColor: theme.palette.background.default,
 									}}
 									key={index}
 								>

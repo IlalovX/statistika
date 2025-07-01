@@ -1,7 +1,13 @@
-// Projects.tsx
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { Autocomplete, Badge, Button, TextField, useTheme } from '@mui/material'
+import {
+	Autocomplete,
+	Badge,
+	Button,
+	TextField,
+	Typography,
+	useTheme,
+} from '@mui/material'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
@@ -91,6 +97,9 @@ function Projects() {
 		isDateExpired(project.planned_date)
 	).length
 
+	const totalBudget = allProjects.reduce((sum, p) => sum + p.budget, 0)
+	const totalJobs = allProjects.reduce((sum, p) => sum + +p.jobs_created, 0)
+
 	return (
 		<div className='space-y-10'>
 			<header>
@@ -109,50 +118,78 @@ function Projects() {
 			</header>
 
 			<section>
-				<ThemeText variant='h4' text='Краткая информация' />
+				<ThemeText variant='h4' text='Қисқача маълумот' />
 				<ProjectStatusesCards projects={allProjects} statuses={statuses} />
 			</section>
 
 			<section>
-				<header>
-					<ThemeText variant='h4' text='Информация' />
-					<div className='flex items-center justify-end gap-5'>
-						<Button
-							className='text-black !capitalize !text-2xl'
-							onClick={() => setFilterVisible(!filterVisible)}
-						>
-							Фильтр
-							{filterVisible ? (
-								<KeyboardArrowUpIcon />
-							) : (
-								<KeyboardArrowDownIcon />
-							)}
-						</Button>
-						<DownloadProjectsExcelButton />
-						<Badge
-							badgeContent={expiredCount}
-							color='error'
-							anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-							sx={{
-								'& .MuiBadge-badge': {
-									fontSize: '0.8rem',
-									height: 24,
-									minWidth: 24,
-									padding: '0 6px',
-									top: 4,
-									right: 4,
-								},
-							}}
-						>
+				<header className='!space-y-5'>
+					<ThemeText variant='h4' text='Лойиҳалар бўйича маълумот' />
+					<div className='flex justify-between items-center'>
+						<section className='flex items-center gap-8 !text-2xl'>
+							<div className='flex items-center gap-2'>
+								<Typography variant='h6' className='!text-neutral-500'>
+									Лойиҳалар:
+								</Typography>
+								<Typography variant='h6' fontWeight='bold'>
+									125
+								</Typography>
+							</div>
+							<div className='flex items-center gap-2'>
+								<Typography variant='h6' className='!text-neutral-500'>
+									Инвестиция:
+								</Typography>
+								<Typography variant='h6' fontWeight='bold'>
+									{totalBudget.toFixed(2)} млн $
+								</Typography>
+							</div>
+							<div className='flex items-center gap-2'>
+								<Typography variant='h6' className='!text-neutral-500'>
+									Иш ўрни:
+								</Typography>
+								<Typography variant='h6' fontWeight='bold'>
+									{totalJobs}
+								</Typography>
+							</div>
+						</section>
+						<div className='flex items-center justify-end gap-5'>
 							<Button
-								variant='contained'
-								color='primary'
-								onClick={() => setIsExpiredFilter((prev) => !prev)}
-								sx={{ position: 'relative' }}
+								className='text-black !capitalize !text-2xl'
+								onClick={() => setFilterVisible(!filterVisible)}
 							>
-								Мүддети өткен
+								Фильтр
+								{filterVisible ? (
+									<KeyboardArrowUpIcon />
+								) : (
+									<KeyboardArrowDownIcon />
+								)}
 							</Button>
-						</Badge>
+							<DownloadProjectsExcelButton />
+							<Badge
+								badgeContent={expiredCount}
+								color='error'
+								anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+								sx={{
+									'& .MuiBadge-badge': {
+										fontSize: '0.8rem',
+										height: 24,
+										minWidth: 24,
+										padding: '0 6px',
+										top: 4,
+										right: 4,
+									},
+								}}
+							>
+								<Button
+									variant='contained'
+									color='primary'
+									onClick={() => setIsExpiredFilter((prev) => !prev)}
+									sx={{ position: 'relative' }}
+								>
+									Муддати ўтган
+								</Button>
+							</Badge>
+						</div>
 					</div>
 
 					{filterVisible && (

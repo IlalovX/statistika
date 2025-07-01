@@ -62,7 +62,7 @@ function ProjectStatusCards({
 	})
 
 	return (
-		<div className='grid grid-cols-6 gap-5 mt-4'>
+		<div className='flex gap-8 mt-4'>
 			{statusCounts.map((item, index) => (
 				<Box
 					key={index}
