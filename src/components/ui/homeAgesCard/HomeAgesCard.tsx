@@ -8,75 +8,29 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
+import { useAgeCategoryPopulationStat } from '../../../hooks/useAgeCategoryPopulationStat'
 
 interface AgeDataItem {
 	name: string
 	uv: number
 }
 
+const years = [2025, 2024, 2023, 2022]
+
 function HomeAgesCard() {
-	const [chartData, setChartData] = useState<AgeDataItem[]>([])
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-	const [selectedYear, setSelectedYear] = useState<string | null>(null)
+	const [selectedYear, setSelectedYear] = useState<number>(2025)
 	const open = Boolean(anchorEl)
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget)
-	}
-
-	const handleClose = (year?: string) => {
-		if (year) setSelectedYear(year)
-		setAnchorEl(null)
-	}
-
 	const theme = useTheme()
-	const { data: ages } = useQuery({
-		queryKey: ['ages'],
-		queryFn: async () => {
-			const res = await fetch(
-				'/db/ages/turaqlı_xalıq_sanı_jas_kategoriyalar_boyınsha_tek_qaralpaqstan.json'
-			)
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
-			return res.json()
-		},
-	})
 
-	// Получаем список годов из данных
-	const years = useMemo(() => {
-		if (!ages) return []
-		return Object.keys(ages['Qaraqalpaqstan Respublikası']).sort().reverse()
-	}, [ages])
+	const { data, isLoading } = useAgeCategoryPopulationStat(selectedYear)
 
-	// Обновляем selectedYear на самый свежий при первом получении данных
-	useEffect(() => {
-		if (years.length > 0 && !selectedYear) {
-			setSelectedYear(years[0])
-		}
-	}, [years, selectedYear])
-
-	// Формируем chartData при изменении selectedYear
-	useEffect(() => {
-		if (ages && selectedYear) {
-			const yearData = ages['Qaraqalpaqstan Respublikası'][selectedYear]
-			if (!yearData) return
-
-			const formattedData = Object.entries(yearData)
-				.filter(([key]) => key !== 'total')
-				.map(([key, value]) => ({
-					name: key === 'up to 80' ? 'за 80' : `до ${key}`,
-					uv: Number(value),
-				}))
-
-			setChartData(formattedData)
-		}
-	}, [ages, selectedYear])
-
-	if (!selectedYear || chartData.length === 0) return <p>Загрузка...</p>
+	const chartData: AgeDataItem[] = data.map((d) => ({
+		name: d.category,
+		uv: d.total,
+	}))
 
 	return (
 		<Box
@@ -87,14 +41,14 @@ function HomeAgesCard() {
 			}}
 		>
 			<Typography variant='h6' fontWeight='bold'>
-				Население
+				Население по возрасту
 			</Typography>
 			<div>
 				<Button
 					disableFocusRipple
 					disableRipple
 					variant='outlined'
-					onClick={handleClick}
+					onClick={(e) => setAnchorEl(e.currentTarget)}
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					sx={{
 						border: 'none',
@@ -107,47 +61,57 @@ function HomeAgesCard() {
 				<Menu
 					anchorEl={anchorEl}
 					open={open}
-					onClose={() => handleClose()}
+					onClose={() => setAnchorEl(null)}
 					sx={{
 						'& .MuiPaper-root': {
 							bgcolor: theme.palette.background.default,
 						},
 					}}
 				>
-					{years.slice(0, 4).map(year => (
+					{years.map((year) => (
 						<MenuItem
 							key={year}
 							selected={selectedYear === year}
-							onClick={() => handleClose(year)}
+							onClick={() => {
+								setSelectedYear(year)
+								setAnchorEl(null)
+							}}
 						>
 							{year}
 						</MenuItem>
 					))}
 				</Menu>
 			</div>
-			<ResponsiveContainer height={135}>
-				<BarChart
-					data={chartData}
-					margin={{
-						top: 20,
-						right: 30,
-						left: 20,
-						bottom: 5,
-					}}
-				>
-					<XAxis dataKey='name' tickLine={false} axisLine={false} />
-					<Bar dataKey='uv' label={{ position: 'top' }}>
-						{chartData.map((entry, index) => (
-							<Cell
-								key={`cell-${index}-${entry.name}`}
-								fill='#7367F0'
-								radius={20}
-								width={10}
-							/>
-						))}
-					</Bar>
-				</BarChart>
-			</ResponsiveContainer>
+
+			{isLoading ? (
+				<p>Загрузка...</p>
+			) : (
+				<ResponsiveContainer height={135}>
+					<BarChart
+						data={chartData}
+						margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+						barCategoryGap={'50%'}
+					>
+						<XAxis dataKey='name' tickLine={false} axisLine={false} />
+						<Bar
+							dataKey='uv'
+							label={{
+								position: 'top',
+								formatter: (value: number) => `${(value / 1000).toFixed(1)}`,
+							}}
+						>
+							{chartData.map((entry, index) => (
+								<Cell
+									key={`cell-${index}-${entry.name}`}
+									fill='#7367F0'
+									radius={20}
+									width={10}
+								/>
+							))}
+						</Bar>
+					</BarChart>
+				</ResponsiveContainer>
+			)}
 		</Box>
 	)
 }

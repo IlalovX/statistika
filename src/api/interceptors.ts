@@ -13,10 +13,14 @@ const options: CreateAxiosDefaults = {
 	baseURL: import.meta.env.VITE_API_BASE_URL,
 }
 
+const axiosStat = axios.create({
+	baseURL: 'https://api.siat.stat.uz/sdmx/',
+})
+
 const axiosClassic = axios.create(options)
 const axiosWithAuth = axios.create(options)
 
-axiosWithAuth.interceptors.request.use(config => {
+axiosWithAuth.interceptors.request.use((config) => {
 	const accessToken = getAccessToken()
 	if (accessToken && config.headers) {
 		config.headers.Authorization = `Bearer ${accessToken}`
@@ -25,8 +29,8 @@ axiosWithAuth.interceptors.request.use(config => {
 })
 
 axiosWithAuth.interceptors.response.use(
-	response => response,
-	async error => {
+	(response) => response,
+	async (error) => {
 		const originalRequest = error.config
 		const refreshToken = getRefreshToken()
 
@@ -70,4 +74,4 @@ axiosWithAuth.interceptors.response.use(
 	}
 )
 
-export { axiosClassic, axiosWithAuth }
+export { axiosClassic, axiosStat, axiosWithAuth }
