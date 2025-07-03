@@ -12,7 +12,7 @@ import {
 import { useState } from 'react'
 import { MonthSelect } from '../../../../components/common/MonthSelect/MonthSelect'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import ThemeText from '../../../../components/ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentMonth, currentYear } from '../../../../const/monthsOfYear'
 import { useGetInvestmentInvestors } from '../../../../hooks/useInvestment'
 import { formatCompactNumber } from '../../../../utils/formatCompactNumber'

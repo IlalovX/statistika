@@ -9,8 +9,8 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import { CustomizedAxisTick } from '../../../components/ChartComponents'
 import { YearSelect } from '../../../components/common/YearSelect/YearSelect'
+import { CustomizedAxisTick } from '../../../components/ui/ChartComponents'
 import { currentYear } from '../../../const/monthsOfYear'
 import { useGetTourismOverview } from '../../../hooks/useTourism'
 

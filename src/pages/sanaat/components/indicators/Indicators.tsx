@@ -10,8 +10,8 @@ import {
 	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
-import ThemeText from '../../../../components/ThemeText'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useGetInvestmentIndicators } from '../../../../hooks/useInvestment'
 import IndicatorsModal from './IndicatorsModal'

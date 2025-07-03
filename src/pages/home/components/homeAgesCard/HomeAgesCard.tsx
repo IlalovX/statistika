@@ -1,28 +1,16 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {
-	Box,
-	Button,
-	Menu,
-	MenuItem,
-	Typography,
-	useTheme,
-} from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
-import { useAgeCategoryPopulationStat } from '../../../hooks/useAgeCategoryPopulationStat'
+import YearMenu from '../../../../components/common/YearMenu/YearMenu'
+import { useAgeCategoryPopulationStat } from '../../../../hooks/useAgeCategoryPopulationStat'
 
 interface AgeDataItem {
 	name: string
 	uv: number
 }
 
-const years = [2025, 2024, 2023, 2022]
-
 function HomeAgesCard() {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
-	const open = Boolean(anchorEl)
 	const theme = useTheme()
 
 	const { data, isLoading } = useAgeCategoryPopulationStat(selectedYear)
@@ -41,46 +29,14 @@ function HomeAgesCard() {
 			}}
 		>
 			<Typography variant='h6' fontWeight='bold'>
-				Население по возрасту
+				Аҳоли сони ёш кесимида
 			</Typography>
 			<div>
-				<Button
-					disableFocusRipple
-					disableRipple
-					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
-					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{
-						border: 'none',
-						color: '#8D8A94',
-						padding: '0',
-					}}
-				>
-					<span className='lowercase mr-1'>за</span> {selectedYear}
-				</Button>
-				<Menu
-					anchorEl={anchorEl}
-					open={open}
-					onClose={() => setAnchorEl(null)}
-					sx={{
-						'& .MuiPaper-root': {
-							bgcolor: theme.palette.background.default,
-						},
-					}}
-				>
-					{years.map((year) => (
-						<MenuItem
-							key={year}
-							selected={selectedYear === year}
-							onClick={() => {
-								setSelectedYear(year)
-								setAnchorEl(null)
-							}}
-						>
-							{year}
-						</MenuItem>
-					))}
-				</Menu>
+				<YearMenu
+					onChange={setSelectedYear}
+					selectedYear={selectedYear}
+					className='self-start'
+				/>
 			</div>
 
 			{isLoading ? (

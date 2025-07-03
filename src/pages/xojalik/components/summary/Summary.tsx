@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import ThemeText from '../../../../components/ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useSummary } from '../../../../hooks/useAgriculture'
 import { AgricultureSummary } from '../../../../types/agriculture.interface'

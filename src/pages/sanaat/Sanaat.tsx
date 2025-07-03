@@ -1,5 +1,5 @@
 import { Typography, useTheme } from '@mui/material'
-import ThemeText from '../../components/ThemeText'
+import ThemeText from '../../components/ui/ThemeText'
 import {
 	useGetInvestmentLastUpdate,
 	useGetInvestmentYears,
@@ -59,7 +59,7 @@ function Sanaat() {
 				<InvestmentProjectsRegion years={years} />
 			</section>
 			<section>
-				<InvestorsMap years={years}/>
+				<InvestorsMap years={years} />
 			</section>
 		</div>
 	)

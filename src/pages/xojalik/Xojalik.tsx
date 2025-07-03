@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import ThemeText from '../../components/ThemeText'
+import ThemeText from '../../components/ui/ThemeText'
 import {
 	useAgricultureLastUpdate,
 	useGetAgricultureYears,
@@ -48,7 +48,7 @@ function Xojalik() {
 				<MarketBarChart years={years} />
 			</section>
 			<section>
-				<District years={years}/>
+				<District years={years} />
 			</section>
 		</div>
 	)

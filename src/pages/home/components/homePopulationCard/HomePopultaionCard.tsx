@@ -17,8 +17,11 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import { useRegionPopulationStat } from '../../../hooks/useStat'
-import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
+import {
+	CustomizedAxisTick,
+	CustomizedLabel,
+} from '../../../../components/ui/ChartComponents'
+import { useRegionPopulationStat } from '../../../../hooks/useStat'
 
 function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 	const sortedYears = [...years].sort()

@@ -9,7 +9,10 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
+import {
+	CustomizedAxisTick,
+	CustomizedLabel,
+} from '../../../../components/ui/ChartComponents'
 
 function HomeUnemployersСard() {
 	const theme = useTheme()
@@ -64,7 +67,7 @@ function HomeUnemployersСard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={value => `${value} тыс.`}
+						formatter={(value) => `${value} тыс.`}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis

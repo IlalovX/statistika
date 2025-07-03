@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 
-function CustomTooltipContent({ data }: { data: string }) {
+function CustomTooltipContent({ data, year }: { data: string; year: number }) {
 	const { data: population } = useQuery({
 		queryKey: [data, 'map'],
 		queryFn: async () => {
@@ -15,10 +15,10 @@ function CustomTooltipContent({ data }: { data: string }) {
 
 	return (
 		<>
-			<span className='text-xs text-gray-400'>2024 г</span>
+			<span className='text-xs text-gray-400'>{year} г</span>
 			<p className='text-xl'>{data}</p>
 			<Typography variant='body2' className='text-blue-400 text-[12px]'>
-				{population && population[data]['2024']}тыс
+				{population && population[data][`${year}`]}тыс
 			</Typography>
 		</>
 	)

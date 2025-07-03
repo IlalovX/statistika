@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import ThemeText from '../../../components/ThemeText'
+import ThemeText from '../../../components/ui/ThemeText'
 import { GroupData } from '../../../types/tourism.interface'
 import SubGroups from './SubGroups'
 

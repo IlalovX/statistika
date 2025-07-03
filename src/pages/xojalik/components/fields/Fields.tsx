@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import ThemeText from '../../../../components/ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentYear } from '../../../../const/monthsOfYear'
 import {
 	usePlacementArea,
@@ -29,7 +29,7 @@ function Fields({ years }: Props) {
 						Сравнение с предыдущим годом
 					</Typography>
 				</div>
-				<YearSelect onChange={setYear} value={year} years={years}/>
+				<YearSelect onChange={setYear} value={year} years={years} />
 			</header>
 
 			<div className='grid grid-cols-2 gap-5 mt-4'>

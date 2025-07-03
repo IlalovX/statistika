@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import ThemeText from '../../../../components/ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useGetInvestmentProjectRegion } from '../../../../hooks/useInvestment'
 import InvestmentProjectsRegionModal from './InvestmentProjectsRegionModal'
@@ -19,11 +19,11 @@ import { default as arrowUp } from '/svg/Polygon 2 (1).svg'
 import { default as arrowDown } from '/svg/Polygon 2.svg'
 import QQ from '/svg/Слой 6.svg'
 
-interface Props { 
-	years:number[]
+interface Props {
+	years: number[]
 }
 
-function InvestmentProjectsRegion({years}:Props) {
+function InvestmentProjectsRegion({ years }: Props) {
 	const theme = useTheme()
 	const [year, setYear] = useState(currentYear)
 	const { data = [] } = useGetInvestmentProjectRegion(year)

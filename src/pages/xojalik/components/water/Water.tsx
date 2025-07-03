@@ -11,10 +11,10 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import HomeDoughnut from '../../../../components/ui/homeDoughnut/HomeDoughnut'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useClientWaterLimit } from '../../../../hooks/useAgriculture'
 import { getPercentColor } from '../../../../utils/getPercentDisplay'
+import HomeDoughnut from '../../../home/components/homeDoughnut/HomeDoughnut'
 import WaterModal from './WaterModal'
 
 interface Props {

@@ -9,8 +9,8 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import { CustomizedAxisTick } from '../../../components/ChartComponents'
 import { YearSelect } from '../../../components/common/YearSelect/YearSelect'
+import { CustomizedAxisTick } from '../../../components/ui/ChartComponents'
 import { MONTHS } from '../../../const/monthsOfYear'
 import { useGetInvestmentGraph } from '../../../hooks/useInvestment'
 import { InvestmentIndustryItem } from '../../../types/investment.interface'

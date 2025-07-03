@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import HomeDoughnut from '../../../../components/ui/homeDoughnut/HomeDoughnut'
 import { useClientFirms } from '../../../../hooks/useAgriculture'
+import HomeDoughnut from '../../../home/components/homeDoughnut/HomeDoughnut'
 import CompaniesModal from './CompaniesModal'
 
 function Companies() {

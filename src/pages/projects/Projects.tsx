@@ -11,7 +11,7 @@ import {
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import DownloadProjectsExcelButton from '../../components/common/DownloanButton/DownloadButton'
-import ThemeText from '../../components/ThemeText'
+import ThemeText from '../../components/ui/ThemeText'
 import {
 	useGetProjectsLastUpdate,
 	useGetProjectsList,

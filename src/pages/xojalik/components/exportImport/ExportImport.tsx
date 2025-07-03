@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import ThemeText from '../../../../components/ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useTradeSummary } from '../../../../hooks/useAgriculture'
 import ExportImportModal from './ExportImportModal'

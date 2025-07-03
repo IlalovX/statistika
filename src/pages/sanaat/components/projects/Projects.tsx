@@ -10,13 +10,13 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import HomeDoughnut from '../../../../components/ui/homeDoughnut/HomeDoughnut'
 import { currentYear } from '../../../../const/monthsOfYear'
 import { useGetInvestmentProjects } from '../../../../hooks/useInvestment'
 import {
 	getPercentColor,
 	getPercentSign,
 } from '../../../../utils/getPercentDisplay'
+import HomeDoughnut from '../../../home/components/homeDoughnut/HomeDoughnut'
 import ProjectsModal from './ProjectsModal'
 import arrowup from '/svg/Polygon 2 (1).svg'
 

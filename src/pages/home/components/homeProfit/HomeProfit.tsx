@@ -8,7 +8,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import ThemeText from '../../ThemeText'
+import ThemeText from '../../../../components/ui/ThemeText'
 import HomeWeeklyBarChart from '../homeWeeklyBarChart/HomeWeeklyBarChart'
 
 const data = [
@@ -49,7 +49,7 @@ function HomeProfit() {
 			<List
 				sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
 			>
-				{data.map(item => (
+				{data.map((item) => (
 					<ListItem
 						key={item.id}
 						sx={{
