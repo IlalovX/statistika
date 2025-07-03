@@ -41,7 +41,7 @@ const YearMenu = ({
 					color,
 				}}
 			>
-				<span className='lowercase mr-1'>за</span> {selectedYear}
+				{selectedYear}
 			</Button>
 			<Menu
 				anchorEl={anchorEl}

@@ -1,6 +1,14 @@
-import { Box, Typography, useTheme } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import {
+	Box,
+	Button,
+	Menu,
+	MenuItem,
+	Typography,
+	useTheme,
+} from '@mui/material'
+import { useMemo, useState } from 'react'
 import {
 	Line,
 	LineChart,
@@ -13,32 +21,52 @@ import {
 	CustomizedAxisTick,
 	CustomizedLabel,
 } from '../../../../components/ui/ChartComponents'
+import { useRegionUnemploymentStat } from '../../../../hooks/useUnemploymentStat'
 
-function HomeUnemployersСard() {
-	const theme = useTheme()
-	const [chartData, setChartData] = useState([210, 240, 230, 250])
-	const xLabels = ['2020', '2021', '2022', '2023']
-	const { data } = useQuery({
-		queryKey: ['unemployees'],
-		queryFn: async () => {
-			const res = await fetch('/db/unemployers/unemployers.json')
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
-			return res.json()
-		},
-	})
+function getYearRangesFromEnd(years: number[], chunkSize = 4): number[][] {
+	const sortedYears = [...years].sort((a, b) => a - b)
+	const result: number[][] = []
 
-	useEffect(() => {
-		if (data?.data?.[1]) {
-			setChartData([
-				data.data[1]['2020'],
-				data.data[1]['2021'],
-				data.data[1]['2022'],
-				data.data[1]['2023'],
-			])
+	for (let i = sortedYears.length; i > 0; i -= chunkSize) {
+		const start = Math.max(i - chunkSize, 0)
+		const chunk = sortedYears.slice(start, i)
+		if (chunk.length > 1) {
+			result.unshift(chunk) // теперь chunk — number[]
 		}
-	}, [data])
+	}
+
+	return result
+}
+
+const allYears = Array.from({ length: 2025 - 2010 + 1 }, (_, i) => 2010 + i)
+
+function HomeUnemployersCard() {
+	const theme = useTheme()
+	const yearChunks = getYearRangesFromEnd(allYears, 4)
+	const rangeLabels = yearChunks.map(
+		(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
+	)
+
+	const [selectedRange, setSelectedRange] = useState<string>(
+		rangeLabels.at(-1) || ''
+	)
+
+	const selectedYears = useMemo(() => {
+		const range = yearChunks.find(
+			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}` === selectedRange
+		)
+		return range || []
+	}, [selectedRange, yearChunks])
+
+	const { data: unemploymentData } = useRegionUnemploymentStat(selectedYears)
+
+	const chartData = selectedYears.map((year) => ({
+		name: String(year),
+		безработные: unemploymentData[year] ?? null,
+	}))
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	const open = Boolean(anchorEl)
 
 	return (
 		<Box
@@ -48,17 +76,49 @@ function HomeUnemployersСard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Typography variant='h6' fontWeight='bold'>
-				Безработные
-			</Typography>
-			<p className='text-gray-400'>{data?.data[1]['2023']} тыс человек</p>
+			<div className='flex justify-between items-center mb-2'>
+				<Typography variant='h6' fontWeight='bold'>
+					Ишсизлар сони
+				</Typography>
+
+				<Button
+					variant='outlined'
+					onClick={(e) => setAnchorEl(e.currentTarget)}
+					disableFocusRipple
+					disableRipple
+					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
+				>
+					{selectedRange}
+				</Button>
+				<Menu
+					anchorEl={anchorEl}
+					open={open}
+					onClose={() => setAnchorEl(null)}
+					sx={{
+						'& .MuiPaper-root': {
+							bgcolor: theme.palette.background.default,
+						},
+					}}
+				>
+					{rangeLabels.map((range) => (
+						<MenuItem
+							key={range}
+							selected={range === selectedRange}
+							onClick={() => {
+								setSelectedRange(range)
+								setAnchorEl(null)
+							}}
+						>
+							{range}
+						</MenuItem>
+					))}
+				</Menu>
+			</div>
 
 			<ResponsiveContainer width='100%' height={120}>
 				<LineChart
-					data={xLabels.map((label, index) => ({
-						name: label,
-						безработные: chartData[index],
-					}))}
+					data={chartData}
 					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<Tooltip
@@ -98,4 +158,5 @@ function HomeUnemployersСard() {
 		</Box>
 	)
 }
-export default HomeUnemployersСard
+
+export default HomeUnemployersCard
