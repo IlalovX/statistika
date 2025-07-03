@@ -1,6 +1,16 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+
+import {
+	Box,
+	Button,
+	Menu,
+	MenuItem,
+	Typography,
+	useTheme,
+} from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
 	Line,
 	LineChart,
@@ -11,11 +21,23 @@ import {
 } from 'recharts'
 import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
 
+function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
+	const sortedYears = [...years].sort() // ascending
+	const result: string[][] = []
+
+	for (let i = sortedYears.length; i > 0; i -= chunkSize) {
+		const start = Math.max(i - chunkSize, 0)
+		result.unshift(sortedYears.slice(start, i))
+	}
+
+	return result
+}
+
 function HomePopulationCard() {
 	const theme = useTheme()
 	const [chartData, setChartData] = useState<number[]>([])
-
 	const [xLabels, setXLabels] = useState<string[]>([])
+	const [selectedRange, setSelectedRange] = useState<string>('')
 
 	const { data } = useQuery({
 		queryKey: ['population'],
@@ -26,25 +48,55 @@ function HomePopulationCard() {
 		},
 	})
 
-	useEffect(() => {
-		if (data && data['Qaraqalpaqstan Respublikası']) {
-			const populationData = data['Qaraqalpaqstan Respublikası']
-
-			const keys = Object.keys(populationData).sort()
-			setXLabels(keys.slice(-4))
-			const validData = keys
-				.slice(-4)
-				.map(year => {
-					const rawValue = populationData[year]
-						?.replace(/\s/g, '')
-						.replace(',', '.')
-					return rawValue ? Number(rawValue) : 0
-				})
-				.filter(value => value > 0)
-
-			setChartData(validData)
+	// Все доступные годы и диапазоны
+	const { allYears, ranges } = useMemo(() => {
+		if (!data || !data['Qaraqalpaqstan Respublikası']) {
+			return { allYears: [], ranges: [] }
 		}
+
+		const populationData = data['Qaraqalpaqstan Respublikası']
+		const keys = Object.keys(populationData).sort()
+		const chunks = getYearRangesFromEnd(keys, 5)
+		const ranges = chunks.map(
+			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
+		)
+		return { allYears: keys, ranges }
 	}, [data])
+
+	// Установить последний диапазон по умолчанию
+	useEffect(() => {
+		if (ranges.length > 0 && !selectedRange) {
+			setSelectedRange(ranges[ranges.length - 1])
+		}
+	}, [ranges, selectedRange])
+
+	// Подготовка данных для графика при изменении диапазона
+	useEffect(() => {
+		if (!data || !data['Qaraqalpaqstan Respublikası'] || !selectedRange) return
+
+		const populationData = data['Qaraqalpaqstan Respublikası']
+		const [start, end] = selectedRange.split('–')
+
+		const selectedYears = allYears.filter(
+			(year) => year >= start && year <= end
+		)
+
+		setXLabels(selectedYears)
+
+		const validData = selectedYears
+			.map((year) => {
+				const rawValue = populationData[year]
+					?.replace(/\s/g, '')
+					.replace(',', '.')
+				return rawValue ? Number(rawValue) : 0
+			})
+			.filter((val) => val > 0)
+
+		setChartData(validData)
+	}, [data, selectedRange, allYears])
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	const open = Boolean(anchorEl)
 
 	return (
 		<Box
@@ -54,41 +106,49 @@ function HomePopulationCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Typography variant='h6' fontWeight='bold'>
-				Население
-			</Typography>
-			{/* <div>
+			<div className='flex justify-between items-center mb-2'>
+				<Typography variant='h6' fontWeight='bold'>
+					Аҳоли сони ўсиши
+				</Typography>
 				<Button
+					variant='outlined'
+					onClick={(e) => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
-					variant='outlined'
-					onClick={handleClick}
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					sx={{
 						border: 'none',
-						color: '#8D8A94',
-						padding: '0',
+						padding: 0,
+						textTransform: 'none',
 					}}
 				>
-					<span className='lowercase mr-1'>за</span> {selectedYear}
+					<span className='lowercase mr-1'>за</span> {selectedRange}
 				</Button>
 				<Menu
 					anchorEl={anchorEl}
 					open={open}
-					onClose={() => handleClose()}
+					onClose={() => setAnchorEl(null)}
 					sx={{
 						'& .MuiPaper-root': {
-							bgcolor: theme.palette.background.paper,
+							bgcolor: theme.palette.background.default,
 						},
 					}}
 				>
-					{years.map(year => (
-						<MenuItem key={year} onClick={() => handleClose(year)}>
-							{year}
+					{ranges.map((range) => (
+						<MenuItem
+							key={range}
+							selected={range === selectedRange}
+							onClick={() => {
+								setSelectedRange(range)
+								setAnchorEl(null)
+							}}
+						>
+							{range}
 						</MenuItem>
 					))}
 				</Menu>
-			</div> */}
+			</div>
+
 			<ResponsiveContainer width='100%' height={130}>
 				<LineChart
 					data={xLabels.map((label, index) => ({
@@ -103,7 +163,7 @@ function HomePopulationCard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={value => `${value} тыс.`}
+						formatter={(value) => `${value} тыс.`}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis

@@ -43,7 +43,7 @@ export default function HomeExportImportButton() {
 					},
 				}}
 			>
-				{['2025', '2024', '2023'].map(y => (
+				{['2025', '2024', '2023'].map((y) => (
 					<MenuItem key={y} onClick={() => handleClose(y)} sx={{ padding: 1 }}>
 						{y}
 					</MenuItem>

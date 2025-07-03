@@ -1,4 +1,4 @@
-import { ClickAwayListener, Tooltip, useTheme } from '@mui/material'
+import { ClickAwayListener, Tooltip, Typography, useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
 import { TooltipProps } from '@mui/material/Tooltip'
 import { useState } from 'react'
@@ -58,11 +58,20 @@ function HomeMapCard() {
 	const theme = useTheme()
 	return (
 		<Box
-			className={`shadow-xl rounded-xl p-2 flex items-center justify-center ${styles.map}`}
+			className={`shadow-xl rounded-xl p-2 flex items-center justify-center flex-col ${styles.map}`}
 			sx={{
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
+			<Typography
+				variant='h6'
+				className='self-center !p-0  whitespace-nowrap !font-bold !mb-5 text-center'
+			>
+				Қорақалпоғистон аҳолиси
+				<br />
+				туманлар кесимида
+			</Typography>
+
 			<svg
 				width='300'
 				height='270'

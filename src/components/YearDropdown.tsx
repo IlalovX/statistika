@@ -46,7 +46,7 @@ export default function YearDropdown() {
 					},
 				}}
 			>
-				{years.map(year => (
+				{years.map((year) => (
 					<MenuItem key={year} onClick={() => handleClose(year)}>
 						{year}
 					</MenuItem>
