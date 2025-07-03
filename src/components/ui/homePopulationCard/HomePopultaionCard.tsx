@@ -1,6 +1,5 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-
 import {
 	Box,
 	Button,
@@ -9,7 +8,6 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import {
 	Line,
@@ -19,15 +17,20 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
+import { useRegionPopulationStat } from '../../../hooks/useStat'
 import { CustomizedAxisTick, CustomizedLabel } from '../../ChartComponents'
 
 function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
-	const sortedYears = [...years].sort() // ascending
+	const sortedYears = [...years].sort()
 	const result: string[][] = []
 
 	for (let i = sortedYears.length; i > 0; i -= chunkSize) {
 		const start = Math.max(i - chunkSize, 0)
-		result.unshift(sortedYears.slice(start, i))
+		const chunk = sortedYears.slice(start, i)
+
+		if (chunk.length > 1) {
+			result.unshift(chunk)
+		}
 	}
 
 	return result
@@ -35,65 +38,34 @@ function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 
 function HomePopulationCard() {
 	const theme = useTheme()
-	const [chartData, setChartData] = useState<number[]>([])
-	const [xLabels, setXLabels] = useState<string[]>([])
+	const { yearMap, years } = useRegionPopulationStat(
+		'Qoraqalpog‘iston Respublikasi'
+	)
 	const [selectedRange, setSelectedRange] = useState<string>('')
 
-	const { data } = useQuery({
-		queryKey: ['population'],
-		queryFn: async () => {
-			const res = await fetch('/db/population/population.json')
-			if (!res.ok) throw new Error('Ошибка загрузки данных')
-			return res.json()
-		},
-	})
-
-	// Все доступные годы и диапазоны
-	const { allYears, ranges } = useMemo(() => {
-		if (!data || !data['Qaraqalpaqstan Respublikası']) {
-			return { allYears: [], ranges: [] }
-		}
-
-		const populationData = data['Qaraqalpaqstan Respublikası']
-		const keys = Object.keys(populationData).sort()
-		const chunks = getYearRangesFromEnd(keys, 5)
+	const { ranges } = useMemo(() => {
+		const chunks = getYearRangesFromEnd(years, 5)
 		const ranges = chunks.map(
 			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
 		)
-		return { allYears: keys, ranges }
-	}, [data])
+		return { ranges }
+	}, [years])
 
-	// Установить последний диапазон по умолчанию
 	useEffect(() => {
 		if (ranges.length > 0 && !selectedRange) {
 			setSelectedRange(ranges[ranges.length - 1])
 		}
 	}, [ranges, selectedRange])
 
-	// Подготовка данных для графика при изменении диапазона
-	useEffect(() => {
-		if (!data || !data['Qaraqalpaqstan Respublikası'] || !selectedRange) return
-
-		const populationData = data['Qaraqalpaqstan Respublikası']
+	const chartData = useMemo(() => {
+		if (!selectedRange) return []
 		const [start, end] = selectedRange.split('–')
-
-		const selectedYears = allYears.filter(
-			(year) => year >= start && year <= end
-		)
-
-		setXLabels(selectedYears)
-
-		const validData = selectedYears
-			.map((year) => {
-				const rawValue = populationData[year]
-					?.replace(/\s/g, '')
-					.replace(',', '.')
-				return rawValue ? Number(rawValue) : 0
-			})
-			.filter((val) => val > 0)
-
-		setChartData(validData)
-	}, [data, selectedRange, allYears])
+		const selectedYears = years.filter((y) => y >= start && y <= end)
+		return selectedYears.map((year) => ({
+			name: year,
+			население: yearMap[year],
+		}))
+	}, [selectedRange, yearMap, years])
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
@@ -116,13 +88,9 @@ function HomePopulationCard() {
 					disableFocusRipple
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{
-						border: 'none',
-						padding: 0,
-						textTransform: 'none',
-					}}
+					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
 				>
-					<span className='lowercase mr-1'>за</span> {selectedRange}
+					{selectedRange}
 				</Button>
 				<Menu
 					anchorEl={anchorEl}
@@ -151,10 +119,7 @@ function HomePopulationCard() {
 
 			<ResponsiveContainer width='100%' height={130}>
 				<LineChart
-					data={xLabels.map((label, index) => ({
-						name: label,
-						население: chartData[index],
-					}))}
+					data={chartData}
 					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
 				>
 					<Tooltip

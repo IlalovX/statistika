@@ -12,16 +12,7 @@ import HomeUnemployersСard from '../../components/ui/homeUnemployersCard/HomeUn
 
 function Home() {
 	const theme = useTheme()
-	const { data } = useQuery({
-		queryKey: ['stat'],
-		queryFn: async () => {
-			const res = await axios.get(
-				'https://api.siat.stat.uz/sdmx/246/cartogram/?years=2025'
-			)
-			return res.data
-		},
-	})
-	console.log(data)
+	
 
 	return (
 		<div>
