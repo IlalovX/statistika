@@ -1,6 +1,4 @@
 import { Box, useTheme } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import HomeAgesCard from '../../components/ui/homeAgesCard/HomeAgesCard'
 import HomeCompaniesCard from '../../components/ui/homeCompaniesCard/HomeCompaniesCard'
 import HomeExportImport from '../../components/ui/homeExportImport/HomeExportImport'
@@ -12,7 +10,6 @@ import HomeUnemployersСard from '../../components/ui/homeUnemployersCard/HomeUn
 
 function Home() {
 	const theme = useTheme()
-	
 
 	return (
 		<div>
