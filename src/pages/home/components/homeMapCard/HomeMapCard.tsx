@@ -58,7 +58,6 @@ const HtmlTooltip = (props: TooltipProps) => {
 
 function HomeMapCard() {
 	const { data: map = [] } = useGetPopulationOfDistricts()
-	console.log(map)
 
 	const theme = useTheme()
 
