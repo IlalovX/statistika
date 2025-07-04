@@ -24,6 +24,7 @@ const data = [
 ]
 function MapCard({ start, end }: { start: string; end: string }) {
 	const theme = useTheme()
+
 	return (
 		<Box
 			className={`shadow-2xl w-full rounded-2xl p-2.5 my-5 grid grid-cols-2 `}

@@ -1,24 +1,18 @@
 import { Typography } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
 
-function CustomTooltipContent({ data, year }: { data: string; year: number }) {
-	const { data: population } = useQuery({
-		queryKey: [data, 'map'],
-		queryFn: async () => {
-			const res = await fetch('/db/population/population.json')
-			if (!res.ok) {
-				throw new Error('Ошибка загрузки данных')
-			}
-			return res.json()
-		},
-	})
+interface Props {
+	population: number | string
+	year: number
+	district: string
+}
 
+function CustomTooltipContent({ population, year, district }: Props) {
 	return (
 		<>
 			<span className='text-xs text-gray-400'>{year} г</span>
-			<p className='text-xl'>{data}</p>
+			<p className='text-xl'>{district}</p>
 			<Typography variant='body2' className='text-blue-400 text-[12px]'>
-				{population && population[data][`${year}`]}тыс
+				{+population} тыс.
 			</Typography>
 		</>
 	)
