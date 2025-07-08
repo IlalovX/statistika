@@ -5,14 +5,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import {
-	Bar,
-	BarChart,
-	Cell,
-	ResponsiveContainer,
-	XAxis,
-	YAxis,
-} from 'recharts'
+import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
 
 const monthNames: string[] = [
 	'Янв',
@@ -145,7 +138,7 @@ export default function HomeExportImport() {
 								},
 							}}
 						>
-							{['2025', '2024', '2023'].map(y => (
+							{['2025', '2024', '2023'].map((y) => (
 								<MenuItem
 									key={y}
 									onClick={() => handleClose(y)}
@@ -172,7 +165,6 @@ export default function HomeExportImport() {
 						tick={{ textAnchor: 'middle', fontSize: 12 }}
 						interval={0}
 					/>
-					<YAxis tickLine={false} axisLine={false} />
 					<Bar label={{ position: 'top' }} dataKey='value'>
 						{chartData.map((_, index) => (
 							<Cell

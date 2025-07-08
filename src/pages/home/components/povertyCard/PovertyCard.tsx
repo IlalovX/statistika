@@ -23,7 +23,7 @@ import {
 } from '../../../../components/ui/ChartComponents'
 import { useRegionPopulationStat } from '../../../../hooks/useStat'
 
-function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
+function getYearRangesFromEnd(years: string[], chunkSize = 4): string[][] {
 	const sortedYears = [...years].sort()
 	const result: string[][] = []
 
@@ -39,7 +39,7 @@ function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 	return result
 }
 
-function HomePopulationCard() {
+function PovertyCard() {
 	const theme = useTheme()
 	const { yearMap, years } = useRegionPopulationStat(
 		'Qoraqalpog‘iston Respublikasi'
@@ -47,7 +47,7 @@ function HomePopulationCard() {
 	const [selectedRange, setSelectedRange] = useState<string>('')
 
 	const { ranges } = useMemo(() => {
-		const chunks = getYearRangesFromEnd(years, 5)
+		const chunks = getYearRangesFromEnd(years, 4)
 		const ranges = chunks.map(
 			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
 		)
@@ -56,7 +56,7 @@ function HomePopulationCard() {
 
 	useEffect(() => {
 		if (ranges.length > 0 && !selectedRange) {
-			setSelectedRange(ranges[ranges.length - 1])
+			setSelectedRange(ranges[ranges.length - 2])
 		}
 	}, [ranges, selectedRange])
 
@@ -75,15 +75,15 @@ function HomePopulationCard() {
 
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-1.5'
+			className='shadow-xl rounded-2xl p-1.5 flex flex-col justify-between'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<div className='flex justify-between  mb-2'>
-				<Typography variant='h6' fontWeight='bold'>
-					Аҳоли сони ўсиши
+			<div className='flex justify-between items-center mb-2 gap-3'>
+				<Typography variant='body2' fontWeight='bold'>
+					Камбағаллик
 				</Typography>
 				<Button
 					variant='outlined'
@@ -92,7 +92,7 @@ function HomePopulationCard() {
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
-					className='whitespace-nowrap'
+					className='!whitespace-nowrap'
 				>
 					{selectedRange}
 				</Button>
@@ -164,4 +164,4 @@ function HomePopulationCard() {
 	)
 }
 
-export default HomePopulationCard
+export default PovertyCard

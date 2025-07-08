@@ -28,7 +28,7 @@ const AuthSchema = z.object({
 type AuthFields = z.infer<typeof AuthSchema>
 
 export default function AuthPage() {
-	const user = useAppSelector(state => state.user_me.user)
+	const user = useAppSelector((state) => state.user_me.user)
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -110,7 +110,7 @@ export default function AuthPage() {
 							endAdornment: (
 								<InputAdornment position='end'>
 									<IconButton
-										onClick={() => setShowPassword(prev => !prev)}
+										onClick={() => setShowPassword((prev) => !prev)}
 										edge='end'
 									>
 										{showPassword ? <VisibilityOff /> : <Visibility />}

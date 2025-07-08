@@ -41,7 +41,7 @@ function HomeSelfEmployedCard() {
 	const theme = useTheme()
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-1.5'
+			className='shadow-xl rounded-2xl p-1.5 '
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,

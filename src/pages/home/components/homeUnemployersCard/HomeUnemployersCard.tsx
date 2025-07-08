@@ -116,10 +116,10 @@ function HomeUnemployersCard() {
 				</Menu>
 			</div>
 
-			<ResponsiveContainer width='100%' height={120}>
+			<ResponsiveContainer width='100%' height={130}>
 				<LineChart
 					data={chartData}
-					margin={{ top: 30, right: 55, left: 0, bottom: 10 }}
+					margin={{ top: 30, right: 30, left: -30, bottom: 10 }}
 				>
 					<Tooltip
 						contentStyle={{
