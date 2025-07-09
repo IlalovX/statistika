@@ -44,23 +44,23 @@ function HomeUnemployersCard() {
 	const theme = useTheme()
 	const yearChunks = getYearRangesFromEnd(allYears, 4)
 	const rangeLabels = yearChunks.map(
-		(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
+		chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`
 	)
 
 	const [selectedRange, setSelectedRange] = useState<string>(
-		rangeLabels.at(-1) || ''
+		rangeLabels.slice(-1)[0] || ''
 	)
 
 	const selectedYears = useMemo(() => {
 		const range = yearChunks.find(
-			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}` === selectedRange
+			chunk => `${chunk[0]}–${chunk[chunk.length - 1]}` === selectedRange
 		)
 		return range || []
 	}, [selectedRange, yearChunks])
 
 	const { data: unemploymentData } = useRegionUnemploymentStat(selectedYears)
 
-	const chartData = selectedYears.map((year) => ({
+	const chartData = selectedYears.map(year => ({
 		name: String(year),
 		безработные: unemploymentData[year] ?? null,
 	}))
@@ -83,7 +83,7 @@ function HomeUnemployersCard() {
 
 				<Button
 					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
+					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -101,7 +101,7 @@ function HomeUnemployersCard() {
 						},
 					}}
 				>
-					{rangeLabels.map((range) => (
+					{rangeLabels.map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
@@ -127,7 +127,7 @@ function HomeUnemployersCard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={(value) => `${value} тыс.`}
+						formatter={value => `${value} тыс.`}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis

@@ -109,7 +109,7 @@ function EmploymentCard() {
 
 				<Button
 					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
+					onClick={e => setAnchorEl(e.currentTarget)}
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
@@ -118,7 +118,7 @@ function EmploymentCard() {
 				</Button>
 
 				<Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-					{Object.keys(mockDataByYear).map((range) => (
+					{Object.keys(mockDataByYear).map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
