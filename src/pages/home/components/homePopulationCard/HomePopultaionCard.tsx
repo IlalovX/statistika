@@ -14,7 +14,7 @@ import {
 	CustomizedAxisTick,
 	CustomizedLabel,
 } from '../../../../components/ui/ChartComponents'
-import { useRegionPopulationStat } from '../../../../hooks/useStat'
+import { useGetDemographyOrder } from '../../../../hooks/useHome'
 
 function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 	const sortedYears = [...years].sort()
@@ -23,27 +23,32 @@ function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 	for (let i = sortedYears.length; i > 0; i -= chunkSize) {
 		const start = Math.max(i - chunkSize, 0)
 		const chunk = sortedYears.slice(start, i)
-
 		if (chunk.length > 1) {
 			result.unshift(chunk)
 		}
 	}
-
 	return result
 }
 
 function HomePopulationCard() {
 	const theme = useTheme()
-	const { yearMap, years } = useRegionPopulationStat(
-		'Qoraqalpog‘iston Respublikasi'
-	)
-	const [selectedRange, setSelectedRange] = useState<string>('')
+	const { data = [] } = useGetDemographyOrder()
+
+	const years = useMemo(() => {
+		if (!data.length) return []
+
+		return Object.keys(data[0])
+			.filter(key => /^\d{4}$/.test(key))
+			.sort()
+	}, [data])
 
 	const { ranges } = useMemo(() => {
 		const chunks = getYearRangesFromEnd(years, 5)
 		const ranges = chunks.map(chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`)
 		return { ranges }
 	}, [years])
+
+	const [selectedRange, setSelectedRange] = useState<string>('')
 
 	useEffect(() => {
 		if (ranges.length > 0 && !selectedRange) {
@@ -52,14 +57,19 @@ function HomePopulationCard() {
 	}, [ranges, selectedRange])
 
 	const chartData = useMemo(() => {
-		if (!selectedRange) return []
+		if (!selectedRange || !data.length) return []
+
 		const [start, end] = selectedRange.split('–')
-		const selectedYears = years.filter(y => y >= start && y <= end)
-		return selectedYears.map(year => ({
-			name: year,
-			население: yearMap[year],
-		}))
-	}, [selectedRange, yearMap, years])
+
+		const populationObj = data[0]
+
+		return years
+			.filter(year => year >= start && year <= end)
+			.map(year => ({
+				name: year,
+				население: Number(populationObj[year]) || 0,
+			}))
+	}, [selectedRange, data, years])
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
@@ -72,10 +82,11 @@ function HomePopulationCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<div className='flex justify-between  mb-2'>
+			<div className='flex justify-between mb-2'>
 				<Typography variant='body2' fontWeight='bold'>
 					Аҳоли сони ўсиши
 				</Typography>
+
 				<Button
 					variant='outlined'
 					onClick={e => setAnchorEl(e.currentTarget)}
@@ -93,6 +104,7 @@ function HomePopulationCard() {
 						{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					</Box>
 				</Button>
+
 				<Menu
 					anchorEl={anchorEl}
 					open={open}

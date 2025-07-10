@@ -71,3 +71,10 @@ export function useGetSmallBusiness() {
 		queryFn: () => HomeService.getSmallBusiness(),
 	})
 }
+
+export function useGetDemographyOrder() {
+	return useQuery<HomeMapPopulation[]>({
+		queryKey: ['get_demography_order'],
+		queryFn: () => HomeService.getDemographyOrder(),
+	})
+}

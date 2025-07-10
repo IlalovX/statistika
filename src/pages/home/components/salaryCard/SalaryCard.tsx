@@ -9,7 +9,6 @@ import {
 } from 'recharts'
 import YearMenu from '../../../../components/common/YearMenu/YearMenu'
 import { useGetSalary } from '../../../../hooks/useHome'
-import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 
 const defaultQuarters = ['Q1', 'Q2', 'Q3', 'Q4']
 
@@ -75,7 +74,7 @@ function SalaryCard() {
 								fill: theme.palette.mode === 'light' ? '#2BE007' : '#ffffff',
 								fontSize: 12,
 							}}
-							formatter={(value: number) => formatCompactNumber(value)}
+							formatter={(value: number) => (value / 1000).toFixed(1)}
 						/>
 					</Area>
 				</AreaChart>

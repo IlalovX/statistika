@@ -37,4 +37,8 @@ export const HomeService = {
 		const res = await axiosWithAuth.get('/uploads/small_business')
 		return res.data.data
 	},
+	async getDemographyOrder() {
+		const res = await axiosWithAuth.get('/uploads/demography/order')
+		return res.data.data
+	},
 }

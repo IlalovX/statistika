@@ -1,7 +1,7 @@
 import { ClickAwayListener, Tooltip, Typography, useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
 import { TooltipProps } from '@mui/material/Tooltip'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import YearMenu from '../../../../components/common/YearMenu/YearMenu'
 import { useGetPopulationOfDistricts } from '../../../../hooks/useHome'
 import CustomTooltipContent from '../homeMapTooltip/HomeMapTooltip'
@@ -61,7 +61,16 @@ function HomeMapCard() {
 
 	const theme = useTheme()
 
-	const [selectedYear, setSelectedYear] = useState<number>(2024)
+	const [selectedYear, setSelectedYear] = useState<number>(2025)
+
+	const years = useMemo(() => {
+		if (!map.length) return []
+
+		return Object.keys(map[0])
+			.filter(key => /^\d{4}$/.test(key)) // оставить только года
+			.map(Number)
+			.sort((a, b) => b - a) // сортировка по убыванию
+	}, [map])
 
 	return (
 		<Box
@@ -80,7 +89,7 @@ function HomeMapCard() {
 					туманлар кесимида
 				</Typography>
 				<YearMenu
-					years={[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]}
+					years={years}
 					onChange={setSelectedYear}
 					selectedYear={selectedYear}
 					className='self-end'
