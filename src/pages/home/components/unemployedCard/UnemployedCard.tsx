@@ -8,7 +8,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
 	Line,
 	LineChart,
@@ -21,7 +21,8 @@ import {
 	CustomizedAxisTick,
 	CustomizedLabel,
 } from '../../../../components/ui/ChartComponents'
-import { useRegionUnemploymentStat } from '../../../../hooks/useUnemploymentStat'
+import { useGetUnemployment } from '../../../../hooks/useHome'
+import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 
 function getYearRangesFromEnd(years: number[], chunkSize = 4): number[][] {
 	const sortedYears = [...years].sort((a, b) => a - b)
@@ -31,39 +32,62 @@ function getYearRangesFromEnd(years: number[], chunkSize = 4): number[][] {
 		const start = Math.max(i - chunkSize, 0)
 		const chunk = sortedYears.slice(start, i)
 		if (chunk.length > 1) {
-			result.unshift(chunk) // теперь chunk — number[]
+			result.unshift(chunk)
 		}
 	}
 
 	return result
 }
 
-const allYears = Array.from({ length: 2025 - 2010 + 1 }, (_, i) => 2010 + i)
-
-function HomeUnemployersCard() {
+function UnemployedCard() {
 	const theme = useTheme()
-	const yearChunks = getYearRangesFromEnd(allYears, 4)
-	const rangeLabels = yearChunks.map(
-		chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`
+	const { data } = useGetUnemployment()
+	const values = useMemo(() => data?.values ?? {}, [data])
+
+	const allYears = useMemo(
+		() =>
+			Object.keys(values)
+				.map(Number)
+				.sort((a, b) => a - b),
+		[values]
+	)
+
+	const yearChunks = useMemo(
+		() => getYearRangesFromEnd(allYears, 4),
+		[allYears]
+	)
+
+	const rangeLabels = useMemo(
+		() => yearChunks.map(chunk => `${chunk[0]}–${chunk.slice(-1)[0]}`),
+		[yearChunks]
 	)
 
 	const [selectedRange, setSelectedRange] = useState<string>(
 		rangeLabels.slice(-1)[0] || ''
 	)
 
+	useEffect(() => {
+		if (rangeLabels.length && !selectedRange) {
+			setSelectedRange(rangeLabels.slice(-1)[0])
+		}
+	}, [rangeLabels, selectedRange])
+
 	const selectedYears = useMemo(() => {
-		const range = yearChunks.find(
-			chunk => `${chunk[0]}–${chunk[chunk.length - 1]}` === selectedRange
+		return (
+			yearChunks.find(
+				chunk => `${chunk[0]}–${chunk.slice(-1)[0]}` === selectedRange
+			) ?? []
 		)
-		return range || []
 	}, [selectedRange, yearChunks])
 
-	const { data: unemploymentData } = useRegionUnemploymentStat(selectedYears)
-
-	const chartData = selectedYears.map(year => ({
-		name: String(year),
-		безработные: unemploymentData[year] ?? null,
-	}))
+	const chartData = useMemo(
+		() =>
+			selectedYears.map(year => ({
+				name: String(year),
+				безработные: values[year] ?? null,
+			})),
+		[selectedYears, values]
+	)
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
@@ -91,6 +115,7 @@ function HomeUnemployersCard() {
 				>
 					{selectedRange}
 				</Button>
+
 				<Menu
 					anchorEl={anchorEl}
 					open={open}
@@ -127,7 +152,11 @@ function HomeUnemployersCard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={value => `${value} тыс.`}
+						formatter={value =>
+							typeof value === 'number'
+								? `${formatCompactNumber(value)} тыс.`
+								: '—'
+						}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis
@@ -159,4 +188,4 @@ function HomeUnemployersCard() {
 	)
 }
 
-export default HomeUnemployersCard
+export default UnemployedCard

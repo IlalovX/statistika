@@ -86,7 +86,7 @@ function PovertyCard() {
 		>
 			<div className='flex justify-between items-center mb-2 gap-3'>
 				<Typography variant='body2' fontWeight='bold'>
-					Камбағаллик
+					Камбағаллик даражаси
 				</Typography>
 				<Button
 					variant='outlined'

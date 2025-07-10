@@ -8,18 +8,23 @@ import {
 	XAxis,
 } from 'recharts'
 import YearMenu from '../../../../components/common/YearMenu/YearMenu'
+import { useGetSalary } from '../../../../hooks/useHome'
+import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 
-// 🧪 Мок-данные по квартальной зарплате (в тыс. сум)
-const chartData = [
-	{ name: 'Q1', salary: 3200 },
-	{ name: 'Q2', salary: 3400 },
-	{ name: 'Q3', salary: 3550 },
-	{ name: 'Q4', salary: 3700 },
-]
+const defaultQuarters = ['Q1', 'Q2', 'Q3', 'Q4']
 
 function SalaryCard() {
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
+	const { data } = useGetSalary()
+
 	const theme = useTheme()
+
+	const quarterlyValues = data?.values?.[selectedYear]
+
+	const chartData = defaultQuarters.map(q => ({
+		name: q,
+		salary: quarterlyValues?.[q as keyof typeof quarterlyValues] ?? 0,
+	}))
 
 	return (
 		<Box
@@ -31,7 +36,7 @@ function SalaryCard() {
 		>
 			<div className='flex justify-between items-center gap-3'>
 				<Typography variant='body2' fontWeight='bold'>
-					Ўртача ойлик(чораклик)
+					Айлык тузилиши
 				</Typography>
 
 				<YearMenu
@@ -70,7 +75,7 @@ function SalaryCard() {
 								fill: theme.palette.mode === 'light' ? '#2BE007' : '#ffffff',
 								fontSize: 12,
 							}}
-							formatter={(value: number) => `${value}`}
+							formatter={(value: number) => formatCompactNumber(value)}
 						/>
 					</Area>
 				</AreaChart>

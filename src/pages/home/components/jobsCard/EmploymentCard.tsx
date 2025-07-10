@@ -8,7 +8,7 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
 	Bar,
 	BarChart,
@@ -18,81 +18,76 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
+import { useGetWorkingDetail } from '../../../../hooks/useHome'
 
-const mockDataByYear: Record<string, any[]> = {
-	'2020–2024': [
-		{
-			year: '2020',
-			employable: 1000,
-			workers: 750,
-			selfEmployed: 250,
-		},
-		{
-			year: '2021',
-			employable: 1100,
-			workers: 800,
-			selfEmployed: 300,
-		},
-		{
-			year: '2022',
-			employable: 1200,
-			workers: 850,
-			selfEmployed: 350,
-		},
-		{
-			year: '2023',
-			employable: 1250,
-			workers: 870,
-			selfEmployed: 380,
-		},
-		{
-			year: '2024',
-			employable: 1300,
-			workers: 900,
-			selfEmployed: 400,
-		},
-	],
-	'2015–2019': [
-		{
-			year: '2015',
-			employable: 950,
-			workers: 700,
-			selfEmployed: 250,
-		},
-		{
-			year: '2016',
-			employable: 970,
-			workers: 710,
-			selfEmployed: 260,
-		},
-		{
-			year: '2017',
-			employable: 980,
-			workers: 720,
-			selfEmployed: 260,
-		},
-		{
-			year: '2018',
-			employable: 1000,
-			workers: 740,
-			selfEmployed: 260,
-		},
-		{
-			year: '2019',
-			employable: 1020,
-			workers: 750,
-			selfEmployed: 270,
-		},
-	],
+// 🔧 Разделить массив по n элементов, начиная с конца
+function chunkArrayFromEnd<T>(arr: T[], size: number): T[][] {
+	const sorted = [...arr].sort((a, b) => +a - +b)
+	const result: T[][] = []
+
+	let i = sorted.length
+	while (i > 0) {
+		const start = Math.max(i - size, 0)
+		result.unshift(sorted.slice(start, i))
+		i = start
+	}
+
+	return result
 }
 
 function EmploymentCard() {
 	const theme = useTheme()
-	const [selectedRange, setSelectedRange] = useState('2020–2024')
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	const { data } = useGetWorkingDetail()
 
+	const employmentValues = useMemo(
+		() => data?.employment?.data?.values ?? {},
+		[data]
+	)
+
+	const workingAgeValues = useMemo(
+		() => data?.working_age_population?.data?.values ?? {},
+		[data]
+	)
+
+	const allYears = useMemo(() => {
+		const years = new Set<number>([
+			...Object.keys(employmentValues).map(Number),
+			...Object.keys(workingAgeValues).map(Number),
+		])
+		return Array.from(years).sort((a, b) => a - b)
+	}, [employmentValues, workingAgeValues])
+
+	const yearRanges = useMemo(() => chunkArrayFromEnd(allYears, 5), [allYears])
+
+	const rangeLabels = useMemo(
+		() => yearRanges.map(range => `${range[0]}–${range[range.length - 1]}`),
+		[yearRanges]
+	)
+
+	const [selectedRange, setSelectedRange] = useState<string>('')
+
+	useEffect(() => {
+		if (!selectedRange && rangeLabels.length > 0) {
+			setSelectedRange(rangeLabels[rangeLabels.length - 1])
+		}
+	}, [rangeLabels, selectedRange])
+
+	const selectedYears = useMemo(() => {
+		const idx = rangeLabels.indexOf(selectedRange)
+		return idx >= 0 ? yearRanges[idx] : []
+	}, [selectedRange, rangeLabels, yearRanges])
+
+	const chartData = useMemo(() => {
+		return selectedYears.map(year => ({
+			year: String(year),
+			employable: employmentValues[year] ?? null,
+			workers: workingAgeValues[year] ?? null,
+			selfEmployed: 0,
+		}))
+	}, [selectedYears, employmentValues, workingAgeValues])
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
-	const chartData = mockDataByYear[selectedRange] || []
 
 	return (
 		<Box
@@ -117,8 +112,17 @@ function EmploymentCard() {
 					{selectedRange}
 				</Button>
 
-				<Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-					{Object.keys(mockDataByYear).map(range => (
+				<Menu
+					anchorEl={anchorEl}
+					open={open}
+					onClose={() => setAnchorEl(null)}
+					sx={{
+						'& .MuiPaper-root': {
+							bgcolor: theme.palette.background.default,
+						},
+					}}
+				>
+					{rangeLabels.map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
@@ -138,7 +142,9 @@ function EmploymentCard() {
 					<XAxis dataKey='year' axisLine={false} tickLine={false} />
 					<YAxis hide />
 					<Tooltip
-						formatter={(value: number) => `${value.toLocaleString()} тыс.`}
+						formatter={(value: number) =>
+							value !== null ? `${value.toLocaleString()} тыс.` : '—'
+						}
 						contentStyle={{
 							backgroundColor: theme.palette.background.paper,
 							borderColor: theme.palette.divider,

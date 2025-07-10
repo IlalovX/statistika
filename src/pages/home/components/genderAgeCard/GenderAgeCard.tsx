@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {
 	Bar,
 	BarChart,
+	LabelList,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -22,6 +23,7 @@ function GenderAgeCard() {
 			name: item.age_group.replace(/^до\s*/, '> ').replace(/^от\s*/, '< '),
 			men: item.mens,
 			women: item.womens,
+			total: item.womens + item.mens,
 		})) ?? []
 
 	const totalMen = chartData.reduce((sum, item) => sum + item.men, 0)
@@ -55,11 +57,11 @@ function GenderAgeCard() {
 						cursor={{ fill: theme.palette.action.hover }}
 						formatter={(value: number, name: string) => [
 							value.toLocaleString(),
-							name === 'men' ? 'Мужчины' : 'Женщины',
+							name === 'men' ? 'Эркаклар' : 'Аёллар',
 						]}
 					/>
 
-					{/* Женщины */}
+					{/* Аёллар */}
 
 					<Bar dataKey='women' stackId='a' fill='#D50000' radius={20}>
 						{/* <LabelList
@@ -106,6 +108,7 @@ function GenderAgeCard() {
 
 					{/* Мужчины */}
 					<Bar dataKey='men' stackId='a' fill='#2196F3' radius={20}>
+						<LabelList dataKey='total' position='top' />
 						{/* <LabelList
 							content={({ x = 0, y = 0, width = 0, index }) => {
 								const label = chartData[index as number]?.men ?? 0
@@ -138,13 +141,13 @@ function GenderAgeCard() {
 				<Box display='flex' alignItems='center' gap={1}>
 					<Box width={12} height={12} borderRadius='50%' bgcolor='#2196F3' />
 					<Typography variant='caption' fontWeight='bold'>
-						Мужчины: {totalMen.toLocaleString()}
+						Эркаклар: {totalMen.toLocaleString()}
 					</Typography>
 				</Box>
 				<Box display='flex' alignItems='center' gap={1}>
 					<Box width={12} height={12} borderRadius='50%' bgcolor='#D50000' />
 					<Typography variant='caption' fontWeight='bold'>
-						Женщины: {totalWomen.toLocaleString()}
+						Аёллар: {totalWomen.toLocaleString()}
 					</Typography>
 				</Box>
 			</Box>

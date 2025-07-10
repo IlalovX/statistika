@@ -17,25 +17,14 @@ import {
 	Tooltip,
 	XAxis,
 } from 'recharts'
+import { useGetEnterprises } from '../../../../hooks/useHome'
 
 type CompanyData = {
 	name: string
-	total: number
-	active: number
-	new: number
+	total: number | null
+	active: number | null
+	new: number | null
 }
-
-const mockData: CompanyData[] = [
-	{ name: '2019', total: 22000, active: 18000, new: 3000 },
-	{ name: '2020', total: 23000, active: 19000, new: 3200 },
-	{ name: '2021', total: 21000, active: 17000, new: 2500 },
-	{ name: '2022', total: 24000, active: 20000, new: 3300 },
-	{ name: '2023', total: 26000, active: 21500, new: 3400 },
-	{ name: '2024', total: 27000, active: 22500, new: 3500 },
-	{ name: '2025', total: 25093, active: 21789, new: 3254 },
-]
-
-type YearRange = string
 
 function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 	const sortedYears = [...years].sort()
@@ -53,32 +42,55 @@ function getYearRangesFromEnd(years: string[], chunkSize = 5): string[][] {
 }
 
 function CompaniesCard() {
+	const { data } = useGetEnterprises()
 	const theme = useTheme()
-	const [selectedRange, setSelectedRange] = useState<YearRange>('')
+	const [selectedRange, setSelectedRange] = useState<string>('')
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
 
-	const allYears = mockData.map((item) => item.name)
+	const active = useMemo(() => data?.active ?? {}, [data])
+	const total = useMemo(() => data?.total ?? {}, [data])
+	const newlyCreated = useMemo(() => data?.new ?? {}, [data])
 
-	const { ranges } = useMemo(() => {
-		const chunks = getYearRangesFromEnd(allYears, 5)
-		const ranges = chunks.map(
-			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
-		)
-		return { ranges }
-	}, [allYears])
+	const allYears = useMemo(() => {
+		const years = new Set<string>([
+			...Object.keys(active),
+			...Object.keys(total),
+			...Object.keys(newlyCreated),
+		])
+		return Array.from(years).sort()
+	}, [active, total, newlyCreated])
+
+	const yearChunks = useMemo(
+		() => getYearRangesFromEnd(allYears, 5),
+		[allYears]
+	)
+
+	const rangeLabels = useMemo(
+		() => yearChunks.map(chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`),
+		[yearChunks]
+	)
 
 	useEffect(() => {
-		if (ranges.length > 0 && !selectedRange) {
-			setSelectedRange(ranges[ranges.length - 1])
+		if (rangeLabels.length && !selectedRange) {
+			setSelectedRange(rangeLabels[rangeLabels.length - 1])
 		}
-	}, [ranges, selectedRange])
+	}, [rangeLabels, selectedRange])
 
-	const chartData = useMemo(() => {
-		if (!selectedRange) return []
-		const [start, end] = selectedRange.split('–')
-		return mockData.filter((d) => d.name >= start && d.name <= end)
-	}, [selectedRange])
+	const selectedYears = useMemo(() => {
+		const idx = rangeLabels.indexOf(selectedRange)
+		return idx >= 0 ? yearChunks[idx] : []
+	}, [rangeLabels, selectedRange, yearChunks])
+
+	const chartData: CompanyData[] = useMemo(() => {
+		return selectedYears.map(year => ({
+			name: year,
+			total: total[+year] ?? null,
+			active: active[+year] ?? null,
+			new: newlyCreated[+year] ?? null,
+		}))
+	}, [selectedYears, total, active, newlyCreated])
 
 	return (
 		<Box
@@ -95,7 +107,7 @@ function CompaniesCard() {
 
 				<Button
 					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
+					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -113,7 +125,7 @@ function CompaniesCard() {
 						'& .MuiPaper-root': { bgcolor: theme.palette.background.default },
 					}}
 				>
-					{ranges.map((range) => (
+					{rangeLabels.map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
@@ -150,7 +162,25 @@ function CompaniesCard() {
 
 					<XAxis dataKey='name' tickLine={false} axisLine={false} />
 
-					<Tooltip formatter={(value: number) => value.toLocaleString()} />
+					<Tooltip<number, string>
+						formatter={(value, name): [string, string] => {
+							const nameMap: Record<string, string> = {
+								total: 'Общий',
+								active: 'Работают',
+								new: 'Новые',
+							}
+
+							const formattedValue =
+								typeof value === 'number' ? value.toLocaleString() : '—'
+
+							return [formattedValue, nameMap[name] ?? name]
+						}}
+						contentStyle={{
+							backgroundColor: theme.palette.background.paper,
+							borderColor: theme.palette.divider,
+							fontSize: 12,
+						}}
+					/>
 
 					<Area
 						type='monotone'

@@ -4,12 +4,12 @@ import { default as GenderAgeCard } from './components/genderAgeCard/GenderAgeCa
 import HomeExportImport from './components/homeExportImport/HomeExportImport'
 import HomeMapCard from './components/homeMapCard/HomeMapCard'
 import HomePopulationCard from './components/homePopulationCard/HomePopultaionCard'
-import HomeUnemployersСard from './components/homeUnemployersCard/HomeUnemployersCard'
 import EmploymentCard from './components/jobsCard/EmploymentCard'
 import PovertyCard from './components/povertyCard/PovertyCard'
 import ProfitCard from './components/profitCard/ProfitCard'
 import SalaryCard from './components/salaryCard/SalaryCard'
 import SmallBusinessCard from './components/smallBusinessCard/SmallBusinessCard'
+import HomeUnemployersСard from './components/unemployedCard/UnemployedCard'
 
 function Home() {
 	const theme = useTheme()

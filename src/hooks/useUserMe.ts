@@ -5,5 +5,6 @@ export function useGetUserMe() {
 	return useQuery({
 		queryKey: ['user_me'],
 		queryFn: async () => await userMeService.getMe(),
+		retry: false,
 	})
 }

@@ -37,6 +37,7 @@ const data = [
 function ProfitCard() {
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
 	const theme = useTheme()
+
 	return (
 		<Box
 			className='shadow-xl rounded-2xl p-1.5 '
@@ -59,7 +60,7 @@ function ProfitCard() {
 			<List
 				sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
 			>
-				{data.map((item) => (
+				{data.map(item => (
 					<ListItem
 						key={item.id}
 						sx={{
