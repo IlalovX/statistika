@@ -16,19 +16,19 @@ function Home() {
 
 	return (
 		<div>
-			<section className='grid grid-cols-[1fr_0.8fr_1.2fr_1fr] grid-rows-[400px] gap-3'>
+			<section className='grid grid-cols-[1fr_0.8fr_1.2fr_1fr] grid-rows-[450px] gap-3'>
 				<HomeMapCard />
 				<div className='grid grid-cols-1 grid-rows-2 gap-2'>
 					<HomePopulationCard />
 					<HomeUnemployersСard />
 				</div>
-				<div className='col-span-2 flex flex-col box-border gap-3'>
+				<div className='col-span-2 flex flex-col  box-border gap-3 justify-between'>
 					<div className='grid grid-cols-[1fr_0.8fr_1.2fr] gap-3 grid-rows-1'>
 						<GenderAgeCard />
 						<PovertyCard />
 						<SalaryCard />
 					</div>
-					<div className='grid grid-cols-[1.6fr_1.4fr] grid-rows-1 gap-3'>
+					<div className='grid grid-cols-[1.6fr_1.4fr] grid-rows-1 gap-3 h-full'>
 						<EmploymentCard />
 						<ProfitCard />
 					</div>

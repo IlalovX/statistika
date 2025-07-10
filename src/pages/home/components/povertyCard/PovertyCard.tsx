@@ -21,7 +21,7 @@ import {
 	CustomizedAxisTick,
 	CustomizedLabel,
 } from '../../../../components/ui/ChartComponents'
-import { useRegionPopulationStat } from '../../../../hooks/useStat'
+import { useGetPoverty } from '../../../../hooks/useHome'
 
 function getYearRangesFromEnd(years: string[], chunkSize = 4): string[][] {
 	const sortedYears = [...years].sort()
@@ -41,34 +41,37 @@ function getYearRangesFromEnd(years: string[], chunkSize = 4): string[][] {
 
 function PovertyCard() {
 	const theme = useTheme()
-	const { yearMap, years } = useRegionPopulationStat(
-		'Qoraqalpog‘iston Respublikasi'
-	)
-	const [selectedRange, setSelectedRange] = useState<string>('')
 
-	const { ranges } = useMemo(() => {
+	const [selectedRange, setSelectedRange] = useState<string>('')
+	const { data } = useGetPoverty()
+
+	const years = useMemo(() => {
+		if (!data) return []
+		return Object.keys(data)
+			.filter(key => /^\d{4}$/.test(key))
+			.sort()
+	}, [data])
+
+	const ranges = useMemo(() => {
 		const chunks = getYearRangesFromEnd(years, 4)
-		const ranges = chunks.map(
-			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
-		)
-		return { ranges }
+		return chunks.map(chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`)
 	}, [years])
 
 	useEffect(() => {
 		if (ranges.length > 0 && !selectedRange) {
-			setSelectedRange(ranges[ranges.length - 2])
+			setSelectedRange(ranges[ranges.length - 1])
 		}
 	}, [ranges, selectedRange])
 
 	const chartData = useMemo(() => {
-		if (!selectedRange) return []
+		if (!selectedRange || !data) return []
 		const [start, end] = selectedRange.split('–')
-		const selectedYears = years.filter((y) => y >= start && y <= end)
-		return selectedYears.map((year) => ({
+		const selectedYears = years.filter(y => y >= start && y <= end)
+		return selectedYears.map(year => ({
 			name: year,
-			население: yearMap[year],
+			бедность: Number(data[year]) || 0,
 		}))
-	}, [selectedRange, yearMap, years])
+	}, [selectedRange, data, years])
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
@@ -87,7 +90,7 @@ function PovertyCard() {
 				</Typography>
 				<Button
 					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
+					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -106,7 +109,7 @@ function PovertyCard() {
 						},
 					}}
 				>
-					{ranges.map((range) => (
+					{ranges.map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
@@ -132,9 +135,9 @@ function PovertyCard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={(value) => `${value} тыс.`}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
+
 					<XAxis
 						dataKey='name'
 						tick={<CustomizedAxisTick />}
@@ -153,7 +156,7 @@ function PovertyCard() {
 					<Line
 						strokeWidth={4}
 						type='monotone'
-						dataKey='население'
+						dataKey='бедность'
 						stroke='#00BAD1'
 						dot={{ r: 5 }}
 						label={<CustomizedLabel />}

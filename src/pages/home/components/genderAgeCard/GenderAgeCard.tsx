@@ -3,25 +3,29 @@ import { useState } from 'react'
 import {
 	Bar,
 	BarChart,
-	LabelList,
 	ResponsiveContainer,
+	Tooltip,
 	XAxis,
 	YAxis,
 } from 'recharts'
 import YearMenu from '../../../../components/common/YearMenu/YearMenu'
-import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
-
-// 🧪 Мок-данные с разбивкой на мужчин и женщин
-const mockData = [
-	{ name: 'до 18', men: 750000, women: 700000 },
-	{ name: 'до 30', men: 800000, women: 750000 },
-	{ name: 'до 55', men: 850000, women: 800000 },
-	{ name: 'от 60', men: 650000, women: 700000 },
-]
+import { useGetPopulationAgeGender } from '../../../../hooks/useHome'
 
 function GenderAgeCard() {
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
 	const theme = useTheme()
+
+	const { data } = useGetPopulationAgeGender()
+
+	const chartData =
+		data?.[String(selectedYear)]?.map(item => ({
+			name: item.age_group.replace(/^до\s*/, '> ').replace(/^от\s*/, '< '),
+			men: item.mens,
+			women: item.womens,
+		})) ?? []
+
+	const totalMen = chartData.reduce((sum, item) => sum + item.men, 0)
+	const totalWomen = chartData.reduce((sum, item) => sum + item.women, 0)
 
 	return (
 		<Box
@@ -43,15 +47,24 @@ function GenderAgeCard() {
 				/>
 			</div>
 
-			<ResponsiveContainer height={160}>
-				<BarChart data={mockData} barCategoryGap={'45%'}>
+			<ResponsiveContainer height={130}>
+				<BarChart data={chartData} barCategoryGap={'45%'}>
 					<XAxis dataKey='name' tickLine={false} axisLine={false} />
 					<YAxis hide />
+					<Tooltip
+						cursor={{ fill: theme.palette.action.hover }}
+						formatter={(value: number, name: string) => [
+							value.toLocaleString(),
+							name === 'men' ? 'Мужчины' : 'Женщины',
+						]}
+					/>
+
 					{/* Женщины */}
+
 					<Bar dataKey='women' stackId='a' fill='#D50000' radius={20}>
-						<LabelList
+						{/* <LabelList
 							content={({ x = 0, y = 0, width = 0, index, value }) => {
-								const women = mockData[index as number].women
+								const women = chartData[index as number]?.women ?? 0
 								const label = women.toLocaleString()
 								const fontSize = 12
 								const padding = 4
@@ -88,14 +101,14 @@ function GenderAgeCard() {
 									</g>
 								)
 							}}
-						/>
+						/> */}
 					</Bar>
 
 					{/* Мужчины */}
 					<Bar dataKey='men' stackId='a' fill='#2196F3' radius={20}>
-						<LabelList
+						{/* <LabelList
 							content={({ x = 0, y = 0, width = 0, index }) => {
-								const label = mockData[index as number].men
+								const label = chartData[index as number]?.men ?? 0
 
 								const cx = +x + +width / 2
 								const cy = +y - 8 // над баром
@@ -117,10 +130,24 @@ function GenderAgeCard() {
 									</g>
 								)
 							}}
-						/>
+						/> */}
 					</Bar>
 				</BarChart>
 			</ResponsiveContainer>
+			<Box mt={1} display='flex' justifyContent='center' gap={4}>
+				<Box display='flex' alignItems='center' gap={1}>
+					<Box width={12} height={12} borderRadius='50%' bgcolor='#2196F3' />
+					<Typography variant='caption' fontWeight='bold'>
+						Мужчины: {totalMen.toLocaleString()}
+					</Typography>
+				</Box>
+				<Box display='flex' alignItems='center' gap={1}>
+					<Box width={12} height={12} borderRadius='50%' bgcolor='#D50000' />
+					<Typography variant='caption' fontWeight='bold'>
+						Женщины: {totalWomen.toLocaleString()}
+					</Typography>
+				</Box>
+			</Box>
 		</Box>
 	)
 }

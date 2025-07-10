@@ -6,3 +6,13 @@ export type HomeMapPopulation = {
 	Klassifikator_uzc: string
 	[year: string]: number | string
 }
+
+export interface AgeGenderStat {
+	age_group: string // например: "до 18", "от 60"
+	mens: number // количество мужчин
+	womens: number // количество женщин
+}
+
+export type PopulationAgeGenderResponse = {
+	[year: string]: AgeGenderStat[]
+}

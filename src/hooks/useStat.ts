@@ -1,22 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { axiosStat } from '../api/interceptors'
-
-export interface RegionPopulation {
-	id: number
-	map_code: string
-	name: string
-	name_en: string
-	name_ru: string
-	name_uz: string
-	name_uzc: string
-	is_root: boolean
-	data: YearPopulationEntry[]
-}
-
-export type YearPopulationEntry = {
-	[year: number]: number
-}
+import { RegionPopulation } from '../types/stat.interface'
 
 export function useGetPopulationStat() {
 	return useQuery<RegionPopulation[]>({
@@ -32,12 +17,12 @@ export function useRegionPopulationStat(regionName: string) {
 	const { data, isLoading } = useGetPopulationStat()
 
 	const { yearMap, years } = useMemo(() => {
-		const region = data?.find((r) => r.name === regionName)
+		const region = data?.find(r => r.name === regionName)
 		if (!region) return { yearMap: {}, years: [] }
 
 		const yearMap: Record<string, number> = {}
 
-		region.data.forEach((entry) => {
+		region.data.forEach(entry => {
 			const year = Object.keys(entry)[0]
 			const value = Object.values(entry)[0]
 			if (year && value) {

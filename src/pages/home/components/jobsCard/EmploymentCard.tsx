@@ -96,7 +96,7 @@ function EmploymentCard() {
 
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-1.5'
+			className='shadow-xl rounded-2xl p-1.5 flex flex-col justify-between'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -133,7 +133,7 @@ function EmploymentCard() {
 				</Menu>
 			</div>
 
-			<ResponsiveContainer width='100%' height={128}>
+			<ResponsiveContainer width='100%' height={160}>
 				<BarChart data={chartData} barCategoryGap='20%' margin={{ bottom: 40 }}>
 					<XAxis dataKey='year' axisLine={false} tickLine={false} />
 					<YAxis hide />

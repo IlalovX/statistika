@@ -48,9 +48,7 @@ function HomePopulationCard() {
 
 	const { ranges } = useMemo(() => {
 		const chunks = getYearRangesFromEnd(years, 5)
-		const ranges = chunks.map(
-			(chunk) => `${chunk[0]}–${chunk[chunk.length - 1]}`
-		)
+		const ranges = chunks.map(chunk => `${chunk[0]}–${chunk[chunk.length - 1]}`)
 		return { ranges }
 	}, [years])
 
@@ -63,8 +61,8 @@ function HomePopulationCard() {
 	const chartData = useMemo(() => {
 		if (!selectedRange) return []
 		const [start, end] = selectedRange.split('–')
-		const selectedYears = years.filter((y) => y >= start && y <= end)
-		return selectedYears.map((year) => ({
+		const selectedYears = years.filter(y => y >= start && y <= end)
+		return selectedYears.map(year => ({
 			name: year,
 			население: yearMap[year],
 		}))
@@ -87,7 +85,7 @@ function HomePopulationCard() {
 				</Typography>
 				<Button
 					variant='outlined'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
+					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
 					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -106,7 +104,7 @@ function HomePopulationCard() {
 						},
 					}}
 				>
-					{ranges.map((range) => (
+					{ranges.map(range => (
 						<MenuItem
 							key={range}
 							selected={range === selectedRange}
@@ -132,7 +130,7 @@ function HomePopulationCard() {
 							borderColor: theme.palette.divider,
 							color: theme.palette.text.primary,
 						}}
-						formatter={(value) => `${value} тыс.`}
+						formatter={value => `${value} тыс.`}
 						labelStyle={{ color: theme.palette.text.secondary }}
 					/>
 					<XAxis

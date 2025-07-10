@@ -23,7 +23,7 @@ function SalaryCard() {
 
 	return (
 		<Box
-			className='shadow-xl rounded-2xl p-1.5'
+			className='shadow-xl rounded-2xl p-1.5 flex flex-col justify-between'
 			sx={{
 				bgcolor: 'background.paper',
 				border: `1px solid ${theme.palette.divider}`,
@@ -31,7 +31,7 @@ function SalaryCard() {
 		>
 			<div className='flex justify-between items-center gap-3'>
 				<Typography variant='body2' fontWeight='bold'>
-					Ўртача маош (квартал бўйича)
+					Ўртача ойлик(чораклик)
 				</Typography>
 
 				<YearMenu
