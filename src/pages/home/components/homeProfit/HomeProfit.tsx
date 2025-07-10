@@ -44,12 +44,12 @@ function HomeProfit() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<ThemeText text='Прибыль' variant='h6' />
+			<ThemeText text='Прибыль' variant='body2' />
 			<p className='text-gray-400'>за последний месяц</p>
 			<List
 				sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
 			>
-				{data.map((item) => (
+				{data.map(item => (
 					<ListItem
 						key={item.id}
 						sx={{

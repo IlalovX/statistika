@@ -105,11 +105,19 @@ function EmploymentCard() {
 				<Button
 					variant='outlined'
 					onClick={e => setAnchorEl(e.currentTarget)}
+					disableFocusRipple
 					disableRipple
-					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
+					sx={{
+						border: 'none',
+						padding: 0,
+						textTransform: 'none',
+						gap: 0,
+					}}
 				>
-					{selectedRange}
+					<Box display='flex' alignItems='center' gap={0}>
+						{selectedRange}
+						{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					</Box>
 				</Button>
 
 				<Menu

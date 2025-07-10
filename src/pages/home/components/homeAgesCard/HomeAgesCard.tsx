@@ -15,7 +15,7 @@ function HomeAgesCard() {
 
 	const { data, isLoading } = useAgeCategoryPopulationStat(selectedYear)
 
-	const chartData: AgeDataItem[] = data.map((d) => ({
+	const chartData: AgeDataItem[] = data.map(d => ({
 		name: d.category,
 		uv: d.total,
 	}))
@@ -28,7 +28,7 @@ function HomeAgesCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Typography variant='h6' fontWeight='bold'>
+			<Typography variant='body2' fontWeight='bold'>
 				Аҳоли сони ёш кесимида
 			</Typography>
 			<div>

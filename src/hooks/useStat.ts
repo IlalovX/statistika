@@ -7,7 +7,9 @@ export function useGetPopulationStat() {
 	return useQuery<RegionPopulation[]>({
 		queryKey: ['stat'],
 		queryFn: async () => {
-			const res = await axiosStat.get('246/cartogram/?years=2025')
+			const res = await axiosStat.get(
+				'https://api.siat.stat.uz/sdmx/246/cartogram/?years=2025'
+			)
 			return res.data
 		},
 	})

@@ -9,20 +9,12 @@ import {
 	useTheme,
 } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import {
-	Line,
-	LineChart,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from 'recharts'
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import {
 	CustomizedAxisTick,
 	CustomizedLabel,
 } from '../../../../components/ui/ChartComponents'
 import { useGetUnemployment } from '../../../../hooks/useHome'
-import { formatCompactNumber } from '../../../../utils/formatCompactNumber'
 
 function getYearRangesFromEnd(years: number[], chunkSize = 4): number[][] {
 	const sortedYears = [...years].sort((a, b) => a - b)
@@ -101,7 +93,7 @@ function UnemployedCard() {
 			}}
 		>
 			<div className='flex justify-between items-center mb-2'>
-				<Typography variant='h6' fontWeight='bold'>
+				<Typography variant='body2' fontWeight='bold'>
 					Ишсизлар сони
 				</Typography>
 
@@ -110,10 +102,17 @@ function UnemployedCard() {
 					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
-					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
+					sx={{
+						border: 'none',
+						padding: 0,
+						textTransform: 'none',
+						gap: 0,
+					}}
 				>
-					{selectedRange}
+					<Box display='flex' alignItems='center' gap={0}>
+						{selectedRange}
+						{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					</Box>
 				</Button>
 
 				<Menu
@@ -146,19 +145,6 @@ function UnemployedCard() {
 					data={chartData}
 					margin={{ top: 30, right: 30, left: -30, bottom: 10 }}
 				>
-					<Tooltip
-						contentStyle={{
-							backgroundColor: theme.palette.background.default,
-							borderColor: theme.palette.divider,
-							color: theme.palette.text.primary,
-						}}
-						formatter={value =>
-							typeof value === 'number'
-								? `${formatCompactNumber(value)} тыс.`
-								: '—'
-						}
-						labelStyle={{ color: theme.palette.text.secondary }}
-					/>
 					<XAxis
 						dataKey='name'
 						tick={<CustomizedAxisTick />}

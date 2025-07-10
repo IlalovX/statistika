@@ -41,7 +41,7 @@ function HomeCompaniesCard() {
 			<div className='flex justify-between items-center'>
 				<div className='flex flex-col gap-5'>
 					<div>
-						<Typography variant='h6' fontWeight='bold'>
+						<Typography variant='body2' fontWeight='bold'>
 							Открытые фирмы
 						</Typography>
 						{/* <YearDropdown /> */}

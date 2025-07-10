@@ -9,14 +9,7 @@ import {
 	useTheme,
 } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import {
-	Line,
-	LineChart,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from 'recharts'
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import {
 	CustomizedAxisTick,
 	CustomizedLabel,
@@ -84,20 +77,28 @@ function PovertyCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<div className='flex justify-between items-center mb-2 gap-3'>
+			<div className='flex justify-between items-center mb-2'>
 				<Typography variant='body2' fontWeight='bold'>
-					Камбағаллик даражаси
+					Камбағаллик
+					<br />
+					даражаси
 				</Typography>
 				<Button
 					variant='outlined'
 					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
-					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
-					className='!whitespace-nowrap'
+					sx={{
+						border: 'none',
+						padding: 0,
+						textTransform: 'none',
+						gap: 0,
+					}}
 				>
-					{selectedRange}
+					<Box display='flex' alignItems='center' gap={0}>
+						{selectedRange}
+						{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					</Box>
 				</Button>
 				<Menu
 					anchorEl={anchorEl}
@@ -129,15 +130,6 @@ function PovertyCard() {
 					data={chartData}
 					margin={{ top: 30, right: 30, left: -30, bottom: 10 }}
 				>
-					<Tooltip
-						contentStyle={{
-							backgroundColor: theme.palette.background.default,
-							borderColor: theme.palette.divider,
-							color: theme.palette.text.primary,
-						}}
-						labelStyle={{ color: theme.palette.text.secondary }}
-					/>
-
 					<XAxis
 						dataKey='name'
 						tick={<CustomizedAxisTick />}

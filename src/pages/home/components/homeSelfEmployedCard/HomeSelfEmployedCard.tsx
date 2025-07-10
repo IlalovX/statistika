@@ -47,7 +47,7 @@ function HomeSelfEmployedCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<Typography variant='h6' fontWeight='bold'>
+			<Typography variant='body2' fontWeight='bold'>
 				Самозанятый
 			</Typography>
 

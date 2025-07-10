@@ -1,6 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Button, Menu, MenuItem, useTheme } from '@mui/material'
+import { Box, Button, Menu, MenuItem, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 interface YearMenuProps {
@@ -30,19 +30,24 @@ const YearMenu = ({
 		<>
 			<Button
 				className={className}
+				variant='outlined'
+				onClick={e => setAnchorEl(e.currentTarget)}
 				disableFocusRipple
 				disableRipple
-				variant='outlined'
-				onClick={(e) => setAnchorEl(e.currentTarget)}
-				endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 				sx={{
 					border: 'none',
-					padding: '0',
+					padding: 0,
+					textTransform: 'none',
+					gap: 0,
 					color,
 				}}
 			>
-				{selectedYear}
+				<Box display='flex' alignItems='center' gap={0}>
+					{selectedYear}
+					{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+				</Box>
 			</Button>
+
 			<Menu
 				anchorEl={anchorEl}
 				open={open}
@@ -55,7 +60,7 @@ const YearMenu = ({
 					},
 				}}
 			>
-				{years.map((year) => (
+				{years.map(year => (
 					<MenuItem
 						key={year}
 						selected={selectedYear === year}

@@ -1,4 +1,5 @@
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Box, Typography, useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -117,13 +118,21 @@ export default function HomeExportImport() {
 				<Box className='flex items-center justify-start gap-8'>
 					<div>
 						<Button
-							aria-controls={open ? 'basic-menu' : undefined}
-							aria-haspopup='true'
-							aria-expanded={open ? 'true' : undefined}
+							variant='outlined'
 							onClick={handleClick}
-							endIcon={<KeyboardArrowDownIcon />}
+							disableFocusRipple
+							disableRipple
+							sx={{
+								border: 'none',
+								padding: 0,
+								textTransform: 'none',
+								gap: 0,
+							}}
 						>
-							{year}
+							<Box display='flex' alignItems='center' gap={0}>
+								{year}
+								{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+							</Box>
 						</Button>
 						<Menu
 							anchorEl={anchorEl}
@@ -138,7 +147,7 @@ export default function HomeExportImport() {
 								},
 							}}
 						>
-							{['2025', '2024', '2023'].map((y) => (
+							{['2025', '2024', '2023'].map(y => (
 								<MenuItem
 									key={y}
 									onClick={() => handleClose(y)}

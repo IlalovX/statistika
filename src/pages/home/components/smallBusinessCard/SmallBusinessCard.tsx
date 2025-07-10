@@ -100,20 +100,25 @@ function SmallBusinessCard() {
 			}}
 		>
 			<div className='flex justify-between items-center mb-2'>
-				<Typography variant='h6' fontWeight='bold'>
+				<Typography variant='body2' fontWeight='bold'>
 					Малый бизнес
 				</Typography>
-
 				<Button
 					variant='outlined'
 					onClick={e => setAnchorEl(e.currentTarget)}
 					disableFocusRipple
 					disableRipple
-					endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-					sx={{ border: 'none', padding: 0, textTransform: 'none' }}
-					className='whitespace-nowrap'
+					sx={{
+						border: 'none',
+						padding: 0,
+						textTransform: 'none',
+						gap: 0,
+					}}
 				>
-					{selectedRange}
+					<Box display='flex' alignItems='center' gap={0}>
+						{selectedRange}
+						{open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					</Box>
 				</Button>
 
 				<Menu
