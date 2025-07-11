@@ -41,4 +41,8 @@ export const HomeService = {
 		const res = await axiosWithAuth.get('/uploads/demography/order')
 		return res.data.data
 	},
+	async getExportImport() {
+		const res = await axiosWithAuth.get('/uploads/export_import')
+		return res.data.data
+	},
 }

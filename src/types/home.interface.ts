@@ -76,3 +76,17 @@ export interface EnterprisesResponse {
 	new: YearlyValues
 	total: YearlyValues
 }
+
+export type MonthlyValues = {
+	[month: string]: number
+}
+
+export interface ExportImportResponse {
+	klassifikators: Klassifikator
+	export: {
+		[year: number]: MonthlyValues
+	}
+	import: {
+		[year: number]: MonthlyValues
+	}
+}

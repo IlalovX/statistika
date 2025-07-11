@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { HomeService } from '../services/home.service'
 import {
 	EnterprisesResponse,
+	ExportImportResponse,
 	HomeMapPopulation,
 	PopulationAgeGenderResponse,
 	SalaryResponse,
@@ -76,5 +77,12 @@ export function useGetDemographyOrder() {
 	return useQuery<HomeMapPopulation[]>({
 		queryKey: ['get_demography_order'],
 		queryFn: () => HomeService.getDemographyOrder(),
+	})
+}
+
+export function useGetExportImport() {
+	return useQuery<ExportImportResponse>({
+		queryKey: ['get_export_import'],
+		queryFn: () => HomeService.getExportImport(),
 	})
 }

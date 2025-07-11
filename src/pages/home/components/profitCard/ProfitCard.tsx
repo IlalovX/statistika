@@ -21,14 +21,14 @@ const data = [
 	},
 	{
 		id: 2,
-		title: 'Сельское хозяйство',
+		title: 'Қишлоқ хўжалиги',
 		value: 0,
 		percent: '0%',
 		icon: '/svg/profit/промышленность.svg',
 	},
 	{
 		id: 3,
-		title: 'Промышленность',
+		title: 'Саноат',
 		value: 0,
 		percent: '0%',
 		icon: '/svg/profit/сельское хозяйство.svg',
@@ -48,7 +48,7 @@ function ProfitCard() {
 		>
 			<div className='flex justify-between items-center gap-3'>
 				<Typography variant='body2' fontWeight='bold'>
-					Прибыль
+					Соҳалар бўйича даромад
 				</Typography>
 
 				<YearMenu

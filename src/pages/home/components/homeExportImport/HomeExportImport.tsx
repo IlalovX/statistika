@@ -4,9 +4,9 @@ import { Box, Typography, useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts'
+import { useGetExportImport } from '../../../../hooks/useHome'
 
 const monthNames: string[] = [
 	'Янв',
@@ -24,58 +24,35 @@ const monthNames: string[] = [
 ]
 
 export default function HomeExportImport() {
-	const [chartData, setChartData] = useState<{ name: string; value: number }[]>(
-		[]
-	)
+	const { data } = useGetExportImport()
+	const theme = useTheme()
+
 	const [selected, setSelected] = useState<'export' | 'import'>('export')
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const [year, setYear] = useState('2025')
 	const open = Boolean(anchorEl)
 
-	const { data: exports } = useQuery({
-		queryKey: ['export'],
-		queryFn: async () => {
-			const res = await fetch('/db/export/eksport_ayma_ay.json')
-			if (!res.ok) throw new Error('Ошибка загрузки данных')
-			return res.json()
-		},
-	})
-
-	const { data: imports } = useQuery({
-		queryKey: ['import'],
-		queryFn: async () => {
-			const res = await fetch('/db/import/import_kólemi_ayma_ay.json')
-			if (!res.ok) throw new Error('Ошибка загрузки данных')
-			return res.json()
-		},
-	})
-
-	const getYearData = (data: any, code: string, year: string) => {
+	const availableYears = useMemo(() => {
 		if (!data) return []
+		const years = data[selected] ? Object.keys(data[selected]) : []
+		return years.sort((a, b) => Number(a) - Number(b)).reverse()
+	}, [data, selected])
 
-		const region = data[0].data.find((item: any) => item.Code === code)
-		if (!region) return []
+	const chartData = useMemo(() => {
+		if (!data) return []
+		const source = data[selected]?.[+year]
+		if (!source) return []
 
-		return monthNames.map((monthName, index) => {
-			const key = `${year}-M${(index + 1).toString().padStart(2, '0')}`
-			const valueStr = region[key]?.toString().replace(',', '.') || '0'
-			const value = parseFloat(valueStr)
-
-			return {
-				name: monthName,
-				value: isNaN(value) ? 0 : value,
-			}
+		return monthNames.map((name, i) => {
+			const key = `M${(i + 1).toString().padStart(2, '0')}`
+			const value = source?.[key] ?? 0
+			return { name, value }
 		})
-	}
+	}, [data, selected, year])
 
-	useEffect(() => {
-		if (exports && selected === 'export') {
-			setChartData(getYearData(exports, '1735', year))
-		}
-		if (imports && selected === 'import') {
-			setChartData(getYearData(imports, '1735', year))
-		}
-	}, [exports, imports, selected, year])
+	const totalValue = useMemo(() => {
+		return chartData.reduce((sum, item) => sum + item.value, 0)
+	}, [chartData])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget)
@@ -85,8 +62,6 @@ export default function HomeExportImport() {
 		if (selectedYear) setYear(selectedYear)
 		setAnchorEl(null)
 	}
-
-	const theme = useTheme()
 
 	return (
 		<Box className='flex flex-col justify-between h-full w-full p-4'>
@@ -122,12 +97,7 @@ export default function HomeExportImport() {
 							onClick={handleClick}
 							disableFocusRipple
 							disableRipple
-							sx={{
-								border: 'none',
-								padding: 0,
-								textTransform: 'none',
-								gap: 0,
-							}}
+							sx={{ border: 'none', padding: 0, textTransform: 'none', gap: 0 }}
 						>
 							<Box display='flex' alignItems='center' gap={0}>
 								{year}
@@ -138,28 +108,44 @@ export default function HomeExportImport() {
 							anchorEl={anchorEl}
 							open={open}
 							onClose={() => handleClose()}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button',
-							}}
+							MenuListProps={{ 'aria-labelledby': 'basic-button' }}
 							sx={{
 								'& .MuiPaper-root': {
 									bgcolor: theme.palette.background.default,
 								},
 							}}
+							PaperProps={{
+								style: {
+									maxHeight: 160,
+								},
+							}}
 						>
-							{['2025', '2024', '2023'].map(y => (
-								<MenuItem
-									key={y}
-									onClick={() => handleClose(y)}
-									sx={{ padding: 1 }}
-								>
-									{y}
-								</MenuItem>
-							))}
+							{availableYears.length > 0 ? (
+								availableYears.map(y => (
+									<MenuItem
+										key={y}
+										onClick={() => handleClose(y)}
+										sx={{ padding: 1 }}
+									>
+										{y}
+									</MenuItem>
+								))
+							) : (
+								<MenuItem disabled>Нет данных</MenuItem>
+							)}
 						</Menu>
 					</div>
 				</Box>
 			</header>
+
+			<div>
+				<Typography variant='h6' className='!font-bold'>
+					{(totalValue * 10 ** 6).toLocaleString('ru-RU')} сум
+				</Typography>
+				<Typography variant='body2' className=' font-semibold text-neutral-500'>
+					Годовой
+				</Typography>
+			</div>
 
 			<ResponsiveContainer>
 				<BarChart
