@@ -57,41 +57,46 @@ function SalaryCard() {
 				border: `1px solid ${theme.palette.divider}`,
 			}}
 		>
-			<div className='flex justify-between items-center gap-3'>
-				<Typography variant='body2' fontWeight='bold'>
-					Айлык тузилиши
-				</Typography>
-
-				<YearMenu
-					onChange={setSelectedYear}
-					selectedYear={selectedYear}
-					className='self-start'
-				/>
-			</div>
-
 			<div>
-				<Typography variant='h6' className='!font-bold'>
-					{totalSalary.toLocaleString('ru-RU')} сум
-					{percentChange !== null && (
-						<Typography
-							component='span'
-							variant='body2'
-							sx={{
-								ml: 1,
-								color: percentChange > 0 ? 'green' : 'red',
-								fontWeight: 'bold',
-							}}
-						>
-							({percentFormatted})
-						</Typography>
-					)}
-				</Typography>
-				<Typography variant='body2' className=' font-semibold text-neutral-500'>
-					Годовой
-				</Typography>
+				<div className='flex justify-between items-center gap-3'>
+					<Typography variant='body2' fontWeight='bold'>
+						Айлык тузилиши
+					</Typography>
+
+					<YearMenu
+						onChange={setSelectedYear}
+						selectedYear={selectedYear}
+						className='self-start'
+					/>
+				</div>
+
+				<div>
+					<Typography variant='h6' className='!font-bold'>
+						{totalSalary.toLocaleString('ru-RU')} сум
+						{percentChange !== null && (
+							<Typography
+								component='span'
+								variant='body2'
+								sx={{
+									ml: 1,
+									color: percentChange > 0 ? 'green' : 'red',
+									fontWeight: 'bold',
+								}}
+							>
+								({percentFormatted})
+							</Typography>
+						)}
+					</Typography>
+					<Typography
+						variant='body2'
+						className=' font-semibold text-neutral-500'
+					>
+						Годовой
+					</Typography>
+				</div>
 			</div>
 
-			<ResponsiveContainer width='100%' height={160}>
+			<ResponsiveContainer width='100%' height={120}>
 				<AreaChart
 					data={chartData}
 					margin={{ top: 20, right: 30, bottom: 10, left: 30 }}
