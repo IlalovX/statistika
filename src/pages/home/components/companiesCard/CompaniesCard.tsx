@@ -112,6 +112,7 @@ function CompaniesCard() {
 					disableRipple
 					sx={{
 						border: 'none',
+						whiteSpace: 'nowrap',
 						padding: 0,
 						textTransform: 'none',
 						gap: 0,

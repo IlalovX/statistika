@@ -32,6 +32,7 @@ export type YearlySalaryData = {
 }
 
 export interface SalaryResponse {
+	average: UnemploymentValues
 	klassifikators: Klassifikator
 	values: YearlySalaryData
 }

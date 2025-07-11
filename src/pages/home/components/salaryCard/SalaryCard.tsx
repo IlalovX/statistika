@@ -6,6 +6,7 @@ import {
 	LabelList,
 	ResponsiveContainer,
 	XAxis,
+	YAxis,
 } from 'recharts'
 import YearMenu from '../../../../components/common/YearMenu/YearMenu'
 import { useGetSalary } from '../../../../hooks/useHome'
@@ -16,6 +17,7 @@ function SalaryCard() {
 	const [selectedYear, setSelectedYear] = useState<number>(2025)
 	const { data } = useGetSalary()
 	const theme = useTheme()
+	const averageSalary = data?.average?.[selectedYear] ?? 0
 
 	const quarterlyValues = data?.values?.[selectedYear]
 	const previousYearValues = data?.values?.[selectedYear - 1]
@@ -25,24 +27,13 @@ function SalaryCard() {
 		salary: quarterlyValues?.[q as keyof typeof quarterlyValues] ?? 0,
 	}))
 
-	const totalSalary = useMemo(() => {
-		return chartData.reduce((acc, item) => acc + item.salary, 0)
-	}, [chartData])
-
-	const prevTotalSalary = useMemo(() => {
-		if (!previousYearValues) return 0
-		return defaultQuarters.reduce(
-			(acc, q) =>
-				acc + (previousYearValues[q as keyof typeof previousYearValues] ?? 0),
-			0
-		)
-	}, [previousYearValues])
-
 	const percentChange = useMemo(() => {
-		if (!prevTotalSalary) return null
-		const change = ((totalSalary - prevTotalSalary) / prevTotalSalary) * 100
+		if (!previousYearValues) return null
+		const prevAvg = data?.average?.[selectedYear - 1] ?? 0
+		if (!prevAvg) return null
+		const change = ((averageSalary - prevAvg) / prevAvg) * 100
 		return change
-	}, [totalSalary, prevTotalSalary])
+	}, [averageSalary, selectedYear, data])
 
 	const percentFormatted =
 		percentChange !== null
@@ -72,7 +63,7 @@ function SalaryCard() {
 
 				<div>
 					<Typography variant='h6' className='!font-bold'>
-						{totalSalary.toLocaleString('ru-RU')} сум
+						{averageSalary.toLocaleString('ru-RU')} сум
 						{percentChange !== null && (
 							<Typography
 								component='span'
@@ -109,7 +100,16 @@ function SalaryCard() {
 					</defs>
 
 					<XAxis dataKey='name' style={{ fontSize: 12 }} />
-
+					<YAxis
+						width={0}
+						ticks={[]}
+						tickSize={0}
+						tickCount={0}
+						tickMargin={0}
+						tickLine={false}
+						axisLine={false}
+						domain={['dataMin - 100000', 'dataMax + 100000']}
+					/>
 					<Area
 						type='monotone'
 						dataKey='salary'

@@ -140,14 +140,14 @@ export default function HomeExportImport() {
 
 			<div>
 				<Typography variant='h6' className='!font-bold'>
-					{(totalValue * 10 ** 6).toLocaleString('ru-RU')} сум
+					{(totalValue * 10 ** 6).toLocaleString('ru-RU')} млн.доллар
 				</Typography>
 				<Typography variant='body2' className=' font-semibold text-neutral-500'>
 					Годовой
 				</Typography>
 			</div>
 
-			<ResponsiveContainer>
+			<ResponsiveContainer height={250}>
 				<BarChart
 					data={chartData}
 					margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
@@ -160,6 +160,7 @@ export default function HomeExportImport() {
 						tick={{ textAnchor: 'middle', fontSize: 12 }}
 						interval={0}
 					/>
+
 					<Bar label={{ position: 'top' }} dataKey='value'>
 						{chartData.map((_, index) => (
 							<Cell

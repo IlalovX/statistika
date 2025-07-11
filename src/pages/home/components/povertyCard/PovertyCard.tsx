@@ -92,6 +92,7 @@ function PovertyCard() {
 						border: 'none',
 						padding: 0,
 						textTransform: 'none',
+						whiteSpace: 'nowrap',
 						gap: 0,
 					}}
 				>

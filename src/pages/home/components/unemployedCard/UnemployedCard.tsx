@@ -107,6 +107,7 @@ function UnemployedCard() {
 						padding: 0,
 						textTransform: 'none',
 						gap: 0,
+						whiteSpace: 'nowrap',
 					}}
 				>
 					<Box display='flex' alignItems='center' gap={0}>
