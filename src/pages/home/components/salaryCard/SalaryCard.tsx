@@ -60,7 +60,7 @@ function SalaryCard() {
 			<div>
 				<div className='flex justify-between items-center gap-3'>
 					<Typography variant='body2' fontWeight='bold'>
-						Айлык тузилиши
+						Ўртача ойлик(чораклик)
 					</Typography>
 
 					<YearMenu
