@@ -144,6 +144,19 @@ export function useGetStatProduct() {
 	return useQuery<KlassifikatorData[]>({
 		queryKey: ['get_stat_products'],
 		queryFn: () => AgricultureService.getStatProducts(),
-		select: (data: StatProductResponse) => Object.values(data),
+		select: (data: StatProductResponse) =>
+			Object.values(data).map(item => {
+				const cleaned = item.metadata
+					.replace('Barcha toifaladagi xo‘jaliklarda yetishtirilgan ', '')
+					.replace('Barcha toifalardagi xo‘jaliklarda yetishtirilgan ', '')
+
+				const capitalized =
+					cleaned.charAt(0).toUpperCase() + cleaned.slice(1).toLowerCase()
+
+				return {
+					...item,
+					metadata: capitalized,
+				}
+			}),
 	})
 }

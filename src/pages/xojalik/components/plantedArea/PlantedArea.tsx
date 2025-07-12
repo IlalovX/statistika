@@ -63,7 +63,7 @@ export default function PlantedArea() {
 									</TableCell>
 									<TableCell>{0}</TableCell>
 									<TableCell>{0}</TableCell>
-									<TableCell>{item && item.values[year]}</TableCell>
+									<TableCell>{item && item.values[year]} T</TableCell>
 									<TableCell>{0}%</TableCell>
 								</TableRow>
 							))}
