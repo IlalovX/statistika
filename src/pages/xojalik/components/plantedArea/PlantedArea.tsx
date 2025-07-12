@@ -59,17 +59,22 @@ export default function PlantedArea() {
 							{harvested?.slice(0, 5).map((item, index) => (
 								<TableRow key={index}>
 									<TableCell>
-										<Typography className='flex items-center gap-2 font-medium'>
+										<Typography
+											className='flex items-center gap-2'
+											fontSize={14}
+										>
 											<Avatar sx={{ width: 24, height: 24 }}>
 												<Agriculture fontSize='small' />
 											</Avatar>
 											{item.metadata}
 										</Typography>
 									</TableCell>
-									<TableCell>{0}</TableCell>
-									<TableCell>{0}</TableCell>
-									<TableCell>{item && item.values[year]} т</TableCell>
-									<TableCell>{0}%</TableCell>
+									<TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
+									<TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
+									<TableCell sx={{ fontSize: 16 }}>
+										{item?.values[year]} т
+									</TableCell>
+									<TableCell sx={{ fontSize: 16 }}>{0}%</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
