@@ -140,7 +140,7 @@ export default function HomeExportImport() {
 
 			<div>
 				<Typography variant='h6' className='!font-bold'>
-					{(totalValue * 10 ** 6).toLocaleString('ru-RU')} млн.доллар
+					{(totalValue * 10 ** 6).toLocaleString('ru-RU')} доллар
 				</Typography>
 				<Typography variant='body2' className=' font-semibold text-neutral-500'>
 					Годовой
