@@ -9,7 +9,7 @@ interface YearSelectProps {
 export const YearSelect = ({
 	value,
 	onChange,
-	years = [2023, 2024, 2025],
+	years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016],
 }: YearSelectProps) => {
 	return (
 		<TextField
@@ -18,6 +18,15 @@ export const YearSelect = ({
 			value={value}
 			onChange={e => onChange(Number(e.target.value))}
 			sx={{ width: 120 }}
+			SelectProps={{
+				MenuProps: {
+					PaperProps: {
+						style: {
+							maxHeight: 4 * 40,
+						},
+					},
+				},
+			}}
 		>
 			{years.map(year => (
 				<MenuItem key={year} value={year}>

@@ -17,14 +17,14 @@ import {
 	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
-import { AgriculturePlacement } from '../../../../types/agriculture.interface'
-import { getPercentSign } from '../../../../utils/getPercentDisplay'
+import { KlassifikatorData } from '../../../../types/agriculture.interface'
 
 interface Props {
-	placement: AgriculturePlacement[]
+	placement: KlassifikatorData[]
+	year: number
 }
 
-function PlantedAreaModal({ placement }: Props) {
+function PlantedAreaModal({ placement, year }: Props) {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 	const handleOpen = () => setOpen(true)
@@ -46,7 +46,7 @@ function PlantedAreaModal({ placement }: Props) {
 			<Dialog
 				open={open}
 				onClose={handleClose}
-				maxWidth='sm'
+				maxWidth='lg'
 				fullWidth
 				PaperProps={{
 					sx: {
@@ -82,23 +82,20 @@ function PlantedAreaModal({ placement }: Props) {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{placement?.slice(0, 6).map((item, index) => (
+								{placement?.map((item, index) => (
 									<TableRow key={index}>
 										<TableCell>
 											<Typography className='flex items-center gap-2 font-medium'>
 												<Avatar sx={{ width: 24, height: 24 }}>
 													<Agriculture fontSize='small' />
 												</Avatar>
-												{item.product}
+												{item.metadata}
 											</Typography>
 										</TableCell>
-										<TableCell>{item.area}</TableCell>
-										<TableCell>{item.planted}</TableCell>
-										<TableCell>{item.harvested}</TableCell>
-										<TableCell>
-											{getPercentSign(item.percent.status)}
-											{item.percent.value}%
-										</TableCell>
+										<TableCell>{0}</TableCell>
+										<TableCell>{0}</TableCell>
+										<TableCell>{item.values[year]}</TableCell>
+										<TableCell>0%</TableCell>
 									</TableRow>
 								))}
 							</TableBody>

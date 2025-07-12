@@ -1,5 +1,3 @@
-'use client'
-
 import { Agriculture } from '@mui/icons-material'
 import {
 	Avatar,
@@ -15,18 +13,15 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
-import { currentYear } from '../../../../const/monthsOfYear'
-import { useClientPlacement } from '../../../../hooks/useAgriculture'
+import { useGetStatProduct } from '../../../../hooks/useAgriculture'
 import PlantedAreaModal from './PlantedAreaModal'
 
-interface Props {
-	years: number[]
-}
-
-export default function PlantedArea({ years }: Props) {
+export default function PlantedArea() {
 	const theme = useTheme()
-	const [year, setYear] = useState(currentYear)
-	const { data: placement = [] } = useClientPlacement(year)
+	const [year, setYear] = useState(2024)
+	// const { data: placement = [] } = useClientPlacement(year)
+	const { data: harvested = [] } = useGetStatProduct()
+	console.log(harvested[0].values[year])
 
 	return (
 		<Box
@@ -41,7 +36,7 @@ export default function PlantedArea({ years }: Props) {
 					Показатели
 				</Typography>
 				<div>
-					<YearSelect value={year} onChange={setYear} years={years} />
+					<YearSelect value={year} onChange={setYear} />
 				</div>
 			</div>
 			<div className='flex flex-col justify-between h-full'>
@@ -57,26 +52,26 @@ export default function PlantedArea({ years }: Props) {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{placement?.slice(0, 6).map((item, index) => (
+							{harvested?.slice(0, 4).map((item, index) => (
 								<TableRow key={index}>
 									<TableCell>
 										<Typography className='flex items-center gap-2 font-medium'>
 											<Avatar sx={{ width: 24, height: 24 }}>
 												<Agriculture fontSize='small' />
 											</Avatar>
-											{item.product}
+											{item.metadata}
 										</Typography>
 									</TableCell>
-									<TableCell>{item.area}</TableCell>
-									<TableCell>{item.planted}</TableCell>
-									<TableCell>{item.harvested}</TableCell>
-									<TableCell>{item.percent.value}%</TableCell>
+									<TableCell>{0}</TableCell>
+									<TableCell>{0}</TableCell>
+									<TableCell>{item.values[year]}</TableCell>
+									<TableCell>{0}%</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<PlantedAreaModal placement={placement} />
+				<PlantedAreaModal placement={harvested} year={year} />
 			</div>
 		</Box>
 	)

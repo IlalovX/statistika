@@ -10,6 +10,8 @@ import {
 	AgricultureSummary,
 	AgricultureTradeSummary,
 	AgricultureWaterLimit,
+	KlassifikatorData,
+	StatProductResponse,
 } from '../types/agriculture.interface'
 import { ValueWithPercent } from '../types/investment.interface'
 
@@ -135,5 +137,13 @@ export function useGetAgricultureYears() {
 	return useQuery({
 		queryKey: ['agriculture_years'],
 		queryFn: () => AgricultureService.getYears(),
+	})
+}
+
+export function useGetStatProduct() {
+	return useQuery<KlassifikatorData[]>({
+		queryKey: ['get_stat_products'],
+		queryFn: () => AgricultureService.getStatProducts(),
+		select: (data: StatProductResponse) => Object.values(data),
 	})
 }

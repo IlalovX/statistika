@@ -74,3 +74,19 @@ export interface AgricultureFirms {
 	data: AgricultureFirmsItem[]
 	total: number
 }
+type YearValue = Record<number, number>
+
+interface Klassifikator {
+	Code: string
+	Klassifikator: string
+	Klassifikator_ru: string
+	Klassifikator_en: string
+	Klassifikator_uzc: string
+}
+
+export interface KlassifikatorData {
+	klassifikators: Klassifikator
+	metadata: string
+	values: YearValue
+}
+export type StatProductResponse = Record<number, KlassifikatorData>

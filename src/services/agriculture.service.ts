@@ -102,4 +102,8 @@ export const AgricultureService = {
 		const res = await axiosWithAuth.get('/agriculture/years')
 		return res.data.data
 	},
+	async getStatProducts() {
+		const res = await axiosWithAuth.get('/uploads/products')
+		return res.data.data
+	},
 }

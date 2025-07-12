@@ -10,10 +10,7 @@ import {
 } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
-import {
-	CustomizedAxisTick,
-	CustomizedLabel,
-} from '../../../../components/ui/ChartComponents'
+import { CustomizedAxisTick } from '../../../../components/ui/ChartComponents'
 import { useGetPoverty } from '../../../../hooks/useHome'
 
 function getYearRangesFromEnd(years: string[], chunkSize = 4): string[][] {
@@ -152,7 +149,18 @@ function PovertyCard() {
 						dataKey='бедность'
 						stroke='#00BAD1'
 						dot={{ r: 5 }}
-						label={<CustomizedLabel />}
+						label={({ x, y, value }) => (
+							<text
+								x={x}
+								y={y}
+								dy={-14}
+								fill={theme.palette.primary.main}
+								fontSize={14}
+								textAnchor='middle'
+							>
+								{value}%
+							</text>
+						)}
 					/>
 				</LineChart>
 			</ResponsiveContainer>

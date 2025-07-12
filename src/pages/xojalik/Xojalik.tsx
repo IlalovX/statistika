@@ -37,7 +37,7 @@ function Xojalik() {
 			<section>
 				<ThemeText variant='h4' text='Размещение' />
 				<Box className='grid grid-cols-2 grid-rows-1 gap-5 mt-5'>
-					<PlantedArea years={years} />
+					<PlantedArea />
 					<div className='flex flex-col justify-between gap-5'>
 						<Companies />
 						<Water years={years} />
