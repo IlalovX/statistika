@@ -24,7 +24,7 @@ interface Props {
 	year: number
 }
 
-function PlantedAreaModal({ placement, year }: Props) {
+function PlantedAreaModal({ placement = [], year }: Props) {
 	const theme = useTheme()
 	const [open, setOpen] = useState(false)
 	const handleOpen = () => setOpen(true)
@@ -94,7 +94,7 @@ function PlantedAreaModal({ placement, year }: Props) {
 										</TableCell>
 										<TableCell>{0}</TableCell>
 										<TableCell>{0}</TableCell>
-										<TableCell>{item.values[year]}</TableCell>
+										<TableCell>{item && item.values[year]}</TableCell>
 										<TableCell>0%</TableCell>
 									</TableRow>
 								))}
