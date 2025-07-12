@@ -94,7 +94,7 @@ function PlantedAreaModal({ placement = [], year }: Props) {
 										</TableCell>
 										<TableCell>{0}</TableCell>
 										<TableCell>{0}</TableCell>
-										<TableCell>{item && item.values[year]} T</TableCell>
+										<TableCell>{item && item.values[year]} т</TableCell>
 										<TableCell>0%</TableCell>
 									</TableRow>
 								))}
