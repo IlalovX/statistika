@@ -21,7 +21,6 @@ export default function PlantedArea() {
 	const [year, setYear] = useState(2024)
 	// const { data: placement = [] } = useClientPlacement(year)
 	const { data: harvested = [] } = useGetStatProduct()
-	console.log(harvested[0].values[year])
 
 	return (
 		<Box
