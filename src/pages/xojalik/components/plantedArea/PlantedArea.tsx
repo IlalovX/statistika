@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
-import { YearSelect } from '../../../../components/common/YearSelect/YearSelect'
+import YearMenu from '../../../../components/common/YearMenu/YearMenu'
 import { useGetStatProduct } from '../../../../hooks/useAgriculture'
 import PlantedAreaModal from './PlantedAreaModal'
 
@@ -31,11 +31,16 @@ export default function PlantedArea() {
 			}}
 		>
 			<div className='flex justify-between items-center'>
-				<Typography variant='h4' className='font-semibold text-gray-700'>
-					Показатели
+				<Typography variant='h4' className='!font-bold text-gray-700'>
+					Кўрсаткичлар
 				</Typography>
 				<div>
-					<YearSelect value={year} onChange={setYear} />
+					<YearMenu
+						selectedYear={year}
+						onChange={setYear}
+						className='!text-xl'
+						color={theme.palette.primary.main}
+					/>
 				</div>
 			</div>
 			<div className='flex flex-col justify-between h-full'>
@@ -43,15 +48,15 @@ export default function PlantedArea() {
 					<Table>
 						<TableHead>
 							<TableRow>
-								<TableCell></TableCell>
-								<TableCell>Площадь</TableCell>
-								<TableCell>Посажено</TableCell>
-								<TableCell>Урожай</TableCell>
-								<TableCell>Процент</TableCell>
+								<TableCell sx={{ fontWeight: 'bold' }}></TableCell>
+								<TableCell sx={{ fontWeight: 'bold' }}>Майдон</TableCell>
+								<TableCell sx={{ fontWeight: 'bold' }}>Экилди</TableCell>
+								<TableCell sx={{ fontWeight: 'bold' }}>Ҳосил</TableCell>
+								<TableCell sx={{ fontWeight: 'bold' }}>Фоизда</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{harvested?.slice(0, 4).map((item, index) => (
+							{harvested?.slice(0, 5).map((item, index) => (
 								<TableRow key={index}>
 									<TableCell>
 										<Typography className='flex items-center gap-2 font-medium'>

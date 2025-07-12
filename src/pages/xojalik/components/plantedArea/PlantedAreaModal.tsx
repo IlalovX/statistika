@@ -41,7 +41,7 @@ function PlantedAreaModal({ placement = [], year }: Props) {
 				}}
 				onClick={() => handleOpen()}
 			>
-				Показать все →
+				Барчасини кўриш →
 			</Button>
 			<Dialog
 				open={open}
@@ -74,11 +74,11 @@ function PlantedAreaModal({ placement = [], year }: Props) {
 						<Table>
 							<TableHead>
 								<TableRow>
-									<TableCell></TableCell>
-									<TableCell>Площадь</TableCell>
-									<TableCell>Посажено</TableCell>
-									<TableCell>Урожай</TableCell>
-									<TableCell>Процент</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}></TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}>Майдон</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}>Экилди</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}>Ҳосил</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}>Фоизда</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
