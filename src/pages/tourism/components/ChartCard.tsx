@@ -6,7 +6,7 @@ import {
   LabelProps,
   Line,
   ResponsiveContainer,
-  Tooltip,
+  // Tooltip,
   XAxis,
   YAxis,
 } from "recharts";

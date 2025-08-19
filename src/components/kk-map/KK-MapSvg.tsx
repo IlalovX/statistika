@@ -1,23 +1,77 @@
-import { Box, useTheme } from "@mui/material";
+import { useState } from "react";
+import { Box, ClickAwayListener, Tooltip, useTheme } from "@mui/material";
+import { TooltipProps } from "@mui/material/Tooltip";
 import styles from "./kk_map_svg.module.scss";
-// import { TooltipProps } from "@mui/material/Tooltip";
-// import { useState } from "react";
+import { useGetPopulationOfDistricts } from "../../hooks/useHome";
+import CustomTooltipContent from "../../pages/home/components/homeMapTooltip/HomeMapTooltip";
 
 interface Props {
   selectedYear: number;
 }
 
-const KKMapSvg = ({ selectedYear }: Props) => {
+const HtmlTooltip = (props: TooltipProps) => {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <ClickAwayListener onClickAway={handleTooltipClose}>
+      <Tooltip
+        {...props}
+        open={open}
+        followCursor
+        onClose={handleTooltipClose}
+        slotProps={{
+          tooltip: {
+            sx: {
+              backgroundColor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.background.paper
+                  : "white",
+              color: theme.palette.mode === "dark" ? "white" : "#2E2E2E",
+              maxWidth: 220,
+              fontSize: "12px",
+              border: `1px solid ${theme.palette.divider}`,
+              boxShadow: theme.shadows[3],
+            },
+          },
+        }}
+      >
+        <g
+          onClick={handleTooltipOpen}
+          onMouseEnter={handleTooltipOpen}
+          onMouseLeave={handleTooltipClose}
+          style={{ cursor: "pointer" }}
+        >
+          {props.children}
+        </g>
+      </Tooltip>
+    </ClickAwayListener>
+  );
+};
+
+const KKMapSvg = ({ selectedYear }: Props) => {
+  const { data: map = [] } = useGetPopulationOfDistricts();
+  // console.log(map);
+
+  const theme = useTheme();
+
   return (
     <Box
-      className={`shadow-xl rounded-xl p-2 flex items-center justify-center flex-col ${styles.map}`}
+      className={`rounded-xl p-2 flex items-center justify-center flex-col ${styles.map}`}
       sx={{
         bgcolor: theme.palette.background.paper,
-        border: `1px solid ${theme.palette.divider}`,
+        // border: `1px solid ${theme.palette.divider}`,
       }}
     >
-      {/* <svg
+      <svg
         width="300"
         height="270"
         viewBox="0 0 934 885"
@@ -311,7 +365,7 @@ const KKMapSvg = ({ selectedYear }: Props) => {
             />
           </HtmlTooltip>
         </g>
-      </svg> */}
+      </svg>
     </Box>
   );
 };
