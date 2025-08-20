@@ -11,8 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
-import YearMenu from "../../../../components/common/YearMenu/YearMenu";
+import { useEffect, useState } from "react";
+// import YearMenu from "../../../../components/common/YearMenu/YearMenu";
 import { useGetStatProduct } from "../../../../hooks/useAgriculture";
 import PlantedAreaModal from "./PlantedAreaModal";
 
@@ -21,6 +21,13 @@ export default function PlantedArea() {
   const [year, setYear] = useState(2024);
   // const { data: placement = [] } = useClientPlacement(year)
   const { data: harvested = [] } = useGetStatProduct();
+
+  useEffect(() => {
+    if (harvested.length > 0) {
+      const years = Object.keys(harvested[0].values || {}).map(Number);
+      setYear(Math.max(...years));
+    }
+  }, [harvested]);
 
   return (
     <Box
@@ -37,14 +44,14 @@ export default function PlantedArea() {
         >
           Кўрсаткичлар
         </Typography>
-        <div>
+        {/* <div>
           <YearMenu
             selectedYear={year}
             onChange={setYear}
             className="!text-xl"
             color={theme.palette.primary.main}
           />
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col justify-between h-full">
         <TableContainer className="mt-4 h-fit ">
@@ -54,7 +61,10 @@ export default function PlantedArea() {
                 <TableCell sx={{ fontWeight: "bold" }}></TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Майдон</TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Экилди</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Ҳосил</TableCell>
+                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
+                  Ҳосил <br />
+                  <span className="text-xs text-gray-300">(минг тонна)</span>
+                </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Фоизда</TableCell>
               </TableRow>
             </TableHead>
@@ -75,7 +85,7 @@ export default function PlantedArea() {
                   <TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
                   <TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
                   <TableCell sx={{ fontSize: 16 }}>
-                    {item?.values[year]} т
+                    {year && item.values[year] ? `${item.values[year]} т` : "-"}
                   </TableCell>
                   <TableCell sx={{ fontSize: 16 }}>{0}%</TableCell>
                 </TableRow>
@@ -83,7 +93,7 @@ export default function PlantedArea() {
             </TableBody>
           </Table>
         </TableContainer>
-        <PlantedAreaModal placement={harvested} year={year} />
+        <PlantedAreaModal placement={harvested} />
       </div>
     </Box>
   );
