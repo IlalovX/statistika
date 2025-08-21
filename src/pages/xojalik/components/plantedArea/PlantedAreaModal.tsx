@@ -16,7 +16,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { KlassifikatorData } from "../../../../types/agriculture.interface";
 import YearMenu from "../../../../components/common/YearMenu/YearMenu";
 
@@ -28,9 +28,28 @@ interface Props {
 function PlantedAreaModal({ placement = [] }: Props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const normalizedPlacement = placement.map((item) => ({
+    ...item,
+    values: Object.fromEntries(
+      Object.entries(item.values || {}).map(([k, v]) => [Number(k), v])
+    ),
+  }));
+
+  const years = normalizedPlacement.length
+    ? Object.keys(normalizedPlacement[0].values || {})
+        .map(Number)
+        .sort((a, b) => b - a)
+    : [];
+
+  useEffect(() => {
+    if (years.length > 0) {
+      setYear(Math.max(...years)); // eng oxirgi yil default
+    }
+  }, []);
 
   return (
     <>
@@ -73,6 +92,7 @@ function PlantedAreaModal({ placement = [] }: Props) {
           <YearMenu
             selectedYear={year}
             onChange={setYear}
+            years={years}
             className="!text-xl !ml-6"
             color={theme.palette.primary.main}
           />
@@ -90,7 +110,7 @@ function PlantedAreaModal({ placement = [] }: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {placement?.map((item, index) => (
+                {normalizedPlacement?.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell>
                       <Typography className="flex items-center gap-2 font-medium">
@@ -102,7 +122,9 @@ function PlantedAreaModal({ placement = [] }: Props) {
                     </TableCell>
                     <TableCell>{0}</TableCell>
                     <TableCell>{0}</TableCell>
-                    <TableCell>{item && item.values[year]} т</TableCell>
+                    <TableCell>
+                      {item.values[year] ? `${item.values[year]} т` : "-"}
+                    </TableCell>
                     <TableCell>0%</TableCell>
                   </TableRow>
                 ))}

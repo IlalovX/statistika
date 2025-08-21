@@ -18,7 +18,7 @@ import PlantedAreaModal from "./PlantedAreaModal";
 
 export default function PlantedArea() {
   const theme = useTheme();
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState<number | null>(null);
   // const { data: placement = [] } = useClientPlacement(year)
   const { data: harvested = [] } = useGetStatProduct();
 
@@ -63,7 +63,9 @@ export default function PlantedArea() {
                 <TableCell sx={{ fontWeight: "bold" }}>Экилди</TableCell>
                 <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
                   Ҳосил <br />
-                  <span className="text-xs text-gray-300">(минг тонна)</span>
+                  <span className="text-xs text-gray-300 font-thin italic">
+                    "Минг тонна"
+                  </span>
                 </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Фоизда</TableCell>
               </TableRow>
