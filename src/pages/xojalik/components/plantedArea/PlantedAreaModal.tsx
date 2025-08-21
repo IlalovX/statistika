@@ -28,7 +28,7 @@ interface Props {
 function PlantedAreaModal({ placement = [] }: Props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [year, setYear] = useState<number | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -46,10 +46,10 @@ function PlantedAreaModal({ placement = [] }: Props) {
     : [];
 
   useEffect(() => {
-    if (years.length > 0) {
-      setYear(Math.max(...years)); // eng oxirgi yil default
+    if (years.length > 0 && year === null) {
+      setYear(Math.max(...years)); // faqat birinchi marta default qo'yiladi
     }
-  }, []);
+  }, [years, year]);
 
   return (
     <>
@@ -123,7 +123,9 @@ function PlantedAreaModal({ placement = [] }: Props) {
                     <TableCell>{0}</TableCell>
                     <TableCell>{0}</TableCell>
                     <TableCell>
-                      {item.values[year] ? `${item.values[year]} т` : "-"}
+                      {year !== null && item.values[year]
+                        ? `${item.values[year]} т`
+                        : "-"}
                     </TableCell>
                     <TableCell>0%</TableCell>
                   </TableRow>

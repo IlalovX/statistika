@@ -4,7 +4,7 @@ import { Box, Button, Menu, MenuItem, useTheme } from "@mui/material";
 import { useState } from "react";
 
 interface YearMenuProps {
-  selectedYear: number;
+  selectedYear: number | null;
   onChange: (year: number) => void;
   years?: number[];
   className?: string;
