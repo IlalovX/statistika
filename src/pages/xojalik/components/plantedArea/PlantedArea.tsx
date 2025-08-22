@@ -40,7 +40,13 @@ export default function PlantedArea() {
       <div className="flex justify-between items-center">
         <Typography
           variant="h4"
-          className="!font-bold text-gray-700 dark:text-gray-400"
+          sx={{
+            fontWeight: 700,
+            color:
+              theme.palette.mode === "light"
+                ? "rgb(104, 104, 133)"
+                : "rgb(169, 169, 160)",
+          }}
         >
           Кўрсаткичлар
         </Typography>
@@ -54,24 +60,40 @@ export default function PlantedArea() {
         </div> */}
       </div>
       <div className="flex flex-col justify-between h-full">
-        <TableContainer className="mt-4 h-fit ">
+        <TableContainer className="h-fit">
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}></TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Майдон</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Экилди</TableCell>
+                <TableCell
+                  sx={{ fontWeight: "bold", textAlign: "center" }}
+                ></TableCell>
+                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
+                  Майдон
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
+                  Экилди
+                </TableCell>
                 <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>
                   Ҳосил <br />
-                  <span className="text-xs text-gray-300 font-thin italic">
+                  <Typography
+                    sx={{
+                      fontSize: 11,
+                      fontStyle: "italic",
+                      fontWeight: 100,
+                      color:
+                        theme.palette.mode === "light"
+                          ? "rgb(104, 104, 133)"
+                          : "rgb(169, 169, 160)",
+                    }}
+                  >
                     "Минг тонна"
-                  </span>
+                  </Typography>
                 </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Фоизда</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {harvested?.slice(0, 5).map((item, index) => (
+              {harvested?.slice(0, 6).map((item, index) => (
                 <TableRow key={index}>
                   <TableCell>
                     <Typography
@@ -84,12 +106,18 @@ export default function PlantedArea() {
                       {item.metadata}
                     </Typography>
                   </TableCell>
-                  <TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
-                  <TableCell sx={{ fontSize: 16 }}>{0}</TableCell>
-                  <TableCell sx={{ fontSize: 16 }}>
+                  <TableCell sx={{ fontSize: 16, textAlign: "center" }}>
+                    {0}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: 16, textAlign: "center" }}>
+                    {0}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: 16, textAlign: "center" }}>
                     {year && item.values[year] ? `${item.values[year]} т` : "-"}
                   </TableCell>
-                  <TableCell sx={{ fontSize: 16 }}>{0}%</TableCell>
+                  <TableCell sx={{ fontSize: 16, textAlign: "center" }}>
+                    {0}%
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

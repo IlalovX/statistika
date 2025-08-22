@@ -19,6 +19,14 @@ function GenderAgeCard() {
 
   const { data } = useGetPopulationAgeGender();
 
+  const years = useMemo(() => {
+    return data
+      ? Object.keys(data)
+          .map(Number)
+          .sort((a, b) => a - b)
+      : [];
+  }, [data]);
+
   const chartData =
     data?.[String(selectedYear)]?.map((item) => ({
       name: item.age_group.replace(/^до\s*/, "> ").replace(/^от\s*/, "< "),
@@ -51,6 +59,7 @@ function GenderAgeCard() {
         </Typography>
 
         <YearMenu
+          years={years}
           onChange={setSelectedYear}
           selectedYear={selectedYear}
           className="self-start"

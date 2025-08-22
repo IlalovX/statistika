@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -15,8 +15,21 @@ import { useGetSalary } from "../../../../hooks/useHome";
 const defaultQuarters = ["Q1", "Q2", "Q3", "Q4"];
 
 function SalaryCard() {
-  const [selectedYear, setSelectedYear] = useState<number>(2025);
   const { data } = useGetSalary();
+
+  const years = useMemo(() => {
+    if (!data) return [];
+    const avgYears = Object.keys(data.average || {}).map(Number);
+    const valueYears = Object.keys(data.values || {}).map(Number);
+
+    return Array.from(new Set([...avgYears, ...valueYears])).sort(
+      (a, b) => b - a
+    );
+  }, [data]);
+
+  const [selectedYear, setSelectedYear] = useState<number>(
+    years[0] ?? new Date().getFullYear()
+  );
   const theme = useTheme();
   const averageSalary = data?.average?.[selectedYear] ?? 0;
 
@@ -41,6 +54,12 @@ function SalaryCard() {
       ? `${percentChange > 0 ? "+" : ""}${percentChange.toFixed(1)}%`
       : "";
 
+  useEffect(() => {
+    if (years.length && !years.includes(selectedYear)) {
+      setSelectedYear(years[0]);
+    }
+  }, [years]);
+
   return (
     <Box
       className="shadow-xl rounded-2xl p-1.5 flex flex-col justify-between"
@@ -56,6 +75,7 @@ function SalaryCard() {
           </Typography>
 
           <YearMenu
+            years={years}
             onChange={setSelectedYear}
             selectedYear={selectedYear}
             className="self-start"

@@ -98,14 +98,29 @@ function PlantedAreaModal({ placement = [] }: Props) {
           />
         </DialogTitle>
         <DialogContent dividers>
-          <TableContainer className="mt-4 min-h-80">
+          <TableContainer className="min-h-80">
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: "bold" }}></TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>Майдон</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>Экилди</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>Ҳосил</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>Майдон</TableCell>
+                  <TableCell>Экилди</TableCell>
+                  <TableCell>
+                    Ҳосил <br />
+                    <Typography
+                      sx={{
+                        fontSize: 11,
+                        fontStyle: "italic",
+                        fontWeight: 100,
+                        color:
+                          theme.palette.mode === "light"
+                            ? "rgb(104, 104, 133)"
+                            : "rgb(169, 169, 160)",
+                      }}
+                    >
+                      "Минг тонна"
+                    </Typography>
+                  </TableCell>
                   <TableCell sx={{ fontWeight: "bold" }}>Фоизда</TableCell>
                 </TableRow>
               </TableHead>
